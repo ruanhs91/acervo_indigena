@@ -1,0 +1,48 @@
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Cabeçalho */
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 40px;
+    background: white;
+    border-bottom: 4px solid #8b0000; /* vermelho escuro */
+}
+
+/* Logo + título */
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.logo img {
+    height: 50px;
+}
+.logo h1 {
+    font-size: 16px;
+    font-weight: bold;
+    color: #013220; /* verde escuro */
+}
+
+/* Navegação */
+.nav {
+    display: flex;
+    gap: 30px;
+}
+.nav a {
+    text-decoration: none;
+    font-weight: bold;
+    color: #8b0000; /* vermelho escuro */
+}
+.nav a:first-child {
+    color: #013220; /* verde escuro para "Início" */
+}
+.nav a:hover {
+    text-decoration: underline;
+}
