@@ -1,4 +1,4 @@
 from django.shortcuts import render
 
 def inicio(request):
-    return render(request, 'dashboard/base.html')
+    return render(request, 'dashboard/inicio.html')

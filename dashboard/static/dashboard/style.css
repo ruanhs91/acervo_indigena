@@ -3,6 +3,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, sans-serif;
 }
 
 /* Cabeçalho */
@@ -11,7 +12,7 @@
     align-items: center;
     justify-content: space-between;
     padding: 10px 40px;
-    background: white;
+    background: #8b0000;
     border-bottom: 4px solid #8b0000; /* vermelho escuro */
 }
 
@@ -27,7 +28,7 @@
 .logo h1 {
     font-size: 16px;
     font-weight: bold;
-    color: #013220; /* verde escuro */
+    color: white; 
 }
 
 /* Navegação */
@@ -38,11 +39,50 @@
 .nav a {
     text-decoration: none;
     font-weight: bold;
-    color: #8b0000; /* vermelho escuro */
+    color: white; /* vermelho escuro */
 }
 .nav a:first-child {
-    color: #013220; /* verde escuro para "Início" */
+    color: white; /* verde escuro para "Início" */
 }
 .nav a:hover {
     text-decoration: underline;
 }
+
+.titulo-inicio{
+    color: #8b0000;
+    font-size: 30px;
+    text-align: center;
+    margin: 20px 0;
+}
+
+.slidesh {
+    position: relative;
+    max-width: 630px;
+    margin:20px 20px;;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+.slide img{
+    width: 100%;
+    height:450px;
+    object-fit: cover;
+    aspect-ratio: 16/9;
+}
+
+.prev, .next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    padding: 10px;
+    color: white;
+    font-weight: bold;
+    font-size: 24px;
+    background-color: rgba(0,0,0,0.3);
+    border-radius: 3px;
+    transform: translateY(-50%);
+    user-select: none;
+}
+
+.prev { left: 20px; }
+.next { left: 617px; }
