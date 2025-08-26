@@ -1,0 +1,25 @@
+{% extends "dashboard/base.html" %}
+{% load static %}
+
+{% block content %}
+
+    <main class="inicio">
+        <h2 class="titulo-inicio">Povos Indígenas</h2>
+        <div class="text-povos">
+            <div>Conheça no mapa abaixo a localização das aldeias e comunidades</div>
+        </div>
+
+        <img src="{% static 'dashboard/map1.png' %}" usemap="#image-map" alt="mapa rn">
+
+        <map name="image-map">
+            <area target="" alt="Cablocos do Assu" title="Cablocos do Assu" href="#" coords="331,120,12" shape="circle">
+            <area target="" alt="Tapuia Paiacu" title="Tapuia Paiacu" href="#" coords="252,139,17" shape="circle">
+            <area target="" alt="" title="" href="#" coords="298,60,17" shape="circle">
+            <area target="" alt="" title="" href="#" coords="530,88,17" shape="circle">
+            <area target="" alt="" title="" href="#" coords="589,140,17" shape="circle">
+            <area target="" alt="" title="" href="#" coords="610,201,15" shape="circle">
+            <area target="" alt="" title="" href="#" coords="630,229,15" shape="circle">
+        </map>
+        </main>
+            
+{% endblock %}

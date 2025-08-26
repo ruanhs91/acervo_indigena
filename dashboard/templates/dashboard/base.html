@@ -14,8 +14,8 @@
             <h1>Povos Indígenas do Rio Grande do Norte</h1>
         </div>
         <nav class="nav">
-            <a href="/">INÍCIO</a>
-            <a href="/povos/">POVOS INDÍGENAS</a>
+            <a href="{% url 'inicio' %}" class="{% if page == 'inicio' %}active{% endif %}">INÍCIO</a>
+            <a href="/povos/">POVOS</a>
             <a href="/conhecimentos/">CONHECIMENTOS TRADICIONAIS</a>
             <a href="/acervo/">ACERVO</a>
         </nav>

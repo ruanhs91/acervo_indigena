@@ -39,13 +39,17 @@
 .nav a {
     text-decoration: none;
     font-weight: bold;
-    color: white; /* vermelho escuro */
+    color: white; 
 }
-.nav a:first-child {
-    color: white; /* verde escuro para "Início" */
-}
+
 .nav a:hover {
     text-decoration: underline;
+}
+
+.nav a.active {
+    color: #3A9A4F;
+    font-weight: bold;
+    text-decoration:underline;
 }
 
 .titulo-inicio{
@@ -58,14 +62,15 @@
 .slidesh {
     position: relative;
     max-width: 630px;
-    margin:20px 20px;;
+    margin:0px 20px 20px 20px;
     overflow: hidden;
     border-radius: 10px;
+    float: left;
 }
 
 .slide img{
     width: 100%;
-    height:450px;
+    height:400px;
     object-fit: cover;
     aspect-ratio: 16/9;
 }
@@ -84,5 +89,35 @@
     user-select: none;
 }
 
-.prev { left: 20px; }
-.next { left: 617px; }
+.prev { left: 10px; }
+.next { right: 10px; }
+
+.texto-inicio, .texto-inicio1 { 
+    margin: 20px 40px;
+    font-size: 20px;
+    line-height: 1.6;
+    text-align: justify;
+}
+
+.texto-inicio, .texto-inicio1 { 
+    margin: 20px 40px;
+    font-size: 20px;
+    line-height: 1.6;
+    text-align: justify;
+}
+
+.texto-inicio h3,
+.texto-inicio1 h3 {
+    text-align: center;
+}
+
+.text-povos { 
+    text-align: center;   /*povos começa aq*/
+    color: #8b0000;
+}
+
+.inicio img1{
+    max-width:100%;
+    display: block;
+    margin: 20px auto 0;
+}
