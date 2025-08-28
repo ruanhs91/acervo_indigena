@@ -3,23 +3,56 @@
 
 {% block content %}
 
-    <main class="inicio">
+    <main class="inicio1">
         <h2 class="titulo-inicio">Povos Indígenas</h2>
         <div class="text-povos">
             <div>Conheça no mapa abaixo a localização das aldeias e comunidades</div>
         </div>
 
-        <img src="{% static 'dashboard/map1.png' %}" usemap="#image-map" alt="mapa rn">
+        <div class="map-container">
+            <img src="{% static 'dashboard/map1.png' %}" usemap="#image-map" alt="mapa rn">
+            
+            <!-- clicáveis no mapa, dps termino isso-->
+            <a href="https://www.google.com/maps/place/Aldeia+Indígena+Tapuias+Paiacus+da+Chapada+do+Apodi/@-5.5997463,-37.8024524,767m/data=!3m2!1e3!4b1!4m6!3m5!1s0x7ba59672aa257fd:0x81cfe7d6966750b5!8m2!3d-5.5997463!4d-37.7998775!16s%2Fg%2F11pwtkxn6s?entry=ttu&g_ep=EgoyMDI1MDgyNS4wIKXMDSoASAFQAw%3D%3D" class="marker"  style="top:42%; left: 26%;"></a>
 
-        <map name="image-map">
-            <area target="" alt="Cablocos do Assu" title="Cablocos do Assu" href="#" coords="331,120,12" shape="circle">
-            <area target="" alt="Tapuia Paiacu" title="Tapuia Paiacu" href="#" coords="252,139,17" shape="circle">
-            <area target="" alt="" title="" href="#" coords="298,60,17" shape="circle">
-            <area target="" alt="" title="" href="#" coords="530,88,17" shape="circle">
-            <area target="" alt="" title="" href="#" coords="589,140,17" shape="circle">
-            <area target="" alt="" title="" href="#" coords="610,201,15" shape="circle">
-            <area target="" alt="" title="" href="#" coords="630,229,15" shape="circle">
-        </map>
+        
+        </div>
+        <div class="menu-povos">
+            <button onclick="mostrarInfo('cablocos')">Cablocos de Assu</button>
+            <button onclick="mostrarInfo('catu')">Catu</button>
+            <button onclick="mostrarInfo('mendonca')">Mendonça</button>
+            <button onclick="mostrarInfo('sagi')">Sagi/Trabanda</button>
+            <button onclick="mostrarInfo('tapuia')">Tapuia Paiacu</button>
+            <button onclick="mostrarInfo('tarairiú')">Tapuia Tarairiú</button>
+            <button onclick="mostrarInfo('warao')">Warao</button>
+        </div>
+        <div class="conteudos">
+            <div id="tapuia" class="texto-povo">
+                <h3>Tapuia Paiacu</h3>
+                <p> teste</p>
+            </div>
+            <div id="catu" class="texto-povo">
+                <h3 class="titulo-povo"Catu></h3>
+                <div class=povo-conteudo>
+                    <img class="img-povo1" src="{% static 'dashboard/catu.jpg' %}" alt="Catu">
+                    <div class=povo-texto>
+                    <p> {{ povos.catu.conteudo}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+        function mostrarInfo(id) {
+            document.querySelectorAll('.texto-povo').forEach(div => {
+                div.style.display = 'none';
+            });
+
+            document.getElementById(id).style.display = 'block';
+
+            }
+        </script>
+        
         </main>
             
 {% endblock %}
