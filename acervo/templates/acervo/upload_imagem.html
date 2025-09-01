@@ -1,0 +1,15 @@
+{% extends "acervo/base.html" %}
+
+{% load static %}
+
+
+{% block content %}
+
+<h2>Enviar nova imagem</h2>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Salvar</button>
+</form>
+
+{% endblock %}
