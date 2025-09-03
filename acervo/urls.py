@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from django.contrib.auth import views as auth_views
 
 app_name = 'acervo'
 
@@ -8,4 +9,5 @@ urlpatterns = [
     path('listar/', views.listar_imagens, name='listar_imagens'),
     path('upload/', views.upload_imagem, name='upload_imagem'),
     path('cadastro/', views.cadastro_view, name='cadastro'),
+    path('login/', views.login_view, name='login'),
 ]

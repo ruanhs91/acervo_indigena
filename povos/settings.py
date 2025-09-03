@@ -42,8 +42,8 @@ INSTALLED_APPS = [
     'dashboard',
 ]
 
-LOGIN_URL = 'login'
-LOGIN_REDIRECT_URL = 'acervo:acervo_view'
+LOGIN_URL = 'acervo:login'
+LOGIN_REDIRECT_URL = 'acervo:upload_imagem'
 
 MODERATOR_INVITE_CODE = 'ruanrebe123'
 

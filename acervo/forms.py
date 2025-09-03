@@ -1,10 +1,10 @@
 from django import forms
 from .models import Imagem 
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.conf import settings 
 
-class cadastroform(UserCreationForm):
+class cadastroform(UserCreationForm): #formulário de cadastro de usuário comum 
     email = forms.EmailField(required=True, label='Email')
     first_name = forms.CharField(required=True, label='Nome')
 
@@ -12,11 +12,11 @@ class cadastroform(UserCreationForm):
         model = User
         fields = ('first_name', 'username', 'email', 'password1', 'password2')
         widgets = {
-            'first_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nome'}),
-            'username': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nome de usuário'}),
-            'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Email'}),
-            'password1': forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Senha'}),
-            'password2': forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Confirme a senha'}),
+            'first_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'username': forms.TextInput(attrs={'class': 'form-control'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control'}),
+            'password1': forms.PasswordInput(attrs={'class': 'form-control'}),
+            'password2': forms.PasswordInput(attrs={'class': 'form-control'}),
 
         }
     
@@ -38,6 +38,9 @@ class cadastroform(UserCreationForm):
             user.save()
         return user
 
+class LoginForm(AuthenticationForm): #formulário de login de usuário comum
+    username = forms.CharField(label='Usuário', widget=forms.TextInput(attrs={'class': 'form-control'}))
+    password = forms.CharField(label='Senha', widget=forms.PasswordInput(attrs={'class': 'form-control'}))
 class ImagemForm(forms.ModelForm):
     class Meta: 
         model = Imagem
