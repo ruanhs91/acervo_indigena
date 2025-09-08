@@ -1,0 +1,3 @@
+Site: Povos Indígenas do Rio Grande do Norte
+
+Esse site foi desenvolvido com o intuito de atender ao aumento da demanda por informações e registros sobre as culturas indígenas, que muitas vezes são esquecidas ou mal compreendidas. Ao reunir informações valiosas sobre a história, a cultura e os desafios enfrentados pelos povos indígenas do Rio Grande do Norte, buscamos não apenas preservar esse conhecimento, mas também promover uma maior compreensão e valorização. Este espaço serve como um repositório virtual que apoia o reconhecimento e o respeito por estas comunidades, refletindo a importância de manter viva a memória cultural.
