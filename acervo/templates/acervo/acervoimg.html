@@ -7,17 +7,24 @@
 
     <main class="inicio">
         <h2 class="titulo-inicio">Acervo</h2>
-        <div class="grid">
-            {% for img in imagens %}
-                <div class="card">
-                    <h3>{{ img.titulo }}</h3>
-                    <p>{{ img.descricao }}</p>
-                    <img src="{{ img.imagem.url }}" alt="{{ img.titulo }}">
-                    <small>Autor: {{ img.autor.username }} - {{ img.data_envio|date:"d/m/Y" }}</small>
+        <nav>
+            {% if user.is_authenticated %}
+                <span>{{ user.username }}</span>
+                <a href="{% url 'acervo:logout' %}">Sair</a>
+            {% else %}
+                <a href="{% url 'acervo:login' %}">Fazer login</a>
+            {% endif %}
+        </nav>
+        <div class="dropdown my-3">
+            <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                    style="background-color: #1A4623; color:white;">
+                Adicionar
+            </button>
+            <ul class="dropdown-menu">
+                <li><a class = "dropdown-item" href="{% url 'acervo:upload_imagem' %}">Imagem</a></li>
+                <li><a class = "dropdown-item" href="{% url 'acervo:upload_artigo' %}">Artigo</a></li>
+                <li><a class = "dropdown-item" href="{% url 'acervo:upload_link' %}">Link</a></li>
+            </ul>
         </div>
-            {% empty %}
-                <p>Nenhuma imagem cadastrada.</p>
-    </main> 
-            {% endfor %}
-        </div>
+    </main>
 {% endblock %}

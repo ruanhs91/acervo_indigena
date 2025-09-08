@@ -45,8 +45,6 @@ INSTALLED_APPS = [
 LOGIN_URL = 'acervo:login'
 LOGIN_REDIRECT_URL = 'acervo:upload_imagem'
 
-MODERATOR_INVITE_CODE = 'ruanrebe123'
-
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

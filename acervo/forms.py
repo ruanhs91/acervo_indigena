@@ -1,10 +1,10 @@
 from django import forms
-from .models import Imagem 
+from .models import Imagem, Artigos, Link
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.conf import settings 
 
-class cadastroform(UserCreationForm): #formulário de cadastro de usuário comum 
+class cadastroform(UserCreationForm): #formulário de cadastro 
     email = forms.EmailField(required=True, label='Email')
     first_name = forms.CharField(required=True, label='Nome')
 
@@ -37,11 +37,29 @@ class cadastroform(UserCreationForm): #formulário de cadastro de usuário comum
         if commit: 
             user.save()
         return user
+    
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if User.objects.filter(email=email).exists():
+            raise forms.ValidationError("Insira um email válido.")
 
-class LoginForm(AuthenticationForm): #formulário de login de usuário comum
+class LoginForm(AuthenticationForm): #formulário de login
     username = forms.CharField(label='Usuário', widget=forms.TextInput(attrs={'class': 'form-control'}))
     password = forms.CharField(label='Senha', widget=forms.PasswordInput(attrs={'class': 'form-control'}))
 class ImagemForm(forms.ModelForm):
     class Meta: 
         model = Imagem
-        fields=['titulo', 'descricao', 'imagem']
+        fields=['titulo_img', 'descricao_img', 'imagem']
+
+class ArtigoForm(forms.ModelForm):
+    class Meta: 
+        model = Artigos 
+        fields=['titulo_artigo', 'descricao_artigo', 'arquivo']
+
+class LinkForm(forms.ModelForm):
+    class Meta: 
+        model = Link
+        fields=['titulo_link', 'descricao_link', 'url']
+        
+
+    
