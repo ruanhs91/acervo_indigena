@@ -1,4 +1,5 @@
 from django.apps import AppConfig
+from django.db.utils import OperationalError, ProgrammingError
 
 
 class AcervoConfig(AppConfig):
@@ -7,6 +8,9 @@ class AcervoConfig(AppConfig):
 
     def ready(self):
         from django.contrib.auth.models import Group
-        for nome in ('Usuários', 'Moderadores'):
-            Group.objects.get_or_create(name = nome)
+        try:
+            for nome in ('Usuários', 'Moderadores'):
+                Group.objects.get_or_create(name = nome)
+        except (OperationalError, ProgrammingError):
+            pass 
             
