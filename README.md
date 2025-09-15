@@ -5,21 +5,25 @@ Esse site foi desenvolvido com o intuito de atender ao aumento da demanda por in
 Passos para a instalação: 
 
 1. Clone o repositório
+```bash
 https://github.com/ruanhs91/acervo_indigena.git 
+```
 
-2. Crie um ambiente virtual 
+2. Crie um ambiente virtual
+```bash 
 python -m venv venv 
+```
 
-3. Ative o ambiente virtual 
+5. Ative o ambiente virtual 
 .\venv\Scripts\activate
 
-4. Instale as dependências 
+6. Instale as dependências 
 pip install -r requirements.txt 
 
-5. Execute as migrações do banco de dados 
+7. Execute as migrações do banco de dados 
 python manage.py makemigrations 
 python manage.py migrate
 python manage.py loaddata db.json 
 
-6. Inicie o servidor 
+8. Inicie o servidor 
 python manage.py runserver 
