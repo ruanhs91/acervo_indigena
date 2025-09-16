@@ -1,3 +1,23 @@
 from django.contrib import admin
+from .models import Imagem, Link, Artigos
 
-# Register your models here.
+@admin.register(Imagem)
+class ImagemAdmin(admin.ModelAdmin):
+    list_display = ("id", "titulo_img", "enviado_usuario", "data_envio", "aprovado")
+    list_filter = ("aprovado", "data_envio")
+    search_fields = ("titulo_img", "descricao_img", "autor_img")
+    list_editable = ("aprovado",)
+
+@admin.register(Link)
+class LinkAdmin(admin.ModelAdmin):
+    list_display = ("id", "titulo_link", "url", "enviado_usuario", "data_envio", "aprovado")
+    list_filter = ("aprovado", "data_envio")
+    search_fields = ("titulo_link", "descricao_link", "autor")
+    list_editable = ("aprovado",)
+
+@admin.register(Artigos)
+class ArtigosAdmin(admin.ModelAdmin):
+    list_display = ("id", "titulo_artigo", "enviado_usuario", "data_envio", "aprovado")
+    list_filter = ("aprovado", "data_envio")
+    search_fields = ("titulo_artigo", "descricao_artigo", "autor_artigo")
+    list_editable = ("aprovado",)

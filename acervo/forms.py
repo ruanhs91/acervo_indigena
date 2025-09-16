@@ -49,12 +49,12 @@ class LoginForm(AuthenticationForm): #formulário de login
 class ImagemForm(forms.ModelForm):
     class Meta: 
         model = Imagem
-        fields=['titulo_img', 'descricao_img', 'imagem']
+        fields=['titulo_img', 'descricao_img', 'autor_img', 'imagem']
 
 class ArtigoForm(forms.ModelForm):
     class Meta: 
         model = Artigos 
-        fields=['titulo_artigo', 'descricao_artigo', 'arquivo']
+        fields=['titulo_artigo', 'descricao_artigo', 'autor_artigo', 'arquivo']
 
 class LinkForm(forms.ModelForm):
     class Meta: 

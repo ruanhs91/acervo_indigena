@@ -164,3 +164,8 @@
 .texto-povo {
     display:none;
 }
+
+.logout-item:hover {
+    background-color: #dc3545;
+    color: white;
+}

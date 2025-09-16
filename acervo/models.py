@@ -7,7 +7,7 @@ class Imagem(models.Model):
     imagem = models.ImageField(upload_to="acervo/acervoimg/")
     enviado_usuario = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
     data_envio = models.DateTimeField(auto_now_add=True)
-    autor=models.CharField(max_length=100, blank=True)
+    autor_img=models.CharField(max_length=100, blank=True)
     aprovado = models.BooleanField(default=False)
 
     def __str__(self):
@@ -31,7 +31,7 @@ class Artigos(models.Model):
     arquivo = models.FileField(upload_to="acervo/artigos/")
     enviado_usuario = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
     data_envio = models.DateTimeField(auto_now_add=True)
-    autor=models.CharField(max_length=100, blank=True)
+    autor_artigo=models.CharField(max_length=100, blank=True)
     aprovado = models.BooleanField(default=False)
 
     def __str__(self):

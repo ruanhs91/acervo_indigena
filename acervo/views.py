@@ -1,10 +1,30 @@
 from django.contrib import messages
 from django.shortcuts import render, redirect
-from .models import Imagem
+from .models import Imagem, Artigos, Link
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.models import Group
 from .forms import ImagemForm, cadastroform, LoginForm, ArtigoForm, LinkForm
 from django.contrib.auth.decorators import login_required
+
+def acervo_busca(request):
+    query = request.Get.get('q')
+    artigos = Artigos.objects.all()
+    imagens = Imagem.objects.all()
+    links = Link.objects.all()
+
+    if query:
+        artigos = artigos.filter(titulo_artigo__icontains=query) #add outros
+        imagens = imagens.filter(titulo_img__icontains=query)
+        links = links.filter(titulo_link__icontains=query)
+
+    context = {
+        "artigos": artigos, 
+        "imagens": imagens, 
+        "links": links, 
+        "query": query,
+    }
+
+    return render(request, "acervo/acervoimg.html", context)
 
 def login_view(request):
     if request.method == 'POST':

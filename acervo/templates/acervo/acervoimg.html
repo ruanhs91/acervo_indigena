@@ -5,26 +5,41 @@
 
 {% block content %}
 
-    <main class="inicio">
-        <h2 class="titulo-inicio">Acervo</h2>
-        <nav>
-            {% if user.is_authenticated %}
-                <span>{{ user.username }}</span>
-                <a href="{% url 'acervo:logout' %}">Sair</a>
-            {% else %}
-                <a href="{% url 'acervo:login' %}">Fazer login</a>
-            {% endif %}
-        </nav>
-        <div class="dropdown my-3">
-            <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown"
+<main class="inicio">
+    <h2 class="titulo-inicio mb-3">Acervo</h2>
+    <form method="get" action="{% url 'acervo:listar_imagens' %}" class="d-flex mb-3 me-4 justify-content-end">
+        <input type="text" name="q" class="form-control me-2" placeholder="Buscar..." value="{{ query|default:'' }}">
+        <button class="btn btn-secondary" type="submit"><i class="bi bi-search"></i></button>
+    </form>
+
+<div class="d-flex justify-content-end gap-3 me-4">
+    <div class="dropdown">
+            <button class="btn dropdown-toggle d-flex align-items-center gap-1" type="button" data-bs-toggle="dropdown"
                     style="background-color: #1A4623; color:white;">
-                Adicionar
+                <i class="bi bi-plus-lg"></i> Adicionar
             </button>
             <ul class="dropdown-menu">
-                <li><a class = "dropdown-item" href="{% url 'acervo:upload_imagem' %}">Imagem</a></li>
-                <li><a class = "dropdown-item" href="{% url 'acervo:upload_artigo' %}">Artigo</a></li>
-                <li><a class = "dropdown-item" href="{% url 'acervo:upload_link' %}">Link</a></li>
+                <li><a class="dropdown-item" href="{% url 'acervo:upload_imagem' %}">Imagem</a></li>
+                <li><a class="dropdown-item" href="{% url 'acervo:upload_artigo' %}">Artigo</a></li>
+                <li><a class="dropdown-item" href="{% url 'acervo:upload_link' %}">Link</a></li>
             </ul>
-        </div>
-    </main>
+    </div>
+    <nav>
+    <div class="dropdown">
+        {% if user.is_authenticated %}
+            <button class="btn btn-dark dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                    style="background-color: #1A4623;">
+                {{ user.username }}
+            </button>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item logout-item" href="{% url 'acervo:logout' %}">Sair</a></li>
+                <li><a class="dropdown-item" href="{% url 'acervo:logout' %}">Painel do moderador</a></li> <!-- mudar qnd adicionar painel moderador -->
+            </ul>
+        {% else %}
+            <a href="{% url 'acervo:login' %}" class="btn btn-dark" style="background-color: #1A4623">Login</a>
+        {% endif %}
+    </div>
+</nav>
+</div>
+</main>
 {% endblock %}
