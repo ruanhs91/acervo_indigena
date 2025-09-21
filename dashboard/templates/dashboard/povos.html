@@ -3,6 +3,67 @@
 
 {% block content %}
 
+<style>
+.povo-conteudo {
+    display: flex;
+    align-items: flex-start;   /* alinha pelo topo */
+    gap: 20px;
+}
+
+.povo-img {
+    flex: 0 0 160px;           /* largura fixa da imagem */
+    text-align: center;
+}
+
+.img-povo1 {
+    width: 100%;
+    height: auto;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+}
+
+.povo-texto {
+    flex: 1;                   /* ocupa o resto do espaço */
+    text-align: justify;
+    font-size: 1em;
+    line-height: 1.6;
+}
+
+.titulo-povo {
+    font-size: 1.4em;
+    font-weight: bold;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.fonte {
+    font-size: 0.8em;
+    color: #555;
+    font-style: italic;
+    margin-top: 6px;
+}
+
+/* No celular: imagem em cima e texto embaixo */
+@media (max-width: 768px) {
+    .povo-conteudo {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .povo-img {
+        flex: none;
+        max-width: 140px;
+        margin-bottom: 15px;
+    }
+
+    .povo-texto {
+        width: 100%;
+    }
+}
+
+
+</style>
+
     <main class="inicio1">
         <h2 class="titulo-inicio">Povos Indígenas</h2>
         <div class="text-povos">

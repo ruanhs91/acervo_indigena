@@ -38,7 +38,7 @@ def povos(request):
     povos = {
         "catu": {
             "titulo": "Catu",
-            "conteudo": """"A comunidade indígena Potiguara do Catu, cujo significado é “bom” ou “agradável”, faz parte da divisão Tupi. Viveram na região de Igramació, mas, em busca de um novo lugar, migraram para os atuais municípios de Canguaretama e Goianinha. A comunidade conta com 726 membros e enfrenta dificuldades devido à exploração agrícola e do desmatamento, já que a principal atividade econômica é a agricultura. O povo aproveita o solo fértil, e a caça e a pesca viraram segundo plano. Existe também a Festa da Batata, que representa um exemplo de resistência e adaptação cultural, eles lutam para preservar suas tradições e fortalecer a sua identidade potiguara por meio da educação e da cultura."""
+            "conteudo": """A comunidade indígena Potiguara do Catu, cujo significado é “bom” ou “agradável”, faz parte da divisão Tupi. Viveram na região de Igramació, mas, em busca de um novo lugar, migraram para os atuais municípios de Canguaretama e Goianinha. A comunidade conta com 726 membros e enfrenta dificuldades devido à exploração agrícola e do desmatamento, já que a principal atividade econômica é a agricultura. O povo aproveita o solo fértil, e a caça e a pesca viraram segundo plano. Existe também a Festa da Batata, que representa um exemplo de resistência e adaptação cultural, eles lutam para preservar suas tradições e fortalecer a sua identidade potiguara por meio da educação e da cultura."""
         },
 
     }

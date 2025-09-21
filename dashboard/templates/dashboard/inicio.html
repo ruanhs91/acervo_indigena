@@ -2,72 +2,103 @@
 
 {% load static %}
 
-
 {% block content %}
 
-    <main class="inicio">
-        <h2 class="titulo-inicio">Início</h2>
+<style>
+.slidesh {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  display: block;
+  position: relative;
+}
 
-        <div class="slidesh">
-            <div class="slide fade">
-                <img src="{% static 'dashboard/slide1.jpg' %}" alt="Imagem 1">
-            </div>
+.slidesh img {
+  width: 100%;
+  height: 550px;       
+  object-fit: cover;   
+  object-position: center; 
+  display: block;
+}
 
-            <div class="slide fade">
-                <img src="{% static 'dashboard/slide2.jpg' %}" alt="Imagem 2">
-            </div>
+.texto-inicio,
+.texto-inicio1 {
+  max-width: 900px;   
+  margin: 20px auto;
+  padding: 0 15px;
+}
+</style>
 
-            <div class="slide fade">
-                <img src="{% static 'dashboard/slide3.jpg' %}" alt="Imagem 3">
-            </div>
-            <div class="slide fade">
-                <img src="{% static 'dashboard/slide4.jpg' %}" alt="Imagem 3">
-            </div>
-            <div class="slide fade">
-                <img src="{% static 'dashboard/slide5.png' %}" alt="Imagem 3">
-            </div>
-            <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-            <a class="next" onclick="plusSlides(1)">&#10095;</a>
+<main class="inicio">
+    <h2 class="titulo-inicio">Início</h2>
+
+    <div class="slidesh">
+        <div class="slide fade">
+            <img src="{% static 'dashboard/slide1.jpg' %}" alt="Imagem 1">
         </div>
 
-        <div class="texto-inicio">
-            <h3> {{ textos.objetivo.titulo }}</h3>
-            <p>{{ textos.objetivo.conteudo }}</p>
-        </div>
-    </main>
-        <div class="texto-inicio1">
-            <h3>{{ textos.desenvolvimento.titulo }}</h3>
-            <p>{{ textos.desenvolvimento.conteudo }}</p>
-            <h3> {{ textos.importancia.titulo }} </h3>
-            <p>
-                {{ textos.importancia.conteudo }}
-            </p>
+        <div class="slide fade">
+            <img src="{% static 'dashboard/slide2.jpg' %}" alt="Imagem 2">
         </div>
 
-    <script> 
-        let slideIndex = 1; //slides
-        showSlides(slideIndex);
+        <div class="slide fade">
+            <img src="{% static 'dashboard/slide3.jpg' %}" alt="Imagem 3">
+        </div>
+        <div class="slide fade">
+            <img src="{% static 'dashboard/slide4.jpg' %}" alt="Imagem 4">
+        </div>
+        <div class="slide fade">
+            <img src="{% static 'dashboard/slide5.png' %}" alt="Imagem 5">
+        </div>
+        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+        <a class="next" onclick="plusSlides(1)">&#10095;</a>
+    </div>
 
-        function plusSlides(n) {
-            showSlides(slideIndex += n);
-        }
+    <div class="texto-inicio">
+        <h3>{{ textos.objetivo.titulo }}</h3>
+        <p>{{ textos.objetivo.conteudo }}</p>
+    </div>
+</main>
 
-        function currentSlide(n) {
-            showSlides(slideIndex = n);
-        }
+<div class="texto-inicio1">
+    <h3>{{ textos.desenvolvimento.titulo }}</h3>
+    <p>{{ textos.desenvolvimento.conteudo }}</p>
+    <h3>{{ textos.importancia.titulo }}</h3>
+    <p>{{ textos.importancia.conteudo }}</p>
+</div>
 
-        function showSlides(n) {
-            let slides = document.getElementsByClassName("slide");
-                if (n > slides.length) { slideIndex = 1 }
-                if (n < 1) { slideIndex = slides.length }
+<script> 
+    let slideIndex = 1; 
+    showSlides(slideIndex);
 
-            for (let i = 0; i < slides.length; i++) {
-                slides[i].style.display = "none";
+    function plusSlides(n) {
+        showSlides(slideIndex += n);
+    }
+
+    function currentSlide(n) {
+        showSlides(slideIndex = n);
+    }
+
+    function showSlides(n) {
+        let slides = document.getElementsByClassName("slide");
+        if (n > slides.length) { slideIndex = 1 }
+        if (n < 1) { slideIndex = slides.length }
+
+        for (let i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
         }
 
         slides[slideIndex-1].style.display = "block";
     }
-    document.addEventListener("DOMContentLoaded", showSlides);
-    </script>
-{% endblock %}
 
+    document.addEventListener("DOMContentLoaded", function() {
+        showSlides(slideIndex);
+
+        // troca automática a cada 4 segundos
+        setInterval(function() {
+            plusSlides(1);
+        }, 4000);
+    });
+</script>
+
+{% endblock %}
