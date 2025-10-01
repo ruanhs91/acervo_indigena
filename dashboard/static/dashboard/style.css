@@ -169,3 +169,13 @@
     background-color: #dc3545;
     color: white;
 }
+
+.dropdown-item.btn-verde {
+    transition: 0.3s; 
+}
+
+.dropdown-item.btn-verde:hover {
+    background: linear-gradient(135deg, #3a8a3a, #2f7d2f);
+    color: white !important;
+    border-radius: 6px;
+}

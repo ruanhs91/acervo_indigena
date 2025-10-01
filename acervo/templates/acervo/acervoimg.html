@@ -7,39 +7,47 @@
 
 <main class="inicio">
     <h2 class="titulo-inicio mb-3">Acervo</h2>
-    <form method="get" action="{% url 'acervo:listar_imagens' %}" class="d-flex mb-3 me-4 justify-content-end">
-        <input type="text" name="q" class="form-control me-2" placeholder="Buscar..." value="{{ query|default:'' }}">
-        <button class="btn btn-secondary" type="submit"><i class="bi bi-search"></i></button>
-    </form>
 
-<div class="d-flex justify-content-end gap-3 me-4">
-    <div class="dropdown">
-            <button class="btn dropdown-toggle d-flex align-items-center gap-1" type="button" data-bs-toggle="dropdown"
-                    style="background-color: #1A4623; color:white;">
-                <i class="bi bi-plus-lg"></i> Adicionar
-            </button>
-            <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{% url 'acervo:upload_imagem' %}">Imagem</a></li>
-                <li><a class="dropdown-item" href="{% url 'acervo:upload_artigo' %}">Artigo</a></li>
-                <li><a class="dropdown-item" href="{% url 'acervo:upload_link' %}">Link</a></li>
-            </ul>
+
+    <div class="d-flex justify-content-between align-items-center mb-3 me-4">
+
+
+        <form method="get" action="{% url 'acervo:listar_imagens' %}" class="d-flex flex-grow-1 me-3 ms-3">
+            <input type="text" name="q" class="form-control me-2 flex-grow-1" placeholder="Buscar imagens..." value="{{ query|default:'' }}">
+            <button class="btn btn-secondary" type="submit"><i class="bi bi-search"></i></button>
+        </form>
+
+        <div class="d-flex align-items-center gap-3">
+            
+            <div class="dropdown">
+                <button class="btn dropdown-toggle d-flex align-items-center gap-1" type="button" data-bs-toggle="dropdown"
+                        style="background-color: #1A4623; color:white;">
+                    <i class="bi bi-plus-lg"></i> Adicionar
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item btn-verde d-flex align-items-center gap-2" href="{% url 'acervo:upload_imagem' %}"><i class="bi bi-image"></i>Imagem</a></li>
+                    <li><a class="dropdown-item btn-verde d-flex align-items-center gap-2" href="{% url 'acervo:upload_artigo' %}"><i class="bi bi-file-earmark-text"></i>Artigo</a></li>
+                    <li><a class="dropdown-item btn-verde d-flex align-items-center gap-2" href="{% url 'acervo:upload_link' %}"><i class="bi bi-link-45deg"></i>Link</a></li>
+                </ul>
+            </div>
+
+    
+            <div class="dropdown">
+                {% if user.is_authenticated %}
+                    <button class="btn btn-dark dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                            style="background-color: #1A4623;">
+                        {{ user.username }}
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item logout-item" href="{% url 'acervo:logout' %}">Sair</a></li>
+                        <li><a class="dropdown-item" href="{% url 'acervo:logout' %}">Painel do moderador</a></li>
+                    </ul>
+                {% else %}
+                    <a href="{% url 'acervo:login' %}" class="btn btn-dark" style="background-color: #1A4623">Login</a>
+                {% endif %}
+            </div>
+        </div>
     </div>
-    <nav>
-    <div class="dropdown">
-        {% if user.is_authenticated %}
-            <button class="btn btn-dark dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                    style="background-color: #1A4623;">
-                {{ user.username }}
-            </button>
-            <ul class="dropdown-menu">
-                <li><a class="dropdown-item logout-item" href="{% url 'acervo:logout' %}">Sair</a></li>
-                <li><a class="dropdown-item" href="{% url 'acervo:logout' %}">Painel do moderador</a></li> <!-- mudar qnd adicionar painel moderador -->
-            </ul>
-        {% else %}
-            <a href="{% url 'acervo:login' %}" class="btn btn-dark" style="background-color: #1A4623">Login</a>
-        {% endif %}
-    </div>
-</nav>
-</div>
 </main>
+
 {% endblock %}

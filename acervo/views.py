@@ -5,6 +5,7 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.models import Group
 from .forms import ImagemForm, cadastroform, LoginForm, ArtigoForm, LinkForm
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 
 def acervo_busca(request):
     query = request.Get.get('q')
@@ -64,8 +65,17 @@ def acervo_view(request):
     return render(request, 'acervo/acervoimg.html', {'page': 'acervo'})
 
 def listar_imagens(request):
+    query = request.GET.get('q')
     imagens = Imagem.objects.all()
-    return render(request, "acervo/acervoimg.html", {'imagens': imagens})
+
+    if query:
+        imagens = imagens.filter(Q(titulo_img__icontains=query) | Q(descricao_img__icontains=query) | Q(autor_img__icontains=query))
+
+    context = {
+        "imagens": imagens,
+        "query": query,
+    }
+    return render(request, "acervo/acervoimg.html", context)
 
 @login_required
 def upload_imagem(request):
