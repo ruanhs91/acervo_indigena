@@ -6,7 +6,7 @@
 {% block content %}
 
 <main class="inicio">
-    <h2 class="titulo-inicio mb-3">Acervo</h2>
+    <h2 class="titulo-inicio mb-3 fw-bold">Acervo</h2>
 
 
     <div class="d-flex justify-content-between align-items-center mb-3 me-4">
@@ -40,7 +40,7 @@
                     </button>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item logout-item" href="{% url 'acervo:logout' %}">Sair</a></li>
-                        <li><a class="dropdown-item" href="{% url 'acervo:logout' %}">Painel do moderador</a></li>
+                        <li><a class="dropdown-item" href="{% url 'acervo:painel_moderacao' %}">Painel do moderador</a></li>
                     </ul>
                 {% else %}
                     <a href="{% url 'acervo:login' %}" class="btn btn-dark" style="background-color: #1A4623">Login</a>

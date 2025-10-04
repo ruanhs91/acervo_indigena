@@ -50,7 +50,12 @@ class ImagemForm(forms.ModelForm):
     class Meta: 
         model = Imagem
         fields=['titulo_img', 'descricao_img', 'autor_img', 'imagem']
-
+        widgets = {
+            'titulo_img': forms.TextInput(attrs={'class': 'form-control'}),
+            'descricao_img': forms.Textarea(attrs={'class': 'form-control', 'rows': 2}),
+            'autor_img': forms.TextInput(attrs={'class': 'form-control'}),
+            'imagem': forms.ClearableFileInput(attrs={'class': 'form-control'}),
+        }
 class ArtigoForm(forms.ModelForm):
     class Meta: 
         model = Artigos 

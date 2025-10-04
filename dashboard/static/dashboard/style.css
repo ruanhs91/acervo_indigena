@@ -179,3 +179,32 @@
     color: white !important;
     border-radius: 6px;
 }
+
+.btn-success-gradient {
+    background: linear-gradient(135deg, #3a8a3a, #2f7d2f);
+    border: none;
+    color: white;
+    transition: all 0.3s ease;
+}
+.btn-success-gradient:hover {
+    background: linear-gradient(135deg,  #3a8a3a, #2f7d2f);
+    transform: scale(1.05);
+    color: #fff
+}
+
+.arrow-icon {
+        transition: transform 0.3s ease;
+        font-size: 1rem;
+}
+.btn-success-gradient:hover .arrow-icon {
+    transform: translateX(-10px);
+}
+
+.upload-card .form-control {
+    background-color: #e0e0e0;
+    border: 1px solid #ccc;
+}
+
+.upload-card .form-control:focus {
+    background-color: #f1f1f1;
+}

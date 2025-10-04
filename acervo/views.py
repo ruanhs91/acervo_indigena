@@ -1,31 +1,11 @@
 from django.contrib import messages
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Imagem, Artigos, Link
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.models import Group
 from .forms import ImagemForm, cadastroform, LoginForm, ArtigoForm, LinkForm
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test 
 from django.db.models import Q
-
-def acervo_busca(request):
-    query = request.Get.get('q')
-    artigos = Artigos.objects.all()
-    imagens = Imagem.objects.all()
-    links = Link.objects.all()
-
-    if query:
-        artigos = artigos.filter(titulo_artigo__icontains=query) #add outros
-        imagens = imagens.filter(titulo_img__icontains=query)
-        links = links.filter(titulo_link__icontains=query)
-
-    context = {
-        "artigos": artigos, 
-        "imagens": imagens, 
-        "links": links, 
-        "query": query,
-    }
-
-    return render(request, "acervo/acervoimg.html", context)
 
 def login_view(request):
     if request.method == 'POST':
@@ -116,4 +96,49 @@ def upload_link(request):
         form = LinkForm()
         return render(request, 'acervo/upload_link.html', {'form': form})
     
+
+def is_moderador(user):
+    return user.is_staff or user.groups.filter(name='Moderadores').exists()
+
+@login_required
+@user_passes_test(is_moderador)
+def painel_moderacao(request):
+    imagens = Imagem.objects.filter(aprovado=False)
+    artigos = Artigos.objects.filter(aprovado=False)
+    links = Link.objects.filter(aprovado=False)
+
+    return render(request, "acervo/painel_moderacao.html", {'imagens': imagens, 'artigos': artigos, 'links': links})
+
+@login_required
+@user_passes_test(is_moderador)
+
+def aprovar_conteudo(request, tipo, pk):
+    if tipo == "imagem":
+        conteudo = get_object_or_404(Imagem, pk=pk)
+    elif tipo == "artigo":
+        conteudo = get_object_or_404(Artigos, pk=pk)
+    elif tipo == "link":
+        conteudo = get_object_or_404(Link, pk=pk)
+    else:
+        return redirect('acervo:painel_moderacao')
+    
+    conteudo_aprovado = True 
+    conteudo.save()
+    return redirect('acervo:painel_moderacao')
+
+@login_required
+@user_passes_test(is_moderador)
+def rejeicao_conteudo(request, tipo, pk):
+    if tipo == "imagem":
+        conteudo = get_object_or_404(Imagem, pk=pk)
+    elif tipo == "artigo":
+        conteudo = get_object_or_404(Artigos, pk=pk)
+    elif tipo == "link":
+        conteudo = get_object_or_404(Link, pk=pk)
+    else:
+        return redirect('acervo:painel_moderacao')
+    
+    conteudo.delete()
+    return redirect('acervo:painel_moderacao')
+
 

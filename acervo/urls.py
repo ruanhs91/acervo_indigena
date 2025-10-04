@@ -13,4 +13,7 @@ urlpatterns = [
     path('cadastro/', views.cadastro_view, name='cadastro'),
     path('login/', views.login_view, name='login'),
     path('logout/', views.logout_view, name='logout'),
+    path('moderacao/', views.painel_moderacao, name='painel_moderacao'),
+    path('moderacao/aprovar/<str:tipo>/<int:pk>/', views.aprovar_conteudo, name='aprovar_conteudo'),
+    path('moderacao/rejeitar/<str:tipo>/<int:pk>/', views.rejeicao_conteudo, name='rejeicao_conteudo'),
 ]

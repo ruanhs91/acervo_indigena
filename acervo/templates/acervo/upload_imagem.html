@@ -2,30 +2,31 @@
 {% load static %}
 
 {% block content %}
-<div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
-    <div class="card shadow-lg p-4 bg-white" style="width: 600px; border-radius: 10px; background-color: #8b0000;">
-        <h2 class="text-center mb-4">Enviar nova imagem para o acervo</h2>
+<div class="container d-flex justify-content-center align-items-center upload-card" style="min-height: 100vh;">
+    <div class="card shadow-lg p-4" style="width: 550px; border-radius: 10px; background: linear-gradient(150deg, #8b0000, #9c1a1a);">
+        <h2 class="text-center mb-4" style="color:#f1f1f1">Enviar nova imagem para o acervo</h2>
 
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="mb-3">
-                {{ form.titulo_img.label_tag }}
-                {{ form.titulo_img }}
+                <label for="id_titulo_img" class="form-label" style="color: #f1f1f1">Título</label>
+                {{ form.titulo_img}}
             </div>
             <div class="mb-3">
-                {{ form.descricao_img.label_tag }}
+                <label for="id_descricao_img" class="form-label" style="color: #f1f1f1">Descrição</label>
                 {{ form.descricao_img }}
             </div>
             <div class="mb-3">
-                {{ form.autor_img.label_tag }}
+                <label for="id_autor_img" class="form-label" style="color: #f1f1f1;">Autor</label>
                 {{ form.autor_img }}
             </div>
-            <div class="mb-3">
-                {{ form.imagem.label_tag }}
-                {{ form.imagem }}
+            <div class="mb-4">
+                <label class="form-label" style= "color: #f1f1f1">Imagem</label>
+                {{ form.imagem }}   
             </div>
-            <div class="text-center">
-                <button type="submit" class="btn btn-danger px-4">Salvar</button>
+            <div class="text-end">
+                <button type="submit" class="btn btn-success-gradient fw-bold px-5 py-2">
+                    Enviar<i class="bi bi-arrow-right-short arrow-icon"></i></button>
             </div>
         </form>
     </div>

@@ -1,0 +1,60 @@
+{% extends "acervo/base.html" %}
+{% block content %}
+<main class="inicio">
+    <h2 class="titulo-inicio mb-3 fw-bold">Painel de Moderação</h2>
+
+    <h2 class="text-start mb-3 ms-3" style="color:#8b0000;">Imagens</h2>
+    {% if imagens %}
+        {% for img in imagens %}
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5>{{ img.titulo_img }}</h5>
+                <p>{{ img.descricao_img }}</p>
+                <img src="{{ img.imagem.url }}" width="200">
+                <p><strong>Autor:</strong> {{ img.autor_img }}</p>
+                <a href="{% url 'acervo:aprovar_conteudo' 'imagem' img.id %}" class="btn btn-success">Aprovar</a>
+                <a href="{% url 'acervo:rejeicao_conteudo' 'imagem' img.id %}" class="btn btn-danger">Rejeitar</a>
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p>Nenhuma imagem pendente.</p>
+    {% endif %}
+
+    <h2 class="text-start mb-3 ms-3" style="color:#8b0000;">Links</h2>
+    {% if links %}
+        {% for link in links %}
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5>{{ link.titulo_link }}</h5>
+                <p>{{ link.descricao_link }}</p>
+                <a href="{{ link.url }}" target="_blank">{{ link.url }}</a>
+                <p><strong>Autor:</strong> {{ link.autor }}</p>
+                <a href="{% url 'acervo:aprovar_conteudo' 'link' link.id %}" class="btn btn-success">Aprovar</a>
+                <a href="{% url 'acervo:rejeicao_conteudo' 'link' link.id %}" class="btn btn-danger">Rejeitar</a>
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p>Nenhum link pendente.</p>
+    {% endif %}
+
+    <h2 class="text-start mb-3 ms-3" style="color:#8b0000;">Artigos</h2>
+    {% if artigos %}
+        {% for artigo in artigos %}
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5>{{ artigo.titulo_artigo }}</h5>
+                <p>{{ artigo.descricao_artigo }}</p>
+                <a href="{{ artigo.arquivo.url }}" target="_blank"> {{ artigo.arquivo.url }}</a>
+                <p><strong>Autor:</strong> {{ artigo.autor_artigo }}</p>
+                <a href="{% url 'acervo:aprovar_conteudo' 'artigo' artigo.id %}" class="btn btn-success">Aprovar</a>
+                <a href="{% url 'acervo:rejeicao_conteudo' 'artigo' artigo.id %}" class="btn btn-danger">Rejeitar</a>
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p>Nenhum artigo pendente.</p>
+    {% endif %}
+</div>
+{% endblock %}
