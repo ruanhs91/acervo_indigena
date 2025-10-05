@@ -24,10 +24,12 @@
                 <label class="form-label" style= "color: #f1f1f1">Imagem</label>
                 {{ form.imagem }}   
             </div>
-            <div class="text-end">
-                <button type="submit" class="btn btn-success-gradient fw-bold px-5 py-2">
-                    Enviar<i class="bi bi-arrow-right-short arrow-icon"></i></button>
+            <div class="d-flex justify-content-between align-items-center">
+                <a href="{% url 'acervo:listar_imagens' %}" class="text-decoration-underline fw-semibold" style="color:#1a73e8;">Voltar</a>
+
+                <button type="submit" class="btn btn-success-gradient fw-bold px-5 py-2">Enviar <i class="bi bi-arrow-right-short arrow-icon"></i></button>
             </div>
+
         </form>
     </div>
 </div>

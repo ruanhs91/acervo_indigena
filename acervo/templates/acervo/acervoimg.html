@@ -48,6 +48,30 @@
             </div>
         </div>
     </div>
+    <div class="row">
+        {% for imagem in imagens %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm">
+                <img src="{{ imagem.imagem.url }}" class="card-img-top" alt="{{ imagem.titulo_img }}">
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title">{{ imagem.titulo_img }}</h5>
+                    <p class="card-text">{{ imagem.descricao_img }}</p>
+                    <p class="card-text mt-auto"><small class="text-muted">Autor: {{ imagem.autor_img }}</small></p>
+                </div>
+
+                {% if user.is_authenticated and user.is_staff %}
+                <div class="card-footer text-center">
+                <a href="{% url 'acervo:editar_imagem' imagem.pk %}" 
+                   class="btn btn-sm btn-outline-primary fw-semibold">
+                    <i class="bi bi-pencil-square"></i> Editar
+                </a>
+            </div>
+            {% endif %}
+            </div>
+        </div>
+        {% empty %}
+        <p class="text-center">Nenhuma imagem encontrada.</p>
+        {% endfor %}
 </main>
 
 {% endblock %}

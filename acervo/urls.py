@@ -5,7 +5,7 @@ from django.contrib.auth import views as auth_views
 app_name = 'acervo'
 
 urlpatterns = [
-    path('', views.acervo_view, name='acervo_view'),
+    path('', views.listar_imagens, name='acervo_view'),
     path('listar/', views.listar_imagens, name='listar_imagens'),
     path('upload/image', views.upload_imagem, name='upload_imagem'),
     path('upload/artigo/', views.upload_artigo, name='upload_artigo'),
@@ -16,4 +16,6 @@ urlpatterns = [
     path('moderacao/', views.painel_moderacao, name='painel_moderacao'),
     path('moderacao/aprovar/<str:tipo>/<int:pk>/', views.aprovar_conteudo, name='aprovar_conteudo'),
     path('moderacao/rejeitar/<str:tipo>/<int:pk>/', views.rejeicao_conteudo, name='rejeicao_conteudo'),
+    path('imagem/editar/<int:pk>/', views.editar_imagem, name='editar_imagem'),
+    path('imagem/excluir/<int:pk>/', views.excluir_imagem, name='excluir_imagem'),
 ]

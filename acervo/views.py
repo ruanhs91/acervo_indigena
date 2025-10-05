@@ -16,7 +16,7 @@ def login_view(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request,user)
-                return redirect('acervo:acervo_view')
+                return redirect('acervo:listar_imagens')
             else:
                 messages.error(request, "Usuário ou senha incorretos.⚠️")
         else:
@@ -39,14 +39,11 @@ def cadastro_view(request):
 
 def logout_view(request):
     logout(request)
-    return redirect('acervo:acervo_view')
-
-def acervo_view(request):
-    return render(request, 'acervo/acervoimg.html', {'page': 'acervo'})
+    return redirect('acervo:listar_imagens')
 
 def listar_imagens(request):
     query = request.GET.get('q')
-    imagens = Imagem.objects.all()
+    imagens = Imagem.objects.filter(aprovado='A')
 
     if query:
         imagens = imagens.filter(Q(titulo_img__icontains=query) | Q(descricao_img__icontains=query) | Q(autor_img__icontains=query))
@@ -64,6 +61,7 @@ def upload_imagem(request):
         if form.is_valid():
             imagem = form.save(commit=False)
             imagem.enviado_usuario = request.user
+            imagem.aprovado ='P'
             imagem.save()
             return redirect('acervo:listar_imagens')
     else: 
@@ -103,9 +101,9 @@ def is_moderador(user):
 @login_required
 @user_passes_test(is_moderador)
 def painel_moderacao(request):
-    imagens = Imagem.objects.filter(aprovado=False)
-    artigos = Artigos.objects.filter(aprovado=False)
-    links = Link.objects.filter(aprovado=False)
+    imagens = Imagem.objects.filter(aprovado='P')
+    artigos = Artigos.objects.filter(aprovado='P')
+    links = Link.objects.filter(aprovado='P')
 
     return render(request, "acervo/painel_moderacao.html", {'imagens': imagens, 'artigos': artigos, 'links': links})
 
@@ -122,7 +120,7 @@ def aprovar_conteudo(request, tipo, pk):
     else:
         return redirect('acervo:painel_moderacao')
     
-    conteudo_aprovado = True 
+    conteudo.aprovado = 'A' 
     conteudo.save()
     return redirect('acervo:painel_moderacao')
 
@@ -138,7 +136,27 @@ def rejeicao_conteudo(request, tipo, pk):
     else:
         return redirect('acervo:painel_moderacao')
     
-    conteudo.delete()
+    conteudo.aprovado = 'R'
+    conteudo.save()
     return redirect('acervo:painel_moderacao')
 
+@login_required
+@user_passes_test(is_moderador)
+def excluir_imagem(request,pk):
+    imagem = get_object_or_404(Imagem, pk=pk)
+    imagem.delete()
+    return redirect('acervo:listar_imagens')
+
+@login_required 
+@user_passes_test(is_moderador)
+def editar_imagem(request, pk):
+    imagem = get_object_or_404(Imagem, pk=pk)
+    if request.method == 'POST':
+        form = ImagemForm(request.POST, request.FILES, instance=imagem)
+        if form.is_valid():
+            form.save()
+            return redirect('acervo:listar_imagens')
+    else:
+        form = ImagemForm(instance=imagem)
+    return render(request, 'acervo:editar_imagem.html', {'form': form, 'imagem': imagem})
 
