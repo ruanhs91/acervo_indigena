@@ -158,5 +158,45 @@ def editar_imagem(request, pk):
             return redirect('acervo:listar_imagens')
     else:
         form = ImagemForm(instance=imagem)
-    return render(request, 'acervo:editar_imagem.html', {'form': form, 'imagem': imagem})
+    return render(request, 'acervo/editar_imagem.html', {'form': form, 'imagem': imagem})
+
+@login_required 
+@user_passes_test(is_moderador)
+def editar_artigo(request, pk):
+    artigo = get_object_or_404(Artigo, pk=pk)
+    if request.method == 'POST':
+        form = ArtigoForm(request.POST, request.FILES, instance=artigo)
+        if form.is_valid():
+            form.save()
+            return redirect('acervo:listar_imagens') #trocar por listar_artigos
+    else:
+        form = ArtigoForm(instance=artigo)
+    return render(request, 'acervo/editar_artigo.html', {'form': form, 'artigo': artigo})
+
+@login_required
+@user_passes_test(is_moderador)
+def excluir_artigo(request, pk):
+    artigo = get_object_or_404(Artigos, pk=pk)
+    artigo.delete()
+    return redirect('acervo:listar_imagens') #trocar por listar_artigos
+
+@login_required
+@user_passes_test(is_moderador)
+def editar_link(request, pk):
+    link = get_object_or_404(Link, pk=pk)
+    if request.method == 'POST':
+        form = LinkForm(request.POST, instance=link)
+        if form.is_valid():
+            form.save()
+            return redirect('acervo:listar_imagens') #trocar por listar_links
+    else:
+        form = LinkForm(instance=link)
+    return render(request, 'acervo/editar_link.html', {'form': form, 'link': link})
+
+@login_required
+@user_passes_test(is_moderador)
+def excluir_link(request, pk):
+    link = get_object_or_404(Link, pk=pk)
+    link.delete()
+    return redirect('acervo:listar_imagens') #trocar por listar_links
 

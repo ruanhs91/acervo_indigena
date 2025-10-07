@@ -63,8 +63,12 @@
                 <div class="card-footer text-center">
                 <a href="{% url 'acervo:editar_imagem' imagem.pk %}" 
                    class="btn btn-sm btn-outline-primary fw-semibold">
-                    <i class="bi bi-pencil-square"></i> Editar
+                    <i class="bi bi-pencil-square"></i> 
                 </a>
+                <a href="{% url 'acervo:excluir_imagem' imagem.pk %}"
+                   class="btn btn-sm fw-semibold"
+                   onclick="return confirm('Tem certeza que deseja excluir esta imagem?');">
+                    <i class="bi bi-trash"></i> 
             </div>
             {% endif %}
             </div>
