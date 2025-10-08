@@ -28,6 +28,7 @@
                     <li><a class="dropdown-item btn-verde d-flex align-items-center gap-2" href="{% url 'acervo:upload_imagem' %}"><i class="bi bi-image"></i>Imagem</a></li>
                     <li><a class="dropdown-item btn-verde d-flex align-items-center gap-2" href="{% url 'acervo:upload_artigo' %}"><i class="bi bi-file-earmark-text"></i>Artigo</a></li>
                     <li><a class="dropdown-item btn-verde d-flex align-items-center gap-2" href="{% url 'acervo:upload_link' %}"><i class="bi bi-link-45deg"></i>Link</a></li>
+                    <li><a class="dropdown-item btn-verde d-flex align-items-center gap-2" href="{% url 'acervo:upload_video' %}"><i class="bi bi-play-btn"></i>Vídeo</a></li>
                 </ul>
             </div>
 
@@ -39,8 +40,11 @@
                         {{ user.username }}
                     </button>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item logout-item" href="{% url 'acervo:logout' %}">Sair</a></li>
-                        <li><a class="dropdown-item" href="{% url 'acervo:painel_moderacao' %}">Painel do moderador</a></li>
+                        <l><a class="dropdown-item perfil-item d-flex align-items-center gap-2" href="{% url 'acervo:logout' %}"><i class="bi-person"></i>Perfil</a></li>
+                        {% if user.is_authenticated and user.is_staff %}
+                        <li><a class="dropdown-item modera d-flex align-items-center gap-2" href="{% url 'acervo:painel_moderacao' %}"><i class="bi-shield-lock"></i>Painel do moderador</a></li>
+                        {% endif %}
+                        <li><a class="dropdown-item logout-item d-flex align-items-center gap-2" href="{% url 'acervo:logout' %}"><i class="bi bi-door-closed"></i>Sair</a></li>
                     </ul>
                 {% else %}
                     <a href="{% url 'acervo:login' %}" class="btn btn-dark" style="background-color: #1A4623">Login</a>

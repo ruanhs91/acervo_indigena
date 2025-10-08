@@ -1,9 +1,9 @@
 from django.contrib import messages
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Imagem, Artigos, Link
+from .models import Imagem, Artigos, Link, Videos
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.models import Group
-from .forms import ImagemForm, cadastroform, LoginForm, ArtigoForm, LinkForm
+from .forms import ImagemForm, cadastroform, LoginForm, ArtigoForm, LinkForm, VideoForm
 from django.contrib.auth.decorators import login_required, user_passes_test 
 from django.db.models import Q
 
@@ -94,6 +94,20 @@ def upload_link(request):
         form = LinkForm()
         return render(request, 'acervo/upload_link.html', {'form': form})
     
+def upload_video(request):
+    if request.method == 'POST':
+        form = VideoForm(request.POST, request.FILES)
+        if form.is_valid():
+            video = form.save(commit=False)
+            video.enviado_usuario = request.user
+            video.aprovado ='P'
+            video.save()
+            return redirect('acervo:listar_imagens') #trocar por listar_videos
+        else:
+            messages.error(request, "Envie um arquivo em formato de vídeo.")
+    else: 
+        form = VideoForm()
+    return render(request, "acervo/upload_video.html", {'form': form})
 
 def is_moderador(user):
     return user.is_staff or user.groups.filter(name='Moderadores').exists()

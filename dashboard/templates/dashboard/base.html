@@ -17,7 +17,7 @@
         <nav class="nav">
             <a href="{% url 'inicio' %}" class="{% if page == 'inicio' %}active{% endif %}">INÍCIO</a>
             <a href="{% url 'povos/' %}" class="{% if page == 'povos' %}active{% endif %}">POVOS</a>
-            <a href="/conhecimentos/">CONHECIMENTOS TRADICIONAIS</a>
+            <a href="{% url 'conhecimentos/' %}" class="{% if page == 'conhecimentos' %}active{% endif %}">CONHECIMENTOS TRADICIONAIS</a>
             <a href="/acervo/">ACERVO</a>
         </nav>
     </header>

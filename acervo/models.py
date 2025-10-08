@@ -52,3 +52,20 @@ class Artigos(models.Model):
     def __str__(self):
         return self.titulo_artigo
     
+class Videos(models.Model):
+    titulo_video = models.CharField(max_length=200)
+    descricao_video = models.TextField()
+    video = models.FileField(upload_to="acervo/videos/")
+    enviado_usuario = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
+    data_envio = models.DateTimeField(auto_now_add=True)
+    autor_video=models.CharField(max_length=100, blank=True)
+    aprovado_opcoes = [
+        ('P', 'Pendente'),
+        ('A', 'Aprovado'),
+        ('R', 'Rejeitado'),
+    ]
+    aprovado = models.CharField(max_length=1, choices=aprovado_opcoes, default='P')
+
+    def __str__(self):
+        return self.titulo_video
+    

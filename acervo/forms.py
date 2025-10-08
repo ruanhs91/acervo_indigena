@@ -1,5 +1,5 @@
 from django import forms
-from .models import Imagem, Artigos, Link
+from .models import Imagem, Artigos, Link, Videos
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.conf import settings 
@@ -60,11 +60,35 @@ class ArtigoForm(forms.ModelForm):
     class Meta: 
         model = Artigos 
         fields=['titulo_artigo', 'descricao_artigo', 'autor_artigo', 'arquivo']
-
+        widgets = {
+            'titulo_artigo': forms.TextInput(attrs={'class': 'form-control'}),
+            'descricao_artigo': forms.Textarea(attrs={'class': 'form-control', 'rows': 2}),
+            'autor_artigo': forms.TextInput(attrs={'class': 'form-control'}),
+            'arquivo': forms.ClearableFileInput(attrs={'class': 'form-control'}),
+        }
 class LinkForm(forms.ModelForm):
     class Meta: 
         model = Link
         fields=['titulo_link', 'descricao_link', 'url']
-        
+        widgets = {
+            'titulo_link': forms.TextInput(attrs={'class': 'form-control'}),
+            'descricao_link': forms.Textarea(attrs={'class': 'form-control', 'rows': 2}),
+            'url': forms.URLInput(attrs={'class': 'form-control'}),
+        }
+
+class VideoForm(forms.ModelForm):
+    class Meta: 
+        model = Videos
+        fields=['titulo_video', 'descricao_video', 'video']
+        widgets = {
+            'titulo_video': forms.TextInput(attrs={'class': 'form-control'}),
+            'descricao_video': forms.Textarea(attrs={'class': 'form-control', 'rows': 2}),
+            'video': forms.ClearableFileInput(attrs={'class': 'form-control'}),
+        }
+    
+    def clean_video(self):
+        video = self.cleaned_data.get('video')
+        if not video:
+            raise forms.ValidationError('Envie um arquivo de vídeo.')
 
     

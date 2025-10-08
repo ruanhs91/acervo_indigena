@@ -44,3 +44,13 @@ def povos(request):
     }
 
     return render(request, 'dashboard/povos.html', {"page": "povos", "povos": povos} )
+
+def conhecimentos(request):
+    textos_conhecimentos = {
+        'introd': {
+            "introducao_conheci":    """Apesar do Rio Grande do Norte ter um grande histórico de chacina e apagamento dos povos indígenas, ainda permanecem várias tradições de origem indígena no nosso estado no cotidiano, evidenciando que sobreviveram à passagem do tempo. O indígena não se “apagou” totalmente; tanto suas comunidades quanto a sua cultura ainda resistem e convivem no nosso cotidiano, como nas festas, comidas típicas, nomes de cidades, alimentos e palavras usadas no nosso vocabulário diário.  A seguir algumas das tradições e conhecimentos: """
+        }
+        }
+
+    
+    return render(request, 'dashboard/conhecimentos.html', {"page": "conhecimentos", "textos_conhecimentos": textos_conhecimentos} )

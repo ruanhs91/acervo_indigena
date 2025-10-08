@@ -1,0 +1,27 @@
+{% extends "dashboard/base.html" %}
+
+{% load static %}
+
+
+{% block content %}
+<style>
+        .texto-inicio p {
+            font-size: 15px;
+            line-height: 1.6;
+            text-align: justify;
+            margin: 20px 0;
+        }
+</style>
+<main class="inicio">
+    <h2 class="titulo-inicio mb-3 fw-bold">Conhecimentos tradicionais</h2>
+
+
+        <div class="texto-inicio row mb-4">
+            <div class="col">
+                <p>
+                    {{ textos_conhecimentos.introd.introducao_conheci }}
+                </p>
+            </div>
+        </div>
+
+{% endblock %}

@@ -165,19 +165,42 @@
     display:none;
 }
 
-.logout-item:hover {
-    background-color: #dc3545;
-    color: white;
+.dropdown-item.logout-item:hover {
+    background: linear-gradient(165deg, #e52d27, #b31217);
+    color: white !important;
+    border-radius: 6px;
 }
-
+.dropdown-item.logout-item {
+    transition: 0.4s;
+}
 .dropdown-item.btn-verde {
-    transition: 0.3s; 
+    transition: 0.4s; 
 }
 
 .dropdown-item.btn-verde:hover {
     background: linear-gradient(135deg, #3a8a3a, #2f7d2f);
     color: white !important;
     border-radius: 6px;
+}
+.dropdown-item.modera:hover  {
+    background: linear-gradient(135deg, #00aaff, #0044cc);
+    color: white !important;
+    border-radius: 6px;
+}
+
+.dropdown-item.modera {
+    transition:0.4s;
+
+}
+.dropdown-item.perfil-item:hover  {
+    background: linear-gradient(135deg, #00aaff, #0044cc);
+    color: white !important;
+    border-radius: 6px;
+}
+
+.dropdown-item.perfil-item {
+    transition:0.4s;
+
 }
 
 .btn-success-gradient {
