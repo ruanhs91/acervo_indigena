@@ -164,7 +164,15 @@
 .texto-povo {
     display:none;
 }
-
+.footer-custom {
+  background-color: #8b0000;
+  height: 100px;            
+  width: 100%;
+  display: flex;
+  align-items: center;
+  color: #ccc;
+  padding-left:20px;
+}
 .dropdown-item.logout-item:hover {
     background: linear-gradient(165deg, #e52d27, #b31217);
     color: white !important;
@@ -223,6 +231,13 @@
     transform: translateX(-10px);
 }
 
+.btn-secondary {
+    background-color: #ccc;
+    border: none;
+    color: #333;
+    transition: all 0.3s ease;
+    transform: scale(1);
+}
 .upload-card .form-control {
     background-color: #e0e0e0;
     border: 1px solid #ccc;
@@ -230,4 +245,12 @@
 
 .upload-card .form-control:focus {
     background-color: #f1f1f1;
+}
+
+@media (max-width: 768px) {
+  .footer-custom .position-absolute {
+    position: static !important;
+    text-align: center;
+    margin-bottom: 10px;
+  }
 }

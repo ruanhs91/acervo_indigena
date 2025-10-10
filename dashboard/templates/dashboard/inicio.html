@@ -31,24 +31,24 @@
 </style>
 
 <main class="inicio">
-    <h2 class="titulo-inicio">Início</h2>
+    <h2 class="titulo-inicio mb-3 fw-bold">Início</h2>
 
     <div class="slidesh">
-        <div class="slide fade">
+        <div class="slide">
             <img src="{% static 'dashboard/slide1.jpg' %}" alt="Imagem 1">
         </div>
 
-        <div class="slide fade">
+        <div class="slide">
             <img src="{% static 'dashboard/slide2.jpg' %}" alt="Imagem 2">
         </div>
 
-        <div class="slide fade">
+        <div class="slide">
             <img src="{% static 'dashboard/slide3.jpg' %}" alt="Imagem 3">
         </div>
-        <div class="slide fade">
+        <div class="slide">
             <img src="{% static 'dashboard/slide4.jpg' %}" alt="Imagem 4">
         </div>
-        <div class="slide fade">
+        <div class="slide">
             <img src="{% static 'dashboard/slide5.png' %}" alt="Imagem 5">
         </div>
         <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
@@ -68,38 +68,38 @@
     <p>{{ textos.importancia.conteudo }}</p>
 </div>
 
-<script> 
-    let slideIndex = 1; 
+<script>
+let slideIndex = 1;
+
+function showSlides(n) {
+    let slides = document.getElementsByClassName("slide");
+    if (slides.length === 0) return; 
+
+    if (n > slides.length) { slideIndex = 1; }
+    if (n < 1) { slideIndex = slides.length; }
+
+    for (let i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";
+    }
+
+    slides[slideIndex - 1].style.display = "block";
+}
+
+function plusSlides(n) {
+    showSlides(slideIndex += n);
+}
+
+function currentSlide(n) {
+    showSlides(slideIndex = n);
+}
+
+document.addEventListener("DOMContentLoaded", function() {
     showSlides(slideIndex);
-
-    function plusSlides(n) {
-        showSlides(slideIndex += n);
-    }
-
-    function currentSlide(n) {
-        showSlides(slideIndex = n);
-    }
-
-    function showSlides(n) {
-        let slides = document.getElementsByClassName("slide");
-        if (n > slides.length) { slideIndex = 1 }
-        if (n < 1) { slideIndex = slides.length }
-
-        for (let i = 0; i < slides.length; i++) {
-            slides[i].style.display = "none";
-        }
-
-        slides[slideIndex-1].style.display = "block";
-    }
-
-    document.addEventListener("DOMContentLoaded", function() {
-        showSlides(slideIndex);
-
-        // troca automática a cada 4 segundos
-        setInterval(function() {
-            plusSlides(1);
-        }, 4000);
-    });
+    setInterval(function() {
+        plusSlides(1);
+    }, 4000);
+});
 </script>
+
 
 {% endblock %}

@@ -12,6 +12,7 @@ urlpatterns = [
     path('upload/link/', views.upload_link, name='upload_link'),
     path('upload/video/', views.upload_video, name='upload_video'),
     path('cadastro/', views.cadastro_view, name='cadastro'),
+    path('perfil/', views.perfil_view, name='perfil'),
     path('login/', views.login_view, name='login'),
     path('logout/', views.logout_view, name='logout'),
     path('moderacao/', views.painel_moderacao, name='painel_moderacao'),

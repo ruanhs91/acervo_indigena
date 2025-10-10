@@ -54,3 +54,6 @@ def conhecimentos(request):
 
     
     return render(request, 'dashboard/conhecimentos.html', {"page": "conhecimentos", "textos_conhecimentos": textos_conhecimentos} )
+
+def agradecimentos(request):
+    return render(request, 'dashboard/agradecimentos.html', {"page": "agradecimentos"} )

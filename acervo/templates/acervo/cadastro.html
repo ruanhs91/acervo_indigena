@@ -7,7 +7,7 @@
 {% block content %}
 
 <div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
-    <div  class = "card shadow-sm p-4" style="width: 400px; border-radius: 10px;">
+    <div  class = "card shadow-sm p-4" style="width: 450px; border-radius: 10px;">
     <h2 class="text-center mb-4">Criar conta</h2>
 <form method="post">
     {% csrf_token %}
@@ -23,9 +23,9 @@
         {{ form.password2.label_tag }}<br>
         {{ form.password2 }}<br>
     </div>
-    <button type="submit">Cadastrar</button>
-    <button type="reset">Limpar</button>
-    <a href="/acervo/login/">Já tenho uma conta</a>
+    <button type="submit" class="btn btn-success-gradient w-100" style="background-color:#1A4623; color:white;">Cadastrar</button>
 </form>
-
+<p class="text-center mt-3">
+    Já tenho uma conta! <a href="{% url 'acervo:login' %}">Fazer login</a>
+</p>
 {% endblock %}

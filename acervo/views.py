@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import Imagem, Artigos, Link, Videos
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.models import Group
-from .forms import ImagemForm, cadastroform, LoginForm, ArtigoForm, LinkForm, VideoForm
+from .forms import ImagemForm, cadastroform, LoginForm, ArtigoForm, LinkForm, VideoForm, PerfilForm
 from django.contrib.auth.decorators import login_required, user_passes_test 
 from django.db.models import Q
 
@@ -177,7 +177,7 @@ def editar_imagem(request, pk):
 @login_required 
 @user_passes_test(is_moderador)
 def editar_artigo(request, pk):
-    artigo = get_object_or_404(Artigo, pk=pk)
+    artigo = get_object_or_404(Artigos, pk=pk)
     if request.method == 'POST':
         form = ArtigoForm(request.POST, request.FILES, instance=artigo)
         if form.is_valid():
@@ -214,3 +214,15 @@ def excluir_link(request, pk):
     link.delete()
     return redirect('acervo:listar_imagens') #trocar por listar_links
 
+@login_required
+def perfil_view(request):
+    if request.method == 'POST':
+        form = PerfilForm(request.POST, request.FILES, instance=request.user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Perfil atualizado com sucesso!')
+            return redirect('perfil')
+    else:
+        form = PerfilForm(instance=request.user)
+    
+    return render(request, 'acervo/perfil.html', {'form': form})

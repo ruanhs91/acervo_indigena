@@ -6,7 +6,7 @@
 
 {% block content %}
 
-<main class="inicio">
+<main class="inicio min-vh-100">
     <h2 class="titulo-inicio mb-3 fw-bold">Acervo</h2>
 
 
@@ -41,7 +41,7 @@
                         {{ user.username }}
                     </button>
                     <ul class="dropdown-menu">
-                        <l><a class="dropdown-item perfil-item d-flex align-items-center gap-2" href="{% url 'acervo:logout' %}"><i class="bi-person"></i>Perfil</a></li>
+                        <l><a class="dropdown-item perfil-item d-flex align-items-center gap-2" href="{% url 'acervo:perfil' %}"><i class="bi-person"></i>Perfil</a></li>
                         {% if user.is_authenticated and user.is_staff %}
                         <li><a class="dropdown-item modera d-flex align-items-center gap-2" href="{% url 'acervo:painel_moderacao' %}"><i class="bi-shield-lock"></i>Painel do moderador</a></li>
                         {% endif %}
