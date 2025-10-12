@@ -174,7 +174,7 @@
   padding-left:20px;
 }
 .dropdown-item.logout-item:hover {
-    background: linear-gradient(165deg, #e52d27, #b31217);
+    background: linear-gradient(150deg, #d32f2f, #b71c1c);
     color: white !important;
     border-radius: 6px;
 }
@@ -246,6 +246,7 @@
 .upload-card .form-control:focus {
     background-color: #f1f1f1;
 }
+
 
 @media (max-width: 768px) {
   .footer-custom .position-absolute {

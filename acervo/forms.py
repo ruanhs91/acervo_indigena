@@ -5,20 +5,17 @@ from django.contrib.auth.models import User
 from django.conf import settings 
 
 class cadastroform(UserCreationForm):
-    email = forms.EmailField(required=True, label='Email')
-    first_name = forms.CharField(required=True, label='Nome')
-
-    class Meta: 
+    class Meta:
         model = User
         fields = ('first_name', 'username', 'email', 'password1', 'password2')
-        widgets = {
-            'first_name': forms.TextInput(attrs={'class': 'form-control'}),
-            'username': forms.TextInput(attrs={'class': 'form-control'}),
-            'email': forms.EmailInput(attrs={'class': 'form-control'}),
-            'password1': forms.PasswordInput(attrs={'class': 'form-control'}),
-            'password2': forms.PasswordInput(attrs={'class': 'form-control'}),
-        }
-    
+        
+    first_name = forms.CharField(required=True, label='Nome',widget=forms.TextInput(attrs={'class': 'form-control'}))
+    email = forms.EmailField(required=True,label='Email', widget=forms.EmailInput(attrs={'class': 'form-control'}))
+    username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
+    password1 = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+    password2 = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for fieldname in ['username', 'password1', 'password2']:
@@ -28,19 +25,7 @@ class cadastroform(UserCreationForm):
         self.fields['password1'].label = "Senha"
         self.fields['password2'].label = 'Confirme a senha'
 
-    def save(self, commit=True):
-        user = super().save(commit=False)
-        user.email = self.cleaned_data['email']
-        user.first_name = self.cleaned_data['first_name']
-        if commit:
-            user.save()
-        return user
     
-    def clean_email(self):
-        email = self.cleaned_data.get('email')
-        if User.objects.filter(email=email).exists():
-            raise forms.ValidationError("Este email já está em uso.")
-        return email
 
 class LoginForm(AuthenticationForm): #formulário de login
     username = forms.CharField(label='Usuário', widget=forms.TextInput(attrs={'class': 'form-control'}))

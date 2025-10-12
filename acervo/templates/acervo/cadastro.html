@@ -6,23 +6,57 @@
 
 {% block content %}
 
-<div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
     <div  class = "card shadow-sm p-4" style="width: 450px; border-radius: 10px;">
     <h2 class="text-center mb-4">Criar conta</h2>
 <form method="post">
     {% csrf_token %}
     <div class="mb-3">
-        {{ form.first_name.label_tag }}<br>
-        {{ form.first_name }} <br>
-        {{ form.email.label_tag }} <br>
-        {{ form.email }} <br>
-        {{ form.username.label_tag }}<br>
-        {{ form.username }}<br>
-        {{ form.password1.label_tag }}<br>
-        {{ form.password1 }}<br>
-        {{ form.password2.label_tag }}<br>
-        {{ form.password2 }}<br>
+        {{ form.first_name.label_tag }}
+        <div class="input-group">
+            {{ form.first_name }}
+            <span class="input-group-text">
+                <i class="bi bi-person"></i>
+            </span>
+        </div>
+    <div class="mb-3">
+        {{ form.username.label_tag }}
+        <div class="input-group">
+            {{ form.username }}
+            <span class="input-group-text">
+                <i class="fa fa-user"></i>
+            </span>
+        </div>
     </div>
+    <div class="mb-3">
+        {{ form.email.label_tag }}
+        <div class="input-group">
+            {{ form.email }}
+            <span class="input-group-text">
+                <i class="fa fa-envelope"></i>
+            </span>
+        </div>
+    </div>
+    <div class="mb-3">
+        {{ form.password1.label_tag }}
+        <div class="input-group">
+            {{ form.password1 }}
+            <span class="input-group-text">
+                <i class="bi bi-lock"></i>
+            </span>
+        </div>
+    </div>
+    <div class="mb-3">
+        {{ form.password2.label_tag }}
+        <div class="input-group">
+            {{ form.password2 }}
+            <span class="input-group-text">
+                <i class="bi bi-lock-fill"></i>
+            </span>
+        </div>
+    </div>
+</div>
+
     <button type="submit" class="btn btn-success-gradient w-100" style="background-color:#1A4623; color:white;">Cadastrar</button>
 </form>
 <p class="text-center mt-3">

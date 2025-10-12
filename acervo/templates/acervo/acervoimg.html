@@ -45,7 +45,11 @@
                         {% if user.is_authenticated and user.is_staff %}
                         <li><a class="dropdown-item modera d-flex align-items-center gap-2" href="{% url 'acervo:painel_moderacao' %}"><i class="bi-shield-lock"></i>Painel do moderador</a></li>
                         {% endif %}
-                        <li><a class="dropdown-item logout-item d-flex align-items-center gap-2" href="{% url 'acervo:logout' %}"><i class="bi bi-door-closed"></i>Sair</a></li>
+                        <li>
+                            <button class="dropdown-item logout-item d-flex align-items-center gap-2" type="button" data-bs-toggle="modal" data-bs-target="#logoutModal">
+                                <i class="bi bi-door-closed"></i> Sair
+                            </button>
+                        </li>
                     </ul>
                 {% else %}
                     <a href="{% url 'acervo:login' %}" class="btn btn-dark" style="background-color: #1A4623">Login</a>
@@ -81,6 +85,23 @@
         {% empty %}
         <p class="text-center">Nenhuma imagem encontrada.</p>
         {% endfor %}
+    </div>
+    <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header" style="border-bottom: none;">
+                    <h5 class="modal-title w-100 text-center" id="logoutModalLabel">Logout</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body text-center">Tem certeza que deseja sair da sua conta?</div>
+                <div class="modal-footer" style="border-top: none;">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Não</button>
+                    <a href="{% url 'acervo:logout' %}" class="btn btn-danger">Sim</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </main>
 
 {% endblock %}

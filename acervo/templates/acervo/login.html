@@ -21,11 +21,21 @@
     {% csrf_token %}
     <div class="mb-3">
         {{ form.username.label_tag }}
-        {{ form.username }}
+         <div class="input-group">
+                {{ form.username }}
+                <span class="input-group-text">
+                    <i class="fa fa-user"></i>
+                </span>
+        </div>    
     </div>
     <div class="mb-3">
         {{ form.password.label_tag }}
-        {{ form.password }}
+        <div class="input-group">
+            {{ form.password }}
+            <span class="input-group-text">
+                <i class="fa-solid fa-key"></i>
+            </span>
+        </div>
     </div>
     <button type="submit" class="btn btn-success-gradient w-100" style="background-color:#1A4623; color:white;">Entrar</button>
 </form>
