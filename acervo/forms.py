@@ -78,7 +78,6 @@ class VideoForm(forms.ModelForm):
 class PerfilForm(forms.ModelForm):
     first_name = forms.CharField(required=True, label='Nome', widget=forms.TextInput(attrs={'class': 'form-control'}))
     email = forms.EmailField(required=True, label='Email', widget=forms.EmailInput(attrs={'class': 'form-control'}))
-
     class Meta:
         model = User
         fields = ('first_name', 'email')

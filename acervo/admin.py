@@ -14,10 +14,15 @@ class LinkAdmin(admin.ModelAdmin):
     list_filter = ("aprovado", "data_envio")
     search_fields = ("titulo_link", "descricao_link", "autor")
     list_editable = ("aprovado",)
-
 @admin.register(Artigos)
 class ArtigosAdmin(admin.ModelAdmin):
     list_display = ("id", "titulo_artigo", "enviado_usuario", "data_envio", "aprovado")
     list_filter = ("aprovado", "data_envio")
     search_fields = ("titulo_artigo", "descricao_artigo", "autor_artigo")
+    list_editable = ("aprovado",)
+
+class VideosAdmin(admin.ModelAdmin):
+    list_display = ("id", "titulo_video", "enviado_usuario", "data_envio", "aprovado")
+    list_filter = ("aprovado", "data_envio")
+    search_fields = ("titulo_video", "descricao_video", "autor_video")
     list_editable = ("aprovado",)

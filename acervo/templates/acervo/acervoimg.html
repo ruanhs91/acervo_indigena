@@ -42,7 +42,7 @@
                     </button>
                     <ul class="dropdown-menu">
                         <l><a class="dropdown-item perfil-item d-flex align-items-center gap-2" href="{% url 'acervo:perfil' %}"><i class="bi-person"></i>Perfil</a></li>
-                        {% if user.is_authenticated and user.is_staff %}
+                        {% if user.is_authenticated and user.is_staff %} <!--ajeitar-->
                         <li><a class="dropdown-item modera d-flex align-items-center gap-2" href="{% url 'acervo:painel_moderacao' %}"><i class="bi-shield-lock"></i>Painel do moderador</a></li>
                         {% endif %}
                         <li>
@@ -68,7 +68,7 @@
                     <p class="card-text mt-auto"><small class="text-muted">Autor: {{ imagem.autor_img }}</small></p>
                 </div>
 
-                {% if user.is_authenticated and user.is_staff %}
+                {% if user.is_authenticated and user.is_staff %}<!-- ajeitar -->
                 <div class="card-footer text-center">
                 <a href="{% url 'acervo:editar_imagem' imagem.pk %}" 
                    class="btn btn-sm btn-outline-primary fw-semibold">
