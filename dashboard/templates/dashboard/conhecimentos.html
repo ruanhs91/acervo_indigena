@@ -1,28 +1,64 @@
 {% extends "dashboard/base.html" %}
-
 {% load static %}
 
 {% block title %}Conhecimentos tradicionais — Povos Indígenas do RN{% endblock %}
 
 {% block content %}
-<style>
-        .texto-inicio p {
-            font-size: 15px;
-            line-height: 1.6;
-            text-align: justify;
-            margin: 20px 0;
-        }
-</style>
-<main class="inicio min-vh-100">
-    <h2 class="titulo-inicio mb-3 fw-bold">Conhecimentos tradicionais</h2>
 
+<main class="bg-white py-5 px-4 px-md-5">
+  <div class="container">
 
-        <div class="texto-inicio row mb-4">
-            <div class="col">
-                <p>
-                    {{ textos_conhecimentos.introd.introducao_conheci }}
-                </p>
-            </div>
+    <h2 class="text-uppercase text-center fw-bold mb-5 pb-2 border-bottom">
+      Conhecimentos Tradicionais
+    </h2>
+
+    <section class="mb-5">
+      <p class="fs-6 lh-lg text-justify">
+        {{ textos_conhecimentos.introd.introducao_conheci }}
+      </p>
+    </section>
+
+    <section class="mb-5">
+      <div class="row g-4 align-items-start">
+        <div class="col-md-5 text-center">
+          <img src="{% static 'dashboard/jurema.jpg' %}" 
+               alt="Jurema" 
+               class="img-fluid rounded shadow-sm mb-2">
+          <p class="text-muted small">Fonte: Mimosa tenuiflora hostilis, João de Deus Medeiros (wikimedia)</p>
         </div>
+        <div class="col-md-7">
+          <h3 class="fw-bold">JUREMA</h3>
+          <p class="lh-lg">
+            Uma das tradições que permanece firme é a Jurema, uma religião afro-indígena que envolve o uso da planta Jurema (Mimosa hostilis) em rituais de cura e conexão espiritual. Segundo a historiadora Karla Fagundes, em sua websérie “Minto na Jurema” (2022), essa tradição já existia no Brasil antes da chegada dos colonizadores, sendo cultivada pelos saberes indígenas do Nordeste.
+          </p>
+          <p class="lh-lg">
+            Os rituais envolvem cânticos, tambores e oferendas. Assim, somam-se os saberes dos povos indígenas com os das religiões afro-brasileiras. Essa tradição é amplamente conhecida em estados como Ceará, Alagoas, Paraíba e Rio Grande do Norte.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="mb-5">
+      <div class="row g-4 align-items-start">
+        <div class="col-md-7 order-2 order-md-1">
+          <h3 class="fw-bold">TORÉ</h3>
+          <p class="lh-lg">
+            O Toré é uma dança cerimonial tradicional praticada por diferentes povos indígenas como Guarani, Tupi, Catu, entre outros. No Rio Grande do Norte, ele representa uma das mais fortes expressões da identidade indígena Potiguara, sendo realizado em cerimônias religiosas e rituais de cura, celebrando a conexão com a natureza e os ancestrais.
+          </p>
+          <p class="lh-lg">
+            Essa dança é acompanhada por instrumentos típicos como maracás, flautas, tambores e chocalhos.
+          </p>
+        </div>
+        <div class="col-md-5 order-1 order-md-2 text-center">
+          <img src="{% static 'dashboard/tore1.jpeg' %}" 
+               alt="Toré indígena" 
+               class="img-fluid rounded shadow-sm mb-2">
+          <p class="text-muted small">Fonte: Panati | Foto: Mário Vital</p>
+        </div>
+      </div>
+    </section>
+
+  </div>
 </main>
+
 {% endblock %}
