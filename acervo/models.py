@@ -24,7 +24,7 @@ class Link(models.Model):
     titulo_link = models.CharField(max_length=200)
     enviado_usuario = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
     data_envio = models.DateTimeField(auto_now_add=True)
-    autor=models.CharField(max_length=100, blank=True)
+    autor=models.CharField(max_length=100, blank=True, null=True)
     aprovado_opcoes = [
         ('P', 'Pendente'),
         ('A', 'Aprovado'),
@@ -58,7 +58,7 @@ class Videos(models.Model):
     video = models.FileField(upload_to="acervo/videos/")
     enviado_usuario = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
     data_envio = models.DateTimeField(auto_now_add=True)
-    autor_video=models.CharField(max_length=100, blank=True)
+    autor_video=models.CharField(max_length=100, blank=True, null=True)
     aprovado_opcoes = [
         ('P', 'Pendente'),
         ('A', 'Aprovado'),

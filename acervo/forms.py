@@ -53,27 +53,32 @@ class ArtigoForm(forms.ModelForm):
 class LinkForm(forms.ModelForm):
     class Meta: 
         model = Link
-        fields=['titulo_link', 'descricao_link', 'url']
+        fields=['titulo_link', 'descricao_link', 'url', 'autor']
         widgets = {
             'titulo_link': forms.TextInput(attrs={'class': 'form-control'}),
             'descricao_link': forms.Textarea(attrs={'class': 'form-control', 'rows': 2}),
             'url': forms.URLInput(attrs={'class': 'form-control'}),
+            'autor': forms.TextInput(attrs={'class': 'form-control'}),
         }
 
 class VideoForm(forms.ModelForm):
     class Meta: 
         model = Videos
-        fields=['titulo_video', 'descricao_video', 'video']
+        fields=['titulo_video', 'descricao_video', 'video', 'autor_video']
         widgets = {
             'titulo_video': forms.TextInput(attrs={'class': 'form-control'}),
             'descricao_video': forms.Textarea(attrs={'class': 'form-control', 'rows': 2}),
             'video': forms.ClearableFileInput(attrs={'class': 'form-control'}),
+            'autor_video': forms.TextInput(attrs={'class': 'form-control'}),
         }
     
     def clean_video(self):
         video = self.cleaned_data.get('video')
-        if not video:
-            raise forms.ValidationError('Envie um arquivo de vídeo.')
+        if video:
+            if not video.name.endswith(('.mp4', '.mov', '.avi', '.mkv')):
+                raise forms.ValidationError('Formato de vídeo não suportado.')
+        return video
+
 
 class PerfilForm(forms.ModelForm):
     first_name = forms.CharField(required=True, label='Nome', widget=forms.TextInput(attrs={'class': 'form-control'}))

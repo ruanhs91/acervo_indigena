@@ -118,8 +118,8 @@ def painel_moderacao(request):
     imagens = Imagem.objects.filter(aprovado='P')
     artigos = Artigos.objects.filter(aprovado='P')
     links = Link.objects.filter(aprovado='P')
-
-    return render(request, "acervo/painel_moderacao.html", {'imagens': imagens, 'artigos': artigos, 'links': links})
+    videos = Videos.objects.filter(aprovado='P')
+    return render(request, "acervo/painel_moderacao.html", {'imagens': imagens, 'artigos': artigos, 'links': links, 'videos': videos})
 
 @login_required
 @user_passes_test(is_moderador)
@@ -131,6 +131,8 @@ def aprovar_conteudo(request, tipo, pk):
         conteudo = get_object_or_404(Artigos, pk=pk)
     elif tipo == "link":
         conteudo = get_object_or_404(Link, pk=pk)
+    elif tipo == "video":
+        conteudo = get_object_or_404(Videos, pk=pk)
     else:
         return redirect('acervo:painel_moderacao')
     
@@ -147,6 +149,8 @@ def rejeicao_conteudo(request, tipo, pk):
         conteudo = get_object_or_404(Artigos, pk=pk)
     elif tipo == "link":
         conteudo = get_object_or_404(Link, pk=pk)
+    elif tipo == "video":
+        conteudo = get_object_or_404(Videos, pk=pk)
     else:
         return redirect('acervo:painel_moderacao')
     

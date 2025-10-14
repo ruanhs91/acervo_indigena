@@ -3,62 +3,144 @@
 {% block title %}Painel de moderação — Povos Indígenas do RN{% endblock %}
 
 {% block content %}
-<main class="inicio min-vh-100">
-    <h2 class="titulo-inicio mb-3 fw-bold">Painel de Moderação</h2>
+<main class="container my-5">
+  <h2 class="fw-bold text-center mb-5" style="color: #8b0000;">Painel de Moderação</h2>
 
-    <h2 class="text-start mb-3 ms-3" style="color:#8b0000;">Imagens</h2>
+  <section class="mb-5">
+    <h3 class=" fw-semibold mb-4" style="color: #8b0000;">
+      <i class="bi bi-image" ></i> Imagens
+    </h3>
+
     {% if imagens %}
+      <div class="row g-4">
         {% for img in imagens %}
-        <div class="card mb-3">
-            <div class="card-body">
-                <h5>{{ img.titulo_img }}</h5>
-                <p>{{ img.descricao_img }}</p>
-                <img src="{{ img.imagem.url }}" width="200">
-                <p><strong>Autor:</strong> {{ img.autor_img }}</p>
-                <a href="{% url 'acervo:aprovar_conteudo' 'imagem' img.id %}" class="btn btn-success">Aprovar</a>
-                <a href="{% url 'acervo:rejeicao_conteudo' 'imagem' img.id %}" class="btn btn-danger">Rejeitar</a>
+          <div class="col-12 col-md-6 col-lg-4">
+            <div class="card h-100 shadow-sm">
+              <img src="{{ img.imagem.url }}" class="card-img-top img-fluid" alt="{{ img.titulo_img }}">
+              <div class="card-body d-flex flex-column">
+                <h5 class="card-title">{{ img.titulo_img }}</h5>
+                <p class="card-text text-muted">{{ img.descricao_img }}</p>
+                <p class="mb-2"><strong>Autor:</strong> {{ img.autor_img }}</p>
+                <div class="mt-auto d-flex gap-2">
+                  <a href="{% url 'acervo:aprovar_conteudo' 'imagem' img.id %}" class="btn btn-success btn-sm flex-fill">
+                    <i class="bi bi-check-lg"></i> Aprovar
+                  </a>
+                  <a href="{% url 'acervo:rejeicao_conteudo' 'imagem' img.id %}" class="btn btn-danger btn-sm flex-fill">
+                    <i class="bi bi-x-lg"></i> Rejeitar
+                  </a>
+                </div>
+              </div>
             </div>
-        </div>
+          </div>
         {% endfor %}
+      </div>
     {% else %}
-        <p>Nenhuma imagem pendente.</p>
+      <p class="text-muted ms-3">Nenhuma imagem pendente.</p>
     {% endif %}
+  </section>
 
-    <h2 class="text-start mb-3 ms-3" style="color:#8b0000;">Links</h2>
+  <section class="mb-5">
+    <h3 class=" fw-semibold mb-4" style="color:#8b0000">
+      <i class="bi bi-link-45deg"></i> Links
+    </h3>
+
     {% if links %}
+      <div class="row g-4">
         {% for link in links %}
-        <div class="card mb-3">
-            <div class="card-body">
-                <h5>{{ link.titulo_link }}</h5>
-                <p>{{ link.descricao_link }}</p>
-                <a href="{{ link.url }}" target="_blank">{{ link.url }}</a>
-                <p><strong>Autor:</strong> {{ link.autor }}</p>
-                <a href="{% url 'acervo:aprovar_conteudo' 'link' link.id %}" class="btn btn-success">Aprovar</a>
-                <a href="{% url 'acervo:rejeicao_conteudo' 'link' link.id %}" class="btn btn-danger">Rejeitar</a>
+          <div class="col-12 col-md-6 col-lg-4">
+            <div class="card h-100 shadow-sm">
+              <div class="card-body d-flex flex-column">
+                <h5 class="card-title">{{ link.titulo_link }}</h5>
+                <p class="card-text text-muted">{{ link.descricao_link }}</p>
+                <a href="{{ link.url }}" target="_blank" class="text-primary text-truncate mb-2">{{ link.url }}</a>
+                <p class="mb-2"><strong>Autor:</strong> {{ link.autor }}</p>
+                <div class="mt-auto d-flex gap-2">
+                  <a href="{% url 'acervo:aprovar_conteudo' 'link' link.id %}" class="btn btn-success btn-sm flex-fill">
+                    <i class="bi bi-check-lg"></i> Aprovar
+                  </a>
+                  <a href="{% url 'acervo:rejeicao_conteudo' 'link' link.id %}" class="btn btn-danger btn-sm flex-fill">
+                    <i class="bi bi-x-lg"></i> Rejeitar
+                  </a>
+                </div>
+              </div>
             </div>
-        </div>
+          </div>
         {% endfor %}
+      </div>
     {% else %}
-        <p>Nenhum link pendente.</p>
+      <p class="text-muted ms-3">Nenhum link pendente.</p>
     {% endif %}
+  </section>
 
-    <h2 class="text-start mb-3 ms-3" style="color:#8b0000;">Artigos</h2>
+  <section class="mb-5">
+    <h3 class="fw-semibold mb-4" style="color:#8b0000">
+      <i class="bi bi-journal-text"></i> Artigos
+    </h3>
+
     {% if artigos %}
+      <div class="row g-4">
         {% for artigo in artigos %}
-        <div class="card mb-3">
-            <div class="card-body">
-                <h5>{{ artigo.titulo_artigo }}</h5>
-                <p>{{ artigo.descricao_artigo }}</p>
-                <a href="{{ artigo.arquivo.url }}" target="_blank"> {{ artigo.arquivo.url }}</a>
-                <p><strong>Autor:</strong> {{ artigo.autor_artigo }}</p>
-                <a href="{% url 'acervo:aprovar_conteudo' 'artigo' artigo.id %}" class="btn btn-success">Aprovar</a>
-                <a href="{% url 'acervo:rejeicao_conteudo' 'artigo' artigo.id %}" class="btn btn-danger">Rejeitar</a>
+          <div class="col-12 col-md-6 col-lg-4">
+            <div class="card h-100 shadow-sm">
+              <div class="card-body d-flex flex-column">
+                <h5 class="card-title">{{ artigo.titulo_artigo }}</h5>
+                <p class="card-text text-muted">{{ artigo.descricao_artigo }}</p>
+                <a href="{{ artigo.arquivo.url }}" target="_blank" class="text-primary text-truncate mb-2">Ver arquivo</a>
+                <p class="mb-2"><strong>Autor:</strong> {{ artigo.autor_artigo }}</p>
+                <div class="mt-auto d-flex gap-2">
+                  <a href="{% url 'acervo:aprovar_conteudo' 'artigo' artigo.id %}" class="btn btn-success btn-sm flex-fill">
+                    <i class="bi bi-check-lg"></i> Aprovar
+                  </a>
+                  <a href="{% url 'acervo:rejeicao_conteudo' 'artigo' artigo.id %}" class="btn btn-danger btn-sm flex-fill">
+                    <i class="bi bi-x-lg"></i> Rejeitar
+                  </a>
+                </div>
+              </div>
             </div>
-        </div>
+          </div>
         {% endfor %}
+      </div>
     {% else %}
-        <p>Nenhum artigo pendente.</p>
+      <p class="text-muted ms-3">Nenhum artigo pendente.</p>
     {% endif %}
-    
-</div>
+  </section>
+
+  <section class="mb-5">
+    <h3 class="fw-semibold mb-4" style="color:#8b0000">
+      <i class="bi bi-camera-video"></i> Vídeos
+    </h3>
+
+    {% if videos %}
+      <div class="row g-4">
+        {% for video in videos %}
+          <div class="col-12 col-md-6 col-lg-4">
+            <div class="card h-100 shadow-sm">
+              <div class="card-body d-flex flex-column">
+                <h5 class="card-title">{{ video.titulo_video }}</h5>
+                <p class="card-text text-muted">{{ video.descricao_video }}</p>
+                <video class="w-100 rounded mb-2" controls>
+                  <source src="{{ video.video.url }}" type="video/mp4">
+                  Seu navegador não suporta vídeos.
+                </video>
+                <p class="mb-2"><strong>Autor:</strong> {{ video.autor_video }}</p>
+                <div class="mt-auto d-flex gap-2">
+                  <a href="{% url 'acervo:aprovar_conteudo' 'video' video.id %}" class="btn btn-success btn-sm flex-fill">
+                    <i class="bi bi-check-lg"></i> Aprovar
+                  </a>
+                  <a href="{% url 'acervo:rejeicao_conteudo' 'video' video.id %}" class="btn btn-danger btn-sm flex-fill">
+                    <i class="bi bi-x-lg"></i> Rejeitar
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="text-muted ms-3">Nenhum vídeo pendente.</p>
+    {% endif %}
+  </section>
+
+</main>
 {% endblock %}
+
