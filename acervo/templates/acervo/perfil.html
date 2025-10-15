@@ -1,0 +1,107 @@
+{% extends "acervo/base.html" %}
+
+{% block title %} Meu perfil - Povos Indígenas do RN {% endblock %}
+
+{% block content %}
+<main class="inicio min-vh-100">
+    <h2 class="titulo-inicio mb-3 fw-bold text-center">Meu Perfil</h2>
+    <div class="container mt-4">
+        <div class="row justify-content-center">
+            <div class="col-md-4 mb-4">
+                <div class="card shadow-sm text-center p-4">
+                    <div class="d-flex justify-content-center mb-3">
+                        {% if user.perfil.foto_perfil %}
+                            <img src="{{ user.perfil.foto_perfil.url }}" class="rounded-circle" 
+                                 style="width: 120px; height: 120px; object-fit: cover;" alt="Foto de perfil">
+                        {% else %}
+                            <i class="bi bi-person-circle text-secondary" style="font-size: 120px;"></i>
+                        {% endif %}
+                    </div>
+                    <h4 class="mb-1">{{ user.get_first_name }}</h4>
+                    <h4 class="mb-1">@{{ user.username }}</h4>
+                    <div class="mb-3">
+                        {% if user.is_superuser %}
+                            <span class="badge bg-warning text-dark">Superusuário</span>
+                        {% elif user.is_staff %}
+                            <span class="badge bg-warning text-dark">Moderador</span>
+                        {% else %}
+                            <span class="badge bg-secondary">Usuário Comum</span>
+                        {% endif %}
+                    </div>
+                    <div class="d-flex justify-content-between">
+                            <span><i class="bi bi-clock-history"></i> Último acesso:</span>
+                            <strong class="text-muted">{{ user.last_login|date:"d/m/Y H:i"|default:"Nunca" }}</strong>
+                    </div>
+                    <p class="mb-2">
+                            <i class="bi bi-calendar-check text-success"></i>
+                            <strong>Membro desde:</strong><br>
+                            <span class="text-muted">{{ user.date_joined|date:"d/m/Y" }}</span>
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-8">
+                <div class="card p-4 shadow-sm">
+                    <h5 class="mb-3">Editar informações</h5>
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        
+                        <div class="mb-3">
+                            <label for="{{ form.first_name.id_for_label }}" class="form-label fw-bold">
+                                <i class="bi bi-person text-success"></i> Nome
+                            </label>
+                            {{ form.first_name }}
+                            {% if form.first_name.errors %}
+                                <div class="text-danger small mt-1">{{ form.first_name.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="{{ form.username.id_for_label }}" class="form-label fw-bold">
+                                <i class="bi bi-at text-success"></i> Usuário
+                            </label>
+                            {{ form.username }}
+                            {% if form.username.errors %}
+                                <div class="text-danger small mt-1">{{ form.username.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="{{ form.email.id_for_label }}" class="form-label fw-bold">
+                                <i class="bi bi-envelope text-success"></i> E-mail
+                            </label>
+                            {{ form.email }}
+                            {% if form.email.errors %}
+                                <div class="text-danger small mt-1">{{ form.email.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="{{ form.password.id_for_label }}" class="form-label fw-bold">
+                                <i class="bi bi-lock text-success"></i> Nova Senha
+                            </label>
+                            {{ form.password }}
+                            {% if form.password.errors %}
+                                <div class="text-danger small mt-1">{{ form.password.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="foto_perfil" class="form-label fw-bold">
+                                <i class="bi bi-camera text-success"></i> Foto de Perfil
+                            </label>
+                            <input type="file" name="foto_perfil" id="foto_perfil" class="form-control" 
+                                   accept=".jpg,.jpeg,.png">
+                            <small class="text-muted">Formatos: JPG, PNG. Máx: 2MB</small>
+                        </div>
+
+                        <button type="submit" class="btn btn-success w-100">
+                            <i class="bi bi-check-circle"></i> Salvar Alterações
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

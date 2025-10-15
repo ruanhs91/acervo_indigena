@@ -36,27 +36,41 @@
     
             <div class="dropdown">
                 {% if user.is_authenticated %}
-                    <button class="btn btn-dark dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                            style="background-color: #1A4623;">
-                        {{ user.username }}
-                    </button>
-                    <ul class="dropdown-menu">
-                        <l><a class="dropdown-item perfil-item d-flex align-items-center gap-2" href="{% url 'acervo:perfil' %}"><i class="bi-person"></i>Perfil</a></li>
-                        {% if user.is_authenticated and user.is_staff %} <!--ajeitar-->
-                        <li><a class="dropdown-item modera d-flex align-items-center gap-2" href="{% url 'acervo:painel_moderacao' %}"><i class="bi-shield-lock"></i>Painel do moderador</a></li>
-                        {% endif %}
-                        <li>
-                            <button class="dropdown-item logout-item d-flex align-items-center gap-2" type="button" data-bs-toggle="modal" data-bs-target="#logoutModal">
-                                <i class="bi bi-door-closed"></i> Sair
-                            </button>
-                        </li>
-                    </ul>
-                {% else %}
-                    <a href="{% url 'acervo:login' %}" class="btn btn-dark" style="background-color: #1A4623">Login</a>
-                {% endif %}
-            </div>
+                <button class="btn dropdown-toggle d-flex align-items-center gap-2 border-0 bg-transparent" type="button" data-bs-toggle="dropdown" style="color: #1A4623;">
+
+                    {% if user.perfil.foto_perfil %}
+                        <img src="{{ user.perfil.foto_perfil.url }}"
+                        class="rounded-circle" style="width: 30px; height: 30px; object-fit: cover;">
+                    {% else %}
+                        <i class="bi bi-person-circle" style="font-size: 1.6rem;"></i>
+                    {% endif %}
+
+                    <span class="username">{{ user.username }}</span>
+                </button>
+
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <li>
+                        <a class="dropdown-item perfil-item d-flex align-items-center gap-2" href="{% url 'acervo:perfil' %}">
+                        <i class="bi bi-person"></i> Perfil</a>
+                    </li>
+                {% if user.is_staff %}
+                <li>
+                <a class="dropdown-item modera d-flex align-items-center gap-2" href="{% url 'acervo:painel_moderacao' %}">
+                    <i class="bi bi-shield-lock"></i> Painel do moderador</a>
+                </li>
+            {% endif %}
+            <li>
+                <button class="dropdown-item logout-item d-flex align-items-center gap-2" type="button" data-bs-toggle="modal" data-bs-target="#logoutModal">
+                <i class="bi bi-door-closed"></i> Sair
+                </button>
+            </li>
+            </ul>
+        {% else %}
+            <a href="{% url 'acervo:login' %}" class="btn btn-dark" style="background-color: #1A4623;">Login</a>
+        {% endif %}
         </div>
     </div>
+</div>
     <div class="row">
         {% for imagem in imagens %}
         <div class="col-md-4 mb-4">

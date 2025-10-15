@@ -68,4 +68,11 @@ class Videos(models.Model):
 
     def __str__(self):
         return self.titulo_video
+
+class Perfil(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    foto_perfil = models.ImageField(upload_to="acervo/perfil/", blank=True, null=True)
+
+    def __str__(self):
+        return self.user.username
     
