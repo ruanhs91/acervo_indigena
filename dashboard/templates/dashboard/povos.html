@@ -6,116 +6,137 @@
 {% block content %}
 
 <style>
+/* ===== MAPA ===== */
+.map-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 40px auto;
+    width: 100%;
+}
+
+.map-container img {
+    max-width: 90%;  
+    height: auto;
+    display: block;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+    border: none;       
+    box-shadow: none;   
+}
+
+/* ===== CONTEÚDO DOS POVOS ===== */
 .povo-conteudo {
     display: flex;
-    align-items: flex-start;   /* alinha pelo topo */
-    gap: 20px;
+    justify-content: center;
+    align-items: center;       
+    gap: 30px;
+    max-width: 1000px;
+    margin: 0 auto 60px auto; 
+    padding-bottom: 40px;     
 }
 
 .povo-img {
-    flex: 0 0 160px;           /* largura fixa da imagem */
+    flex: 0 0 35%;             
     text-align: center;
 }
 
 .img-povo1 {
     width: 100%;
     height: auto;
-    border-radius: 6px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    object-fit: cover;
 }
 
 .povo-texto {
-    flex: 1;                   /* ocupa o resto do espaço */
+    flex: 1;
     text-align: justify;
-    font-size: 1em;
-    line-height: 1.6;
+    font-size: 1.05em;
+    line-height: 1.7;
 }
 
 .titulo-povo {
-    font-size: 1.4em;
+    font-size: 1.6em;
     font-weight: bold;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
     text-align: center;
+    color: #600000;
 }
 
-.fonte {
-    font-size: 0.8em;
-    color: #555;
-    font-style: italic;
-    margin-top: 6px;
-}
+/* ===== RESPONSIVIDADE ===== */
+@media (max-width: 900px) {
+    .map-container img {
+        max-width: 95%;
+    }
 
-/*no celular*/
-@media (max-width: 768px) {
     .povo-conteudo {
         flex-direction: column;
-        align-items: center;
+        text-align: center;
+        max-width: 90%;
+        padding-bottom: 50px;
     }
 
     .povo-img {
         flex: none;
-        max-width: 140px;
-        margin-bottom: 15px;
+        max-width: 300px;
     }
 
     .povo-texto {
+        text-align: justify;
         width: 100%;
     }
 }
-
-
 </style>
 
-    <main class="inicio1 min-vh-100">
-        <h2 class="titulo-inicio mb-3 fw-bold">Povos Indígenas</h2>
-        <div class="text-povos">
-            <div>Conheça no mapa abaixo a localização das aldeias e comunidades</div>
+<main class="inicio1 min-vh-100">
+    <h2 class="titulo-inicio mb-3 fw-bold">Povos Indígenas</h2>
+    <div class="text-povos">
+        <div>Conheça no mapa abaixo a localização das aldeias e comunidades</div>
+    </div>
+
+    <div class="map-container">
+        <img src="{% static 'dashboard/map1.png' %}" usemap="#image-map" alt="mapa rn">
+    </div>
+
+    <div class="menu-povos">
+        <button onclick="mostrarInfo('cablocos')">Cablocos de Assu</button>
+        <button onclick="mostrarInfo('catu')">Catu</button>
+        <button onclick="mostrarInfo('mendonca')">Mendonça</button>
+        <button onclick="mostrarInfo('sagi')">Sagi/Trabanda</button>
+        <button onclick="mostrarInfo('tapuia')">Tapuia Paiacu</button>
+        <button onclick="mostrarInfo('tarairiú')">Tapuia Tarairiú</button>
+        <button onclick="mostrarInfo('warao')">Warao</button>
+    </div>
+
+    <div class="conteudos">
+        <div id="tapuia" class="texto-povo">
+            <h3>Tapuia Paiacu</h3>
+            <p>teste</p>
         </div>
 
-        <div class="map-container">
-            <img src="{% static 'dashboard/map1.png' %}" usemap="#image-map" alt="mapa rn">
-            
-            <!-- clicáveis no mapa, dps termino isso-->
-            <a href="https://www.google.com/maps/place/Aldeia+Indígena+Tapuias+Paiacus+da+Chapada+do+Apodi/@-5.5997463,-37.8024524,767m/data=!3m2!1e3!4b1!4m6!3m5!1s0x7ba59672aa257fd:0x81cfe7d6966750b5!8m2!3d-5.5997463!4d-37.7998775!16s%2Fg%2F11pwtkxn6s?entry=ttu&g_ep=EgoyMDI1MDgyNS4wIKXMDSoASAFQAw%3D%3D" class="marker"  style="top:42%; left: 26%;"></a>
-
-        
-        </div>
-        <div class="menu-povos">
-            <button onclick="mostrarInfo('cablocos')">Cablocos de Assu</button>
-            <button onclick="mostrarInfo('catu')">Catu</button>
-            <button onclick="mostrarInfo('mendonca')">Mendonça</button>
-            <button onclick="mostrarInfo('sagi')">Sagi/Trabanda</button>
-            <button onclick="mostrarInfo('tapuia')">Tapuia Paiacu</button>
-            <button onclick="mostrarInfo('tarairiú')">Tapuia Tarairiú</button>
-            <button onclick="mostrarInfo('warao')">Warao</button>
-        </div>
-        <div class="conteudos">
-            <div id="tapuia" class="texto-povo">
-                <h3>Tapuia Paiacu</h3>
-                <p> teste</p>
-            </div>
-            <div id="catu" class="texto-povo">
-                <h3 class="titulo-povo"Catu></h3>
-                <div class=povo-conteudo>
+        <!-- CATU -->
+        <div id="catu" class="texto-povo" style="display:none;">
+            <h3 class="titulo-povo" style="margin-top: 40px;">Catu</h3>
+            <div class="povo-conteudo">
+                <div class="povo-img">
                     <img class="img-povo1" src="{% static 'dashboard/catu.jpg' %}" alt="Catu">
-                    <div class=povo-texto>
-                    <p> {{ povos.catu.conteudo}}</p>
-                    </div>
+                </div>
+                <div class="povo-texto">
+                    <p>{{ povos.catu.conteudo }}</p>
                 </div>
             </div>
         </div>
+    </div>
 
-        <script>
+    <script>
         function mostrarInfo(id) {
             document.querySelectorAll('.texto-povo').forEach(div => {
                 div.style.display = 'none';
             });
-
             document.getElementById(id).style.display = 'block';
+        }
+    </script>
+</main>
 
-            }
-        </script>
-        
-        </main>
-            
 {% endblock %}
