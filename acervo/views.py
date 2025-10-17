@@ -6,6 +6,7 @@ from django.contrib.auth.models import Group
 from .forms import ImagemForm, cadastroform, LoginForm, ArtigoForm, LinkForm, VideoForm, PerfilForm
 from django.contrib.auth.decorators import login_required, user_passes_test 
 from django.db.models import Q
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger 
 
 def login_view(request):
     if request.method == 'POST':
@@ -43,13 +44,27 @@ def logout_view(request):
 
 def listar_imagens(request):
     query = request.GET.get('q')
-    imagens = Imagem.objects.filter(aprovado='A')
+    imagens = Imagem.objects.filter(aprovado='A').order_by('-data_envio')
 
     if query:
         imagens = imagens.filter(Q(titulo_img__icontains=query) | Q(descricao_img__icontains=query) | Q(autor_img__icontains=query))
+    
+    # paginação 
+
+    itens_por_pagina = 9
+    paginator = Paginator(imagens, itens_por_pagina)
+    page_number = request.GET.get('page')
+
+    try:
+        page_obj = paginator.get_page(page_number)
+    except PageNotAnInteger: 
+        page_obj = paginator.get_page(1)
+    except EmptyPage:
+        page_obj = paginator.get_page(paginator.num_pages)
 
     context = {
-        "imagens": imagens,
+        "imagens": page_obj,
+        "page_obj": page_obj,
         "query": query,
     }
     return render(request, "acervo/acervoimg.html", context)

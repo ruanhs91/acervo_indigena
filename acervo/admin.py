@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Imagem, Link, Artigos
+from .models import Imagem, Link, Artigos, Videos
 
 @admin.register(Imagem)
 class ImagemAdmin(admin.ModelAdmin):
@@ -20,7 +20,7 @@ class ArtigosAdmin(admin.ModelAdmin):
     list_filter = ("aprovado", "data_envio")
     search_fields = ("titulo_artigo", "descricao_artigo", "autor_artigo")
     list_editable = ("aprovado",)
-
+@admin.register(Videos)
 class VideosAdmin(admin.ModelAdmin):
     list_display = ("id", "titulo_video", "enviado_usuario", "data_envio", "aprovado")
     list_filter = ("aprovado", "data_envio")
