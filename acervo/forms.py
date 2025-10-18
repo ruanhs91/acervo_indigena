@@ -40,6 +40,26 @@ class ImagemForm(forms.ModelForm):
             'autor_img': forms.TextInput(attrs={'class': 'form-control'}),
             'imagem': forms.ClearableFileInput(attrs={'class': 'form-control'}),
         }
+class ImagemFiltroForm(forms.Form):
+    query = forms.CharField(
+        required=False, widget=forms.TextInput(attrs={
+            'class': 'form-control', 
+            'placeholder': 'Buscar por título, descrição ou autor...'}),
+            label='Título, descrição ou autor'
+        )
+    data_inicio = forms.DateField(
+        required=False, widget=forms.DateInput(attrs={
+            'class':'form-control',
+            'type':'date'}),
+            label='Data Início'
+        )
+    data_fim = forms.DateField(
+        required=False, widget=forms.DateInput(attrs={
+            'class':'form-control',
+            'type':'date'}),
+            label='Data Fim'
+    )
+    
 class ArtigoForm(forms.ModelForm):
     class Meta: 
         model = Artigos 

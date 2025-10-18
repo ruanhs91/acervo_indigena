@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import Imagem, Artigos, Link, Videos, Perfil
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.models import Group
-from .forms import ImagemForm, cadastroform, LoginForm, ArtigoForm, LinkForm, VideoForm, PerfilForm
+from .forms import ImagemForm, cadastroform, LoginForm, ArtigoForm, LinkForm, VideoForm, PerfilForm, ImagemFiltroForm
 from django.contrib.auth.decorators import login_required, user_passes_test 
 from django.db.models import Q
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger 
@@ -43,11 +43,24 @@ def logout_view(request):
     return redirect('acervo:listar_imagens')
 
 def listar_imagens(request):
-    query = request.GET.get('q')
     imagens = Imagem.objects.filter(aprovado='A').order_by('-data_envio')
+    filtro_form = ImagemFiltroForm(request.GET or None)
+    
+    if filtro_form.is_valid():
+        query = filtro_form.cleaned_data.get('query')
+        data_inicio = filtro_form.cleaned_data.get('data_inicio')
+        data_fim = filtro_form.cleaned_data.get('data_fim')
 
-    if query:
-        imagens = imagens.filter(Q(titulo_img__icontains=query) | Q(descricao_img__icontains=query) | Q(autor_img__icontains=query))
+        if query:
+            imagens = imagens.filter(
+                Q(titulo_img__icontains=query) |
+                Q(descricao_img__icontains=query) |
+                Q(autor_img__icontains=query)
+            )
+        if data_inicio:
+            imagens = imagens.filter(data_envio__date__gte=data_inicio)
+        if data_fim:
+            imagens = imagens.filter(data_envio__date__lte=data_fim)
     
     # paginação 
 
@@ -65,7 +78,7 @@ def listar_imagens(request):
     context = {
         "imagens": page_obj,
         "page_obj": page_obj,
-        "query": query,
+        'filtro_form': filtro_form,
     }
     return render(request, "acervo/acervoimg.html", context)
 

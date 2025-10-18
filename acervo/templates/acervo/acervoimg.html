@@ -12,10 +12,13 @@
         
         <div class="d-flex justify-content-between align-items-center mb-4 px-3">
             <form method="get" action="{% url 'acervo:listar_imagens' %}" class="d-flex flex-grow-1 me-3">
-                <input type="text" name="q" class="form-control me-2" placeholder="Buscar imagens..." value="{{ query|default:'' }}">
-                <button class="btn btn-secondary" type="submit"><i class="bi bi-search"></i></button>
+                <input type="text" name="query" class="form-control me-2" placeholder="Buscar imagens..." value="{{ filtro_form.query.value|default:'' }}">
+                <div class="d-flex gap-2">
+                    <input type="date" name="data_inicio" class="form-control form-control-sm" style="width: 150px;" value="{{ filtro_form.data_inicio.value|default:'' }}">
+                    <input type="date" name="data_fim" class="form-control form-control-sm" style="width: 150px;" value="{{ filtro_form.data_fim.value|default:'' }}">
+                </div>
+            <button class="btn btn-secondary" type="submit"><i class="bi bi-search"></i></button>
             </form>
-
             <div class="d-flex align-items-center gap-3">
                 
                 <div class="dropdown">
@@ -94,7 +97,7 @@
                         </div>
                         <div class="card-body d-flex flex-column">
                             <h5 class="card-title">{{ imagem.titulo_img }}</h5>
-                            <p class="card-text flex-grow-1">{{ imagem.descricao_img|truncatewords:20 }}</p>
+                            <p class="card-text flex-grow-1">{{ imagem.descricao_img|truncatewords:40 }}</p>
                             <p class="card-text mt-auto">
                                 <small class="text-muted">Autor: {{ imagem.autor_img }}</small>
                             </p>
@@ -152,7 +155,7 @@
             </div>
 
         {% else %}
-            <a>Nenhuma imagem encontrada.</a>
+            <p class="text-center">Nenhuma imagem encontrada.</p>
         {% endif %}
     </div>
 
