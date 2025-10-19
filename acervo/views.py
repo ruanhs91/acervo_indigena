@@ -68,6 +68,10 @@ def listar_imagens(request):
     paginator = Paginator(imagens, itens_por_pagina)
     page_number = request.GET.get('page')
 
+    params = request.GET.copy()
+    if 'page' in params:
+        params.pop('page')
+
     try:
         page_obj = paginator.get_page(page_number)
     except PageNotAnInteger: 
@@ -79,6 +83,7 @@ def listar_imagens(request):
         "imagens": page_obj,
         "page_obj": page_obj,
         'filtro_form': filtro_form,
+        'querystring': params.urlencode(),
     }
     return render(request, "acervo/acervoimg.html", context)
 
