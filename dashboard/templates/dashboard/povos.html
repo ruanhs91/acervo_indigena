@@ -27,7 +27,7 @@
 .povo-conteudo {
     display: flex;
     justify-content: center;
-    align-items: center;       
+    align-items: flex-start;       
     gap: 30px;
     max-width: 1000px;
     margin: 0 auto 60px auto; 
@@ -62,6 +62,38 @@
     color: #600000;
 }
 
+.legenda-imagem {
+    font-size: 0.9em;
+    color: #6c757d;
+    margin-top: 10px;
+    font-style: italic;
+}
+
+/* Estilo específico para Tapuia Paiacu com imagem abaixo do texto */
+.povo-conteudo-tapuia {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 1000px;
+    margin: 0 auto 60px auto;
+    padding-bottom: 40px;
+}
+
+.povo-img-grande {
+    width: 100%;
+    max-width: 800px;
+    text-align: center;
+    margin-top: 30px;
+}
+
+.img-povo-grande {
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    object-fit: cover;
+}
+
 @media (max-width: 900px) {
     .map-container img {
         max-width: 95%;
@@ -82,6 +114,14 @@
     .povo-texto {
         text-align: justify;
         width: 100%;
+    }
+    
+    .povo-conteudo-tapuia {
+        max-width: 90%;
+    }
+    
+    .povo-img-grande {
+        max-width: 100%;
     }
 }
 </style>
@@ -105,23 +145,34 @@
         <button onclick="mostrarInfo('tarairiú')">Tapuia Tarairiú</button>
         <button onclick="mostrarInfo('warao')">Warao</button>
     </div>
-
-    <div class="conteudos">
-        <div id="tapuia" class="texto-povo">
-            <h3>Tapuia Paiacu</h3>
-            <p>teste</p>
+    
+    <!-- CATU -->
+    <div id="catu" class="texto-povo" style="display:none;">
+        <h3 class="titulo-povo" style="margin-top: 40px;">Catu</h3>
+        <div class="povo-conteudo">
+            <div class="povo-img">
+                <img class="img-povo1" src="{% static 'dashboard/catu.jpg' %}" alt="Catu">
+            </div>
+            <div class="povo-texto">
+                <p>{{ povos.catu.conteudo }}</p>
+            </div>
         </div>
+    </div>
 
-        <!-- CATU -->
-        <div id="catu" class="texto-povo" style="display:none;">
-            <h3 class="titulo-povo" style="margin-top: 40px;">Catu</h3>
-            <div class="povo-conteudo">
-                <div class="povo-img">
-                    <img class="img-povo1" src="{% static 'dashboard/catu.jpg' %}" alt="Catu">
-                </div>
-                <div class="povo-texto">
-                    <p>{{ povos.catu.conteudo }}</p>
-                </div>
+    <!-- TAPUIA PAIACU -->
+    <div id="tapuia" class="texto-povo" style="display:none;">
+        <h3 class="titulo-povo" style="margin-top: 40px;">{{ povos.tapuia.titulo }}</h3>
+        <div class="povo-conteudo-tapuia">
+            <div class="povo-texto" style="width: 100%;">
+                <p>Os Tapuia Paiacu são um povo indígena com uma rica história de resistência no Rio Grande do Norte. Sua trajetória é marcada por lutas pela terra e pela preservação de suas tradições culturais frente aos processos coloniais e de expansão territorial.</p>
+                
+                <p>Originalmente habitando a região do Seridó, os Paiacu desenvolveram estratégias de adaptação e sobrevivência em um ambiente semiárido. Sua organização social e conhecimento do território foram fundamentais para sua resistência ao longo dos séculos, mantendo viva sua identidade cultural mesmo diante das pressões externas.</p>
+                
+                <p>Atualmente, os Tapuia Paiacu continuam sua luta pelo reconhecimento étnico e territorial, reafirmando sua presença no estado através de manifestações culturais, práticas tradicionais e da educação como ferramenta de fortalecimento identitário para as futuras gerações.</p>
+            </div>
+            <div class="povo-img-grande">
+                <img class="img-povo-grande" src="{% static 'dashboard/paiacu.jpg' %}" alt="Lúcia Paiacu Tabajara">
+                <p class="legenda-imagem">Fonte: Guerreira potiguar - Lúcia Paiacu Tabajara</p>
             </div>
         </div>
     </div>
