@@ -343,3 +343,49 @@
 .upload-card .form-control:focus {
     background-color: #f1f1f1;
 }
+
+.nav .dropdown {
+    position: relative;
+    display: flex;              
+    align-items: center;        
+}
+
+.nav .dropdown-toggle {
+    text-decoration: none;
+    font-weight: bold;
+    color: white;
+    white-space: nowrap;
+    font-size: 14px;
+    background: none;
+    border: none;
+    padding: 0;
+}
+
+.nav .dropdown-toggle:hover,
+.nav .dropdown-toggle:focus {
+    text-decoration: underline;
+               
+}
+
+
+.nav .dropdown-menu {
+    border: none;
+    min-width: 150px;
+    margin-top: 8px;
+    padding:0;
+    background-color: #8b0000;
+    border-radius: 6px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+
+.nav .dropdown-item {
+    color: white;
+    font-size: 14px;
+    font-weight: normal;
+}
+
+.nav .dropdown-item:hover {
+    background: rgba(0,0,0,0.1);
+    
+}

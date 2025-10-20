@@ -20,7 +20,23 @@
             <a href="{% url 'inicio' %}" class="{% if page == 'inicio' %}active{% endif %}">INÍCIO</a>
             <a href="{% url 'povos/' %}" class="{% if page == 'povos' %}active{% endif %}">POVOS</a>
             <a href="{% url 'conhecimentos/' %}" class="{% if page == 'conhecimentos' %}active{% endif %}">CONHECIMENTOS TRADICIONAIS</a>
-            <a href="/acervo/">ACERVO</a>
+             <div class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle {% if page|default:''|slice:':6' == 'acervo' %}active{% endif %}"
+                    href="/acervo/"
+                    id="acervoDropdown"
+                    role="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                >
+                    ACERVO
+                    </a>
+                    <ul class="dropdown-menu" arialabelledby="acervoDropdown">
+                      <li><a class="dropdown-item" href="{% url 'acervo:listar_imagens' %}">Imagens</a></li>
+                      <li><a class="dropdown-item" href="{% url 'acervo:listar_imagens' %}">Links</a></li>
+                      <li><a class="dropdown-item" href="{% url 'acervo:listar_imagens' %}">Vídeos</a></li>
+                      <li><a class="dropdown-item" href="{% url 'acervo:listar_imagens' %}">Artigos</a></li>
+                    </ul>
+                  </div>
         </nav>
     </header>
     

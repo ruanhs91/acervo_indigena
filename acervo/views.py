@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.db.models import Q
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger 
 
-def login_view(request):
+def login_view(request): #view de login
     if request.method == 'POST':
         form = LoginForm(request.POST, data=request.POST)
         if form.is_valid():
@@ -26,7 +26,7 @@ def login_view(request):
         form=LoginForm()
     return render(request, 'acervo/login.html', {"form": form})
 
-def cadastro_view(request):
+def cadastro_view(request): #view de cadastro, ainda ajeitar
     if request.method == 'POST':
         form = cadastroform(request.POST)
         if form.is_valid():
@@ -38,11 +38,11 @@ def cadastro_view(request):
         form = cadastroform()
     return render(request, 'acervo/cadastro.html', {'form': form})
 
-def logout_view(request):
+def logout_view(request): #view de logout
     logout(request)
     return redirect('acervo:listar_imagens')
 
-def listar_imagens(request):
+def listar_imagens(request): #view de listagem de imagens com filtro e paginação
     imagens = Imagem.objects.filter(aprovado='A').order_by('-data_envio')
     filtro_form = ImagemFiltroForm(request.GET or None)
     
@@ -84,11 +84,33 @@ def listar_imagens(request):
         "page_obj": page_obj,
         'filtro_form': filtro_form,
         'querystring': params.urlencode(),
+        'page': 'acervo',
     }
     return render(request, "acervo/acervoimg.html", context)
 
+def listar_artigos(request): #view de listagem de artigos, ajeitar 
+    artigos = Artigos.objects.filter(aprovado='A').order_by('data_envio')
+    context = {
+        "artigos": artigos,
+    }
+    return render(request, "acervo/acervoarti.html", context)
+
+def listar_links(request): #view de listagem de links, ajeitar
+    links = Link.objects.filter(aprovado='A').order_by('data_envio')
+    context = {
+        "links": links,
+    }
+    return render(request, "acervo/acervolinks.html", context)
+
+def listar_videos(request): #view de listagem de vídeos, ajeitar
+    videos = Videos.objects.filter(aprovado='A').order_by('data_envio')
+    context = {
+        "videos": videos,
+    }
+    return render(request, "acervo/acervovids.html", context)
+
 @login_required
-def upload_imagem(request):
+def upload_imagem(request): #view de upload de imagem
     if request.method == 'POST':
         form = ImagemForm(request.POST, request.FILES)
         if form.is_valid():
@@ -99,10 +121,14 @@ def upload_imagem(request):
             return redirect('acervo:listar_imagens')
     else: 
         form = ImagemForm()
-    return render(request, "acervo/upload_imagem.html", {'form': form})
+    context = {
+        'form': form,
+        'page': 'acervo',
+    }
+    return render(request, "acervo/upload_imagem.html", context)
 
 @login_required 
-def upload_artigo(request):
+def upload_artigo(request): #view de upload de artigo
     if request.method == 'POST':
         form = ArtigoForm(request.POST, request.FILES)
         if form.is_valid():
@@ -112,10 +138,14 @@ def upload_artigo(request):
             return redirect('acervo:listar_imagens') #trocar por listar_artigos
     else:
         form = ArtigoForm()
-    return render(request, 'acervo/upload_artigo.html', {'form': form})
+    context = {
+        'form': form,
+        'page': 'acervo',
+    }
+    return render(request, 'acervo/upload_artigo.html', context)
 
 @login_required 
-def upload_link(request):
+def upload_link(request): #view de upload de link
     if request.method == 'POST':
         form = LinkForm(request.POST)
         if form.is_valid():
@@ -125,9 +155,13 @@ def upload_link(request):
             return redirect('acervo:listar_imagens') #trocar por listar_links
     else: 
         form = LinkForm()
-        return render(request, 'acervo/upload_link.html', {'form': form})
+    context = {
+        'form': form,
+        'page': 'acervo',
+    }
+    return render(request, 'acervo/upload_link.html', context)
     
-def upload_video(request):
+def upload_video(request): #view de upload de vídeo
     if request.method == 'POST':
         form = VideoForm(request.POST, request.FILES)
         if form.is_valid():
@@ -140,24 +174,28 @@ def upload_video(request):
             messages.error(request, "Envie um arquivo em formato de vídeo.")
     else: 
         form = VideoForm()
-    return render(request, "acervo/upload_video.html", {'form': form})
+    context = {
+        'form': form,
+        'page': 'acervo',
+    }
+    return render(request, "acervo/upload_video.html", context)
 
-def is_moderador(user):
+def is_moderador(user): #checagem do grupo moderador
     return user.is_staff or user.groups.filter(name='Moderadores').exists()
 
 @login_required
-@user_passes_test(is_moderador)
-def painel_moderacao(request):
+@user_passes_test(is_moderador) #exclusivo para moderadores e superusuários
+def painel_moderacao(request): 
     imagens = Imagem.objects.filter(aprovado='P')
     artigos = Artigos.objects.filter(aprovado='P')
     links = Link.objects.filter(aprovado='P')
     videos = Videos.objects.filter(aprovado='P')
-    return render(request, "acervo/painel_moderacao.html", {'imagens': imagens, 'artigos': artigos, 'links': links, 'videos': videos})
+    return render(request, "acervo/painel_moderacao.html", {'imagens': imagens, 'artigos': artigos, 'links': links, 'videos': videos, 'page': 'acervo'})
 
 @login_required
 @user_passes_test(is_moderador)
 
-def aprovar_conteudo(request, tipo, pk):
+def aprovar_conteudo(request, tipo, pk): #aprovação dos conteúdos do acervo aq
     if tipo == "imagem":
         conteudo = get_object_or_404(Imagem, pk=pk)
     elif tipo == "artigo":
@@ -175,7 +213,7 @@ def aprovar_conteudo(request, tipo, pk):
 
 @login_required
 @user_passes_test(is_moderador)
-def rejeicao_conteudo(request, tipo, pk):
+def rejeicao_conteudo(request, tipo, pk): #rejeição
     if tipo == "imagem":
         conteudo = get_object_or_404(Imagem, pk=pk)
     elif tipo == "artigo":
@@ -193,7 +231,7 @@ def rejeicao_conteudo(request, tipo, pk):
 
 @login_required
 @user_passes_test(is_moderador)
-def excluir_imagem(request,pk):
+def excluir_imagem(request,pk): #delete de imagem
     imagem = get_object_or_404(Imagem, pk=pk)
     imagem.delete()
     return redirect('acervo:listar_imagens')
@@ -209,7 +247,12 @@ def editar_imagem(request, pk):
             return redirect('acervo:listar_imagens')
     else:
         form = ImagemForm(instance=imagem)
-    return render(request, 'acervo/editar_imagem.html', {'form': form, 'imagem': imagem})
+    context = {
+        'form': form,
+        'imagem': imagem,
+        'page': 'acervo',
+    }
+    return render(request, 'acervo/editar_imagem.html', context)
 
 @login_required 
 @user_passes_test(is_moderador)
@@ -222,7 +265,12 @@ def editar_artigo(request, pk):
             return redirect('acervo:listar_imagens') #trocar por listar_artigos
     else:
         form = ArtigoForm(instance=artigo)
-    return render(request, 'acervo/editar_artigo.html', {'form': form, 'artigo': artigo})
+    context = {
+        'form': form,
+        'artigo': artigo,
+        'page': 'acervo',
+    }
+    return render(request, 'acervo/editar_artigo.html', context)
 
 @login_required
 @user_passes_test(is_moderador)
@@ -242,7 +290,12 @@ def editar_link(request, pk):
             return redirect('acervo:listar_imagens') #trocar por listar_links
     else:
         form = LinkForm(instance=link)
-    return render(request, 'acervo/editar_link.html', {'form': form, 'link': link})
+    context = {
+        'form': form,
+        'link': link,
+        'page': 'acervo',
+    }
+    return render(request, 'acervo/editar_link.html', context)
 
 @login_required
 @user_passes_test(is_moderador)
@@ -252,7 +305,7 @@ def excluir_link(request, pk):
     return redirect('acervo:listar_imagens') #trocar por listar_links
 
 @login_required
-def perfil_view(request):
+def perfil_view(request): #view de perfil do usuário
     if request.method == 'POST':
         form = PerfilForm(request.POST, instance=request.user)
         if form.is_valid():
@@ -270,5 +323,9 @@ def perfil_view(request):
             return redirect('acervo:listar_imagens')
     else:
         form = PerfilForm(instance=request.user)
+    context = {
+        'form': form,
+        'page': 'acervo',
+    }
     
-    return render(request, 'acervo/perfil.html', {'form': form})
+    return render(request, 'acervo/perfil.html', context)
