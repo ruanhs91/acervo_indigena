@@ -15,6 +15,7 @@ venv/
 # VSCode
 .vscode/
 
-povos_indigenas/db.json 
+*.json
+db.json 
 
 
