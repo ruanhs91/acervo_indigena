@@ -1,19 +1,21 @@
 from django import forms
-from .models import Imagem, Artigos, Link, Videos, Perfil
+from .models import Imagem, Artigos, Link, Videos, UsuarioAdaptado
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from django.contrib.auth.models import User
 from django.conf import settings 
 
 class cadastroform(UserCreationForm): #formulário de cadastro
     class Meta:
-        model = User
-        fields = ('first_name', 'username', 'email', 'password1', 'password2')
+        model = UsuarioAdaptado
+        fields = ('first_name', 'username', 'email', 'password1', 'password2', 'nome_cidade', 'uf', 'foto_perfil')
         
     first_name = forms.CharField(required=True, label='Nome',widget=forms.TextInput(attrs={'class': 'form-control'}))
     email = forms.EmailField(required=True,label='Email', widget=forms.EmailInput(attrs={'class': 'form-control'}))
     username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
     password1 = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}))
     password2 = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+    nome_cidade = forms.CharField(required=False, label='Cidade', widget=forms.TextInput(attrs={'class': 'form-control'}))
+    uf = forms.CharField(required=False, label='UF', widget=forms.TextInput(attrs={'class': 'form-control', 'maxlength': '2'}))
+    foto_perfil = forms.ImageField(required=False, label='Foto de Perfil', widget=forms.ClearableFileInput(attrs={'class': 'form-control'}))
 
 
     def __init__(self, *args, **kwargs): # lembrar de botar pra n cadastrar mais de um email igual
@@ -104,20 +106,21 @@ class PerfilForm(forms.ModelForm):
     password = forms.CharField(
         widget=forms.PasswordInput(render_value=True),
         required=False,
-        label="Nova Senha")
+        label="Nova Senha"
+    )
     class Meta:
-        model = User
-        fields = ['first_name', 'username', 'email']
+        model = UsuarioAdaptado
+        fields = ['first_name', 'username', 'email', 'nome_cidade', 'uf', 'foto_perfil']
     
     def clean_username(self): #mensagem de erro user já existentee
         username = self.cleaned_data.get('username')
-        if User.objects.filter(username=username).exclude(pk=self.instance.pk).exists():
+        if UsuarioAdaptado.objects.filter(username=username).exclude(pk=self.instance.pk).exists():
             raise forms.ValidationError("Este nome de usuário já está em uso.")
         return username
     
     def clean_email(self):
         email = self.cleaned_data.get('email') #mensagem de erro email já existente
-        if User.objects.filter(email=email).exclude(pk=self.instance.pk).exists():
+        if UsuarioAdaptado.objects.filter(email=email).exclude(pk=self.instance.pk).exists():
             raise forms.ValidationError("Este email já está cadastrado.")
         return email
 

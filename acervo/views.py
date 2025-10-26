@@ -1,6 +1,6 @@
 from django.contrib import messages
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Imagem, Artigos, Link, Videos, Perfil
+from .models import Imagem, Artigos, Link, Videos
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.models import Group
 from .forms import ImagemForm, cadastroform, LoginForm, ArtigoForm, LinkForm, VideoForm, PerfilForm, ImagemFiltroForm
@@ -305,24 +305,20 @@ def excluir_link(request, pk):
     return redirect('acervo:listar_imagens') #trocar por listar_links
 
 @login_required
-def perfil_view(request): #view de perfil do usuário
+def perfil_view(request):
     if request.method == 'POST':
-        form = PerfilForm(request.POST, instance=request.user)
+        form = PerfilForm(request.POST, request.FILES, instance=request.user)
         if form.is_valid():
             user = form.save(commit=False)
             password = form.cleaned_data.get('password')
             if password:
                 user.set_password(password)
             user.save()
-            if 'foto_perfil' in request.FILES:
-                perfil, created = Perfil.objects.get_or_create(user=user)
-                perfil.foto_perfil = request.FILES['foto_perfil']
-                perfil.save()
-            
             messages.success(request, "Perfil atualizado com sucesso!")
             return redirect('acervo:listar_imagens')
     else:
         form = PerfilForm(instance=request.user)
+
     context = {
         'form': form,
         'page': 'acervo',

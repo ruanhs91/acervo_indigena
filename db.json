@@ -1,0 +1,614 @@
+[
+{
+    "model": "contenttypes.contenttype",
+    "fields": {
+        "app_label": "admin",
+        "model": "logentry"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "fields": {
+        "app_label": "auth",
+        "model": "permission"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "fields": {
+        "app_label": "auth",
+        "model": "group"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "fields": {
+        "app_label": "auth",
+        "model": "user"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "fields": {
+        "app_label": "contenttypes",
+        "model": "contenttype"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "fields": {
+        "app_label": "sessions",
+        "model": "session"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "fields": {
+        "app_label": "dashboard",
+        "model": "povo"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "fields": {
+        "app_label": "acervo",
+        "model": "imagem"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "fields": {
+        "app_label": "acervo",
+        "model": "link"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "fields": {
+        "app_label": "acervo",
+        "model": "artigos"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "mqwoq3ah3pscqkexvynt2elc0ek9ubua",
+    "fields": {
+        "session_data": ".eJxVjDsOwjAQBe_iGln-LbYp6TmDtfZucAA5UpxUiLuTSCmgfTPz3iLhutS0dp7TSOIinDj9bhnLk9sO6IHtPskytWUes9wVedAubxPx63q4fwcVe91qfdYGcrQqAnodPWbWEK2zEAMWKmSDBuc3mB0ozQODMTCUoCIRgRKfL7aRNxg:1uvind:Xxhpkviz3Re2XOULQzu5nQSixiTwaiq0Tv_sGeUXJbI",
+        "expire_date": "2025-09-22T20:49:17.501Z"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can add log entry",
+        "content_type": [
+            "admin",
+            "logentry"
+        ],
+        "codename": "add_logentry"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can change log entry",
+        "content_type": [
+            "admin",
+            "logentry"
+        ],
+        "codename": "change_logentry"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can delete log entry",
+        "content_type": [
+            "admin",
+            "logentry"
+        ],
+        "codename": "delete_logentry"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can view log entry",
+        "content_type": [
+            "admin",
+            "logentry"
+        ],
+        "codename": "view_logentry"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can add permission",
+        "content_type": [
+            "auth",
+            "permission"
+        ],
+        "codename": "add_permission"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can change permission",
+        "content_type": [
+            "auth",
+            "permission"
+        ],
+        "codename": "change_permission"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can delete permission",
+        "content_type": [
+            "auth",
+            "permission"
+        ],
+        "codename": "delete_permission"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can view permission",
+        "content_type": [
+            "auth",
+            "permission"
+        ],
+        "codename": "view_permission"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can add group",
+        "content_type": [
+            "auth",
+            "group"
+        ],
+        "codename": "add_group"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can change group",
+        "content_type": [
+            "auth",
+            "group"
+        ],
+        "codename": "change_group"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can delete group",
+        "content_type": [
+            "auth",
+            "group"
+        ],
+        "codename": "delete_group"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can view group",
+        "content_type": [
+            "auth",
+            "group"
+        ],
+        "codename": "view_group"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can add user",
+        "content_type": [
+            "auth",
+            "user"
+        ],
+        "codename": "add_user"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can change user",
+        "content_type": [
+            "auth",
+            "user"
+        ],
+        "codename": "change_user"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can delete user",
+        "content_type": [
+            "auth",
+            "user"
+        ],
+        "codename": "delete_user"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can view user",
+        "content_type": [
+            "auth",
+            "user"
+        ],
+        "codename": "view_user"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can add content type",
+        "content_type": [
+            "contenttypes",
+            "contenttype"
+        ],
+        "codename": "add_contenttype"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can change content type",
+        "content_type": [
+            "contenttypes",
+            "contenttype"
+        ],
+        "codename": "change_contenttype"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can delete content type",
+        "content_type": [
+            "contenttypes",
+            "contenttype"
+        ],
+        "codename": "delete_contenttype"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can view content type",
+        "content_type": [
+            "contenttypes",
+            "contenttype"
+        ],
+        "codename": "view_contenttype"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can add session",
+        "content_type": [
+            "sessions",
+            "session"
+        ],
+        "codename": "add_session"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can change session",
+        "content_type": [
+            "sessions",
+            "session"
+        ],
+        "codename": "change_session"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can delete session",
+        "content_type": [
+            "sessions",
+            "session"
+        ],
+        "codename": "delete_session"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can view session",
+        "content_type": [
+            "sessions",
+            "session"
+        ],
+        "codename": "view_session"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can add povo",
+        "content_type": [
+            "dashboard",
+            "povo"
+        ],
+        "codename": "add_povo"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can change povo",
+        "content_type": [
+            "dashboard",
+            "povo"
+        ],
+        "codename": "change_povo"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can delete povo",
+        "content_type": [
+            "dashboard",
+            "povo"
+        ],
+        "codename": "delete_povo"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can view povo",
+        "content_type": [
+            "dashboard",
+            "povo"
+        ],
+        "codename": "view_povo"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can add imagem",
+        "content_type": [
+            "acervo",
+            "imagem"
+        ],
+        "codename": "add_imagem"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can change imagem",
+        "content_type": [
+            "acervo",
+            "imagem"
+        ],
+        "codename": "change_imagem"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can delete imagem",
+        "content_type": [
+            "acervo",
+            "imagem"
+        ],
+        "codename": "delete_imagem"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can view imagem",
+        "content_type": [
+            "acervo",
+            "imagem"
+        ],
+        "codename": "view_imagem"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can add link",
+        "content_type": [
+            "acervo",
+            "link"
+        ],
+        "codename": "add_link"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can change link",
+        "content_type": [
+            "acervo",
+            "link"
+        ],
+        "codename": "change_link"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can delete link",
+        "content_type": [
+            "acervo",
+            "link"
+        ],
+        "codename": "delete_link"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can view link",
+        "content_type": [
+            "acervo",
+            "link"
+        ],
+        "codename": "view_link"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can add artigos",
+        "content_type": [
+            "acervo",
+            "artigos"
+        ],
+        "codename": "add_artigos"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can change artigos",
+        "content_type": [
+            "acervo",
+            "artigos"
+        ],
+        "codename": "change_artigos"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can delete artigos",
+        "content_type": [
+            "acervo",
+            "artigos"
+        ],
+        "codename": "delete_artigos"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can view artigos",
+        "content_type": [
+            "acervo",
+            "artigos"
+        ],
+        "codename": "view_artigos"
+    }
+},
+{
+    "model": "auth.group",
+    "fields": {
+        "name": "Usußrios",
+        "permissions": []
+    }
+},
+{
+    "model": "auth.group",
+    "fields": {
+        "name": "Moderadores",
+        "permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "fields": {
+        "password": "pbkdf2_sha256$600000$1VbP8OyVQy0E8D3gHWflly$TbfBmBFQrZ19ipL5+loyVtC+ate4N7m9FyZfxqMQ48M=",
+        "last_login": "2025-09-08T20:47:58.369Z",
+        "is_superuser": false,
+        "username": "ruanh",
+        "first_name": "",
+        "last_name": "",
+        "email": "ruanhenry139@gmail.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2025-09-01T17:53:33.568Z",
+        "groups": [
+            [
+                "Usußrios"
+            ]
+        ],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "fields": {
+        "password": "pbkdf2_sha256$600000$X1I0WpOaWPYJTk1WPXKpMj$lnjJmN7fsu2YOjq+Xco7N7HYkOnen+PSMfm0M39xqlk=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "rebecalfb",
+        "first_name": "rebeca",
+        "last_name": "",
+        "email": "ruanhenry31@gmail.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2025-09-03T12:47:27.072Z",
+        "groups": [
+            [
+                "Usußrios"
+            ]
+        ],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "fields": {
+        "password": "pbkdf2_sha256$600000$JXYLn1JnGWSfvkogcIm0Cb$lhxplUftjZECanigxWnvcfz2xqq8KLqCDQ+kHxzaiw0=",
+        "last_login": "2025-09-05T12:16:16.398Z",
+        "is_superuser": true,
+        "username": "ruanhs",
+        "first_name": "",
+        "last_name": "",
+        "email": "ruanhenry139@gmail.com",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2025-09-05T12:15:10.805Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "fields": {
+        "password": "pbkdf2_sha256$600000$ip2q4XDboh8gtuDLlLqWek$VkHrriYhKKkSlLGaNu7N1shOOl2phf4XupMNavA9JIM=",
+        "last_login": "2025-09-08T20:49:17.393Z",
+        "is_superuser": false,
+        "username": "ruanhenry",
+        "first_name": "ru",
+        "last_name": "",
+        "email": "ruanhenry139@gmail.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2025-09-05T12:17:54.666Z",
+        "groups": [
+            [
+                "Usußrios"
+            ]
+        ],
+        "user_permissions": []
+    }
+}
+]
