@@ -1,0 +1,118 @@
+{% extends 'acervo/base.html' %}
+
+{% block title %}Gerenciamento de usuários — Povos Indígenas do RN{% endblock %}
+
+{% block content %}
+<main class="inicio min-vh-100">
+    <div class="container-fluid">
+        <h2 class="titulo-inicio mb-4 fw-bold">Gerenciamento de usuários</h2>
+        
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <div class="container-fluid">
+            <div class="d-flex justify-content-between align-items-center mb-4 px-0">
+                <form method="get" class="d-flex flex-grow-1 me-3">
+                    <div class="input-group me-2">
+                        <input type="text" name="busca" class="form-control" 
+                               placeholder="Buscar por usuário, email ou nome..." 
+                               value="{{ busca }}">
+                        <button type="submit" class="btn btn-secondary">
+                            <i class="bi bi-search"></i>
+                        </button>
+                    </div>
+                    <a href="{% url 'acervo:gerenciar_usuarios' %}" class="btn btn-secondary d-flex align-items-center">
+                        <i class="bi bi-x-circle"></i>
+                    </a>
+                </form>
+            </div>
+
+            <div class="card">
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover mb-0">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Usuário</th>
+                                    <th>Email</th>
+                                    <th>Nome</th>
+                                    <th>Cidade - UF</th>
+                                    <th>Cargo</th>
+                                    <th>Data cadastro</th>
+                                    <th>Editar</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for usuario in usuarios %}
+                                <tr>
+                                    <td>{{ usuario.id }}</td>
+                                    <td>
+                                        <strong>{{ usuario.username }}</strong>
+                                        {% if usuario == request.user %}
+                                            <span class="badge bg-info">Você</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ usuario.email }}</td>
+                                    <td>{{ usuario.first_name }}</td>
+                                    <td>
+                                        {% if usuario.nome_cidade %}
+                                            {{ usuario.nome_cidade }} - {{ usuario.uf }}
+                                        {% else %}
+                                            <span class="text-muted">Não informado</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if usuario.is_superuser %}
+                                            <span class="badge bg-warning text-dark">Superuser</span>
+                                        {% elif usuario.is_moderador %}
+                                            <span class="badge bg-success">Moderador</span>
+                                        {% else %}
+                                            <span class="badge bg-secondary">Usuário</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ usuario.date_joined|date:"d/m/Y" }}</td>
+                                    <td>
+                                        {% if not usuario.is_superuser or request.user.is_superuser %}
+                                            {% if usuario != request.user %}
+                                                <a href="{% url 'acervo:editar_tipo_usuario' usuario.id %}" 
+                                                   class="btn btn-sm btn-outline-primary">
+                                                   <i class="bi bi-pencil-square"></i> Editar
+                                                </a>
+                                            {% else %}
+                                                <span class="text-muted">Seu usuário</span>
+                                            {% endif %}
+                                        {% else %}
+                                            <span class="text-muted">Não editável</span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="8" class="text-center py-4">
+                                        <i class="bi bi-people text-muted mb-2" style="font-size: 2rem;"></i><br>
+                                        Nenhum usuário encontrado.
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-4">
+                <div class="col-12">
+                    {% include 'includes/pagination.html' %}
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

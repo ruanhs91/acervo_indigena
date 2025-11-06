@@ -1,5 +1,11 @@
 from django.contrib import admin
-from .models import Imagem, Link, Artigos, Videos
+from .models import Imagem, Link, Artigos, Videos, UsuarioAdaptado
+
+@admin.register(UsuarioAdaptado)
+class UsuarioAdaptadoAdmin(admin.ModelAdmin):
+    list_display = ("id", "username", "email", "first_name", "is_staff", "is_active")
+    search_fields = ("username", "email", "first_name")
+    list_filter = ("is_staff", "is_active")
 
 @admin.register(Imagem)
 class ImagemAdmin(admin.ModelAdmin):

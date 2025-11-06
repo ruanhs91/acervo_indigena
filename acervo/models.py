@@ -12,7 +12,7 @@ class UsuarioAdaptado(AbstractUser):
     def is_moderador(self):
         return self.groups.filter(name='Moderadores').exists()
     def is_usuario_comum(self):
-        return self.groups.filter(name='UsuariosComuns').exists()
+        return self.groups.filter(name='Usuários').exists()
 
 class Imagem(models.Model):
     titulo_img = models.CharField(max_length=200)

@@ -23,6 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('dashboard.urls')),
     path('acervo/', include('acervo.urls')),
+    path('forum/', include('forum.urls')),
 ]
 
 if settings.DEBUG:

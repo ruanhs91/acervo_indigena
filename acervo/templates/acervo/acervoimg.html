@@ -1,180 +1,165 @@
 {% extends "acervo/base.html" %}
-
 {% load static %}
 
 {% block title %}Acervo — Povos Indígenas do RN{% endblock %}
 
 {% block content %}
-
 <main class="inicio min-vh-100">
     <div class="container-fluid">
         <h2 class="titulo-inicio mb-4 fw-bold">Acervo</h2>
         
         <div class="d-flex justify-content-between align-items-center mb-4 px-3">
-            <form method="get" action="{% url 'acervo:listar_imagens' %}" class="d-flex flex-grow-1 me-3">
-                <input type="text" name="query" class="form-control me-2" placeholder="Buscar imagens..." value="{{ filtro_form.query.value|default:'' }}">
-                <div class="d-flex gap-2">
-                    <input type="date" name="data_inicio" class="form-control form-control-sm" style="width: 150px;" value="{{ filtro_form.data_inicio.value|default:'' }}">
-                    <input type="date" name="data_fim" class="form-control form-control-sm" style="width: 150px;" value="{{ filtro_form.data_fim.value|default:'' }}">
+            <form method="get" action="{% url 'acervo:listar_imagens' %}" class="d-flex align-items-center flex-grow-1 me-3" id="filterForm">
+                <div class="input-group me-2">
+                    <input type="text" name="query" class="form-control" placeholder="Buscar imagens..." value="{{ filtro_form.query.value|default:'' }}">
+                    <button class="btn btn-secondary" type="submit"><i class="bi bi-search"></i></button>
                 </div>
-            <button class="btn btn-secondary" type="submit"><i class="bi bi-search"></i></button>
+
+                <button type="button" class="btn btn-secondary d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#filterModal"><i class="bi bi-funnel"></i></button>
+
+                <input type="hidden" id="data_inicio" name="data_inicio" value="{{ filtro_form.data_inicio.value|default:'' }}">
+                <input type="hidden" id="data_fim" name="data_fim" value="{{ filtro_form.data_fim.value|default:'' }}">
             </form>
-            <div class="d-flex align-items-center gap-3">
-                
-                <div class="dropdown">
-                    <button class="btn dropdown-toggle d-flex align-items-center gap-1" type="button" data-bs-toggle="dropdown"
-                            style="background-color: #1A4623; color:white;">
-                        <i class="bi bi-plus-lg"></i> Adicionar
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item btn-verde d-flex align-items-center gap-2" href="{% url 'acervo:upload_imagem' %}"><i class="bi bi-image"></i>Imagem</a></li>
-                        <li><a class="dropdown-item btn-verde d-flex align-items-center gap-2" href="{% url 'acervo:upload_artigo' %}"><i class="bi bi-file-earmark-text"></i>Artigo</a></li>
-                        <li><a class="dropdown-item btn-verde d-flex align-items-center gap-2" href="{% url 'acervo:upload_link' %}"><i class="bi bi-link-45deg"></i>Link</a></li>
-                        <li><a class="dropdown-item btn-verde d-flex align-items-center gap-2" href="{% url 'acervo:upload_video' %}"><i class="bi bi-play-btn"></i>Vídeo</a></li>
-                    </ul>
-                </div>
 
-        
-                <div class="dropdown">
-                    {% if user.is_authenticated %}
-                    <button class="btn dropdown-toggle d-flex align-items-center gap-2 border-0 bg-transparent" type="button" data-bs-toggle="dropdown" style="color: #1A4623;">
-
-                        {% if user.perfil.foto_perfil %}
-                            <img src="{{ user.perfil.foto_perfil.url }}"
-                            class="rounded-circle" style="width: 30px; height: 30px; object-fit: cover;">
-                        {% else %}
-                            <i class="bi bi-person-circle" style="font-size: 1.6rem;"></i>
-                        {% endif %}
-
-                        <span class="username">{{ user.username }}</span>
-                    </button>
-
-                    <ul class="dropdown-menu dropdown-menu-end">
-                        <li>
-                            <a class="dropdown-item perfil-item d-flex align-items-center gap-2" href="{% url 'acervo:perfil' %}">
-                            <i class="bi bi-person"></i> Perfil</a>
-                        </li>
-                    {% if user.is_staff %}
-                    <li>
-                    <a class="dropdown-item modera d-flex align-items-center gap-2" href="{% url 'acervo:painel_moderacao' %}">
-                        <i class="bi bi-shield-lock"></i> Painel do moderador</a>
-                    </li>
-                {% endif %}
-                <li>
-                    <button class="dropdown-item logout-item d-flex align-items-center gap-2" type="button" data-bs-toggle="modal" data-bs-target="#logoutModal">
-                    <i class="bi bi-door-closed"></i> Sair
-                    </button>
-                </li>
+            <div class="dropdown">
+                <button class="btn dropdown-toggle d-flex align-items-center gap-1" type="button" data-bs-toggle="dropdown"style="background-color: #1A4623; color:white;">
+                    <i class="bi bi-plus-lg"></i> Adicionar
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item btn-verde d-flex align-items-center gap-2" href="{% url 'acervo:upload_imagem' %}"><i class="bi bi-image"></i>Imagem</a></li>
+                    <li><a class="dropdown-item btn-verde d-flex align-items-center gap-2" href="{% url 'acervo:upload_artigo' %}"><i class="bi bi-file-earmark-text"></i>Artigo</a></li>
+                    <li><a class="dropdown-item btn-verde d-flex align-items-center gap-2" href="{% url 'acervo:upload_link' %}"><i class="bi bi-link-45deg"></i>Link</a></li>
+                    <li><a class="dropdown-item btn-verde d-flex align-items-center gap-2" href="{% url 'acervo:upload_video' %}"><i class="bi bi-play-btn"></i>Vídeo</a></li>
                 </ul>
-            {% else %}
-                <a href="{% url 'acervo:login' %}" class="btn btn-dark" style="background-color: #1A4623;">Login</a>
-            {% endif %}
+            </div>
+        </div>
+        <div class="modal fade" id="filterModal" tabindex="-1" aria-labelledby="filterModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header border-0 pb-0">
+                    <h5 class="modal-title" id="filterModalLabel">Filtragem por data</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label for="modal_data_inicio" class="form-label">Data de início</label>
+                    <input type="date" class="form-control" id="modal_data_inicio" value="{{ filtro_form.data_inicio.value|default:'' }}">
+                </div>
+                <div class="mb-3">
+                    <label for="modal_data_fim" class="form-label">Data de fim</label>
+                    <input type="date" class="form-control" id="modal_data_fim" value="{{ filtro_form.data_fim.value|default:'' }}">
+                </div>
+            </div>
+            <div class="modal-footer border-0 pt-0">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" style="background: linear-gradient(150deg, #d32f2f, #b71c1c)">Cancelar</button>
+                <button type="button" class="btn btn-success" id="applyFilter" style="background: linear-gradient(135deg, #3a8a3a, #2f7d2f);">Aplicar filtro</button>
             </div>
         </div>
     </div>
-
-    <div class="container-fluid">
-        {% if imagens %}
-            <div class="row g-4">
-                {% for imagem in imagens %}
-                <div class="col-lg-4 col-md-6 col-sm-12">
-                    <div class="card h-100 shadow-sm">
-                        <div class="image-container position-relative" style="height: 250px; overflow: hidden;">
-                            <img src="{{ imagem.imagem.url }}" 
-                                 class="card-img-top h-100 w-100" 
-                                 alt="{{ imagem.titulo_img }}"
-                                 style="object-fit: cover;"
-                                 data-bs-toggle="modal" 
-                                 data-bs-target="#imageModal{{ forloop.counter }}">
-                            
-                            <button class="btn btn-light btn-sm position-absolute top-0 end-0 m-2 rounded-circle"
-                                    style="width: 35px; height: 35px; opacity: 0.8;"
-                                    data-bs-toggle="modal" 
-                                    data-bs-target="#imageModal{{ forloop.counter }}"
-                                    title="tela cheia">
-                                <i class="bi bi-arrows-fullscreen"></i>
-                            </button>
-                        </div>
-                        <div class="card-body d-flex flex-column">
-                            <h5 class="card-title">{{ imagem.titulo_img }}</h5>
-                            <p class="card-text flex-grow-1">{{ imagem.descricao_img|truncatewords:40 }}</p>
-                            <p class="card-text mt-auto">
-                                <small class="text-muted">Autor: {{ imagem.autor_img }}</small>
-                            </p>
-                        </div>
-
-                        {% if user.is_authenticated and user.is_staff %}
-                        <div class="card-footer bg-transparent border-0 pt-0">
-                            <div class="d-flex justify-content-center gap-2">
-                                <a href="{% url 'acervo:editar_imagem' imagem.pk %}" 
-                                   class="btn btn-sm btn-outline-primary">
-                                    <i class="bi bi-pencil-square"></i> Editar
-                                </a>
-                                <a href="{% url 'acervo:excluir_imagem' imagem.pk %}"
-                                   class="btn btn-sm btn-outline-danger"
-                                   onclick="return confirm('Tem certeza que deseja excluir esta imagem?');">
-                                    <i class="bi bi-trash"></i> Excluir
-                                </a>
-                            </div>
-                        </div>
-                        {% endif %}
-                    </div>
-                </div>
-
-                <!-- tela cheia modal-->
-                <div class="modal fade" id="imageModal{{ forloop.counter }}" tabindex="-1" aria-labelledby="imageModalLabel{{ forloop.counter }}" aria-hidden="true">
-                    <div class="modal-dialog modal-xl modal-dialog-centered">
-                        <div class="modal-content border-0 bg-transparent">
-                            <div class="modal-header border-0 position-absolute top-0 end-0 z-3">
-                                <button type="button" class="btn btn-light btn-sm rounded-circle" data-bs-dismiss="modal" aria-label="Fechar">
-                                    <i class="bi bi-x-lg"></i>
+</div>
+        <div class="container-fluid">
+            {% if imagens %}
+                <div class="row g-4">
+                    {% for imagem in imagens %}
+                    <div class="col-lg-4 col-md-6 col-sm-12">
+                        <div class="card h-100 shadow-sm">
+                            <div class="image-container position-relative" style="height: 250px; overflow: hidden;">
+                                <img src="{{ imagem.imagem.url }}" 
+                                     class="card-img-top h-100 w-100" 
+                                     alt="{{ imagem.titulo_img }}"
+                                     style="object-fit: cover;"
+                                     data-bs-toggle="modal" 
+                                     data-bs-target="#imageModal{{ forloop.counter }}">
+                                
+                                <button class="btn btn-light btn-sm position-absolute top-0 end-0 m-2 rounded-circle"
+                                        style="width: 35px; height: 35px; opacity: 0.8;"
+                                        data-bs-toggle="modal" 
+                                        data-bs-target="#imageModal{{ forloop.counter }}"
+                                        title="tela cheia">
+                                    <i class="bi bi-arrows-fullscreen"></i>
                                 </button>
                             </div>
-                            <div class="modal-body p-0 text-center">
-                                <img src="{{ imagem.imagem.url }}" 
-                                     class="img-fluid" 
-                                     alt="{{ imagem.titulo_img }}"
-                                     style="max-height: 85vh; object-fit: contain;">
-                                <div class="image-info bg-dark bg-opacity-75 text-white p-3 mt-2 rounded">
-                                    <h5 class="mb-1">{{ imagem.titulo_img }}</h5>
-                                    <p class="mb-1 small">{{ imagem.descricao_img }}</p>
-                                    <p class="mb-0 small">Autor: {{ imagem.autor_img }}</p>
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="card-title">{{ imagem.titulo_img }}</h5>
+                                <p class="card-text flex-grow-1">{{ imagem.descricao_img|truncatewords:40 }}</p>
+                                <p class="card-text mt-auto">
+                                    <small class="text-muted">Autor: {{ imagem.autor_img }}</small>
+                                </p>
+                            </div>
+
+                            {% if user.is_authenticated and user.is_moderador or user.is_superuser %}
+                            <div class="card-footer bg-transparent border-0 pt-0">
+                                <div class="d-flex justify-content-center gap-2">
+                                    <a href="{% url 'acervo:editar_imagem' imagem.pk %}" class="btn btn-sm btn-outline-primary">
+                                        <i class="bi bi-pencil-square"></i> Editar
+                                    </a>
+                                    <a href="{% url 'acervo:excluir_imagem' imagem.pk %}" class="btn btn-sm btn-outline-danger" onclick="return confirm('Tem certeza que deseja excluir esta imagem?');">
+                                        <i class="bi bi-trash"></i> Excluir
+                                    </a>
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="modal fade" id="imageModal{{ forloop.counter }}" tabindex="-1" aria-labelledby="imageModalLabel{{ forloop.counter }}" aria-hidden="true">
+                        <div class="modal-dialog modal-xl modal-dialog-centered">
+                            <div class="modal-content border-0 bg-transparent">
+                                <div class="modal-header border-0 position-absolute top-0 end-0 z-3">
+                                    <button type="button" class="btn btn-light btn-sm rounded-circle" data-bs-dismiss="modal" aria-label="Fechar">
+                                        <i class="bi bi-x-lg"></i>
+                                    </button>
+                                </div>
+                                <div class="modal-body p-0 text-center">
+                                    <img src="{{ imagem.imagem.url }}" class="img-fluid" alt="{{ imagem.titulo_img }}" style="max-height: 85vh; object-fit: contain;">
+                                    <div class="image-info bg-dark bg-opacity-75 text-white p-3 mt-2 rounded">
+                                        <h5 class="mb-1">{{ imagem.titulo_img }}</h5>
+                                        <p class="mb-1 small">{{ imagem.descricao_img }}</p>
+                                        <p class="mb-0 small">Autor: {{ imagem.autor_img }}</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    {% endfor %}
                 </div>
-                {% endfor %}
-            </div>
 
-            <!--paginação-->
-            <div class="row mt-4">
-                <div class="col-12">
-                    {% include 'includes/pagination.html' %}
+                <div class="row mt-4">
+                    <div class="col-12">
+                        {% include 'includes/pagination.html' %}
+                    </div>
                 </div>
-            </div>
+            {% else %}
+                <p class="text-center">Nenhuma imagem encontrada.</p>
+            {% endif %}
+        </div>
 
-        {% else %}
-            <p class="text-center">Nenhuma imagem encontrada.</p>
-        {% endif %}
-    </div>
-
-    <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header" style="border-bottom: none;">
-                    <h5 class="modal-title w-100 text-center" id="logoutModalLabel">Logout</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
-                </div>
-                <div class="modal-body text-center">Tem certeza que deseja sair da sua conta?</div>
-                <div class="modal-footer" style="border-top: none;">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Não</button>
-                    <a href="{% url 'acervo:logout' %}" class="btn btn-danger">Sim</a>
+        <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header" style="border-bottom: none;">
+                        <h5 class="modal-title w-100 text-center" id="logoutModalLabel">Logout</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                    </div>
+                    <div class="modal-body text-center">Tem certeza que deseja sair da sua conta?</div>
+                    <div class="modal-footer" style="border-top: none;">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Não</button>
+                        <a href="{% url 'acervo:logout' %}" class="btn btn-danger">Sim</a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-
 </main>
 
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('applyFilter').addEventListener('click', function() {
+        document.getElementById('data_inicio').value = document.getElementById('modal_data_inicio').value;
+        document.getElementById('data_fim').value = document.getElementById('modal_data_fim').value;
+        document.getElementById('filterForm').submit();
+    });
+});
+</script>
 {% endblock %}
+

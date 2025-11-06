@@ -1,6 +1,6 @@
 from django.contrib import messages
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Imagem, Artigos, Link, Videos
+from .models import Imagem, Artigos, Link, Videos, UsuarioAdaptado
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.models import Group
 from .forms import ImagemForm, cadastroform, LoginForm, ArtigoForm, LinkForm, VideoForm, PerfilForm, ImagemFiltroForm
@@ -24,7 +24,11 @@ def login_view(request): #view de login
             messages.error(request, "Usuário ou senha incorretos.⚠️")
     else:
         form=LoginForm()
-    return render(request, 'acervo/login.html', {"form": form})
+    context = {
+        'form': form,
+        'page': 'acervo',
+    }
+    return render(request, 'acervo/login.html', context)
 
 def cadastro_view(request): #view de cadastro, ainda ajeitar
     if request.method == 'POST':
@@ -36,7 +40,11 @@ def cadastro_view(request): #view de cadastro, ainda ajeitar
             return redirect('acervo:login')
     else:
         form = cadastroform()
-    return render(request, 'acervo/cadastro.html', {'form': form})
+    context = {
+        'form': form,
+        'page': 'acervo',
+    }
+    return render(request, 'acervo/cadastro.html', context)
 
 def logout_view(request): #view de logout
     logout(request)
@@ -314,7 +322,6 @@ def perfil_view(request):
             if password:
                 user.set_password(password)
             user.save()
-            messages.success(request, "Perfil atualizado com sucesso!")
             return redirect('acervo:listar_imagens')
     else:
         form = PerfilForm(instance=request.user)
@@ -325,3 +332,84 @@ def perfil_view(request):
     }
     
     return render(request, 'acervo/perfil.html', context)
+
+#gerenciamento de usuários 
+def superuser_or_moderador(view_func):
+    def wrapper(request, *args, **kwargs):
+        user = request.user
+        if user.is_authenticated and (user.is_superuser or user.is_moderador()):
+            return view_func(request, *args, **kwargs)
+        return redirect('acervo:listar_imagens')
+    return wrapper
+
+@login_required
+@superuser_or_moderador
+def gerenciar_usuarios(request):
+    busca = request.GET.get('busca', '')
+    usuarios = UsuarioAdaptado.objects.all().order_by('-date_joined')
+
+    if busca:
+        usuarios = usuarios.filter(
+            Q(username__icontains=busca) |
+            Q(email__icontains=busca) |
+            Q(first_name__icontains=busca)
+        )
+
+    paginator = Paginator(usuarios, 10)  
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    querystring = f"busca={busca}" if busca else " "
+
+    context = {
+        'usuarios': page_obj,  
+        'page_obj': page_obj,
+        'busca': busca,
+        'querystring': querystring,
+        'page': 'acervo',
+    }
+    return render(request, 'acervo/gerenciar_usuarios.html', context)
+
+@login_required
+@superuser_or_moderador
+def editar_tipo_usuario(request, user_id):
+    usuario_editar = get_object_or_404(UsuarioAdaptado, id=user_id)
+    grupos = {
+        'usuario': Group.objects.get(name='Usuários'),
+        'moderador': Group.objects.get(name='Moderadores'),
+    }
+
+    if request.user.is_moderador() and (usuario_editar.is_superuser or usuario_editar.is_moderador()):
+        messages.error(request, "Moderadores não podem editar superusuários nem outros moderadores.")
+        return redirect('acervo:gerenciar_usuarios')
+    if usuario_editar == request.user:
+        messages.error(request, "Você não pode alterar seu próprio tipo de usuário.")
+        return redirect('acervo:gerenciar_usuarios')
+
+    if request.method == 'POST':
+        novo_tipo = request.POST.get('tipo_usuario')
+        usuario_editar.groups.clear() 
+        if novo_tipo == 'superuser' and request.user.is_superuser:
+            usuario_editar.is_superuser = True
+            usuario_editar.is_staff = True
+            msg = "superusuário"
+
+        elif novo_tipo == 'moderador':
+            usuario_editar.is_superuser = False
+            usuario_editar.is_staff = False
+            usuario_editar.groups.add(grupos['moderador'])
+            msg = "moderador"
+
+        else:
+            usuario_editar.is_superuser = False
+            usuario_editar.is_staff = False
+            usuario_editar.groups.add(grupos['usuario'])
+            msg = "usuário comum"
+
+        usuario_editar.save()
+        messages.success(request, f"{usuario_editar.username} foi definido como {msg}.")
+        return redirect('acervo:gerenciar_usuarios')
+
+    return render(request, 'acervo/editar_cargo_usuario.html', {'usuario_editar': usuario_editar})
+
+    

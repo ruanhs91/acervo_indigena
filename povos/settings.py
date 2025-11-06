@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'acervo.apps.AcervoConfig',
     'povos',  
     'dashboard',
+    'forum',
 ]
 
 LOGIN_URL = 'acervo:login'

@@ -10,8 +10,8 @@
             <div class="col-md-4 mb-4">
                 <div class="card shadow-sm text-center p-4">
                     <div class="d-flex justify-content-center mb-3">
-                        {% if user.perfil.foto_perfil %}
-                            <img src="{{ user.perfil.foto_perfil.url }}" class="rounded-circle" 
+                        {% if user.foto_perfil %}
+                            <img src="{{ user.foto_perfil.url }}" class="rounded-circle" 
                                  style="width: 120px; height: 120px; object-fit: cover;" alt="Foto de perfil">
                         {% else %}
                             <i class="bi bi-person-circle text-secondary" style="font-size: 120px;"></i>
@@ -87,7 +87,7 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="foto_perfil" class="form-label fw-bold">
+                            <label for="{{form.foto_perfil.id_for_label}}" class="form-label fw-bold">
                                 <i class="bi bi-camera text-success"></i> Foto de Perfil
                             </label>
                             <input type="file" name="foto_perfil" id="foto_perfil" class="form-control" 

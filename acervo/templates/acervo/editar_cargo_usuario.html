@@ -1,0 +1,84 @@
+{% extends 'acervo/base.html' %}
+
+{% block title %}Editar usuários - Povos Indígenas do RN{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="mb-0"><i class="fas fa-user-edit"></i> Editar tipo de usuário</h2>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-4">
+                        <div class="col-md-2 text-center">
+                            {% if usuario_editar.foto_perfil %}
+                                <img src="{{ usuario_editar.foto_perfil.url }}" alt="Foto" class="img-fluid rounded-circle" style="max-height: 80px;">
+                            {% else %}
+                                <div class="bg-secondary rounded-circle d-flex align-items-center justify-content-center mx-auto" style="width: 80px; height: 80px;">
+                                    <i class="fas fa-user text-white fa-2x"></i>
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-10">
+                            <h4>{{ usuario_editar.username }}</h4>
+                            <p class="mb-1"><strong>Email:</strong> {{ usuario_editar.email }}</p>
+                            <p class="mb-1"><strong>Nome:</strong> {{ usuario_editar.first_name }}</p>
+                            <p class="mb-0">
+                                <strong>Cidade/UF:</strong> 
+                                {% if usuario_editar.nome_cidade %}
+                                    {{ usuario_editar.nome_cidade }}/{{ usuario_editar.uf }}
+                                {% else %}
+                                    <span class="text-muted">Não informado</span>
+                                {% endif %}
+                            </p>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <!-- Formulário -->
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                        <div class="form-group">
+                            <label for="tipo_usuario" class="font-weight-bold">Selecionar Tipo de Usuário:</label>
+                            <select name="tipo_usuario" id="tipo_usuario" class="form-control" required>
+                                <option value="">Selecione o tipo...</option>
+                                {% if request.user.is_superuser %}
+                                    <option value="superuser" {% if usuario_editar.is_superuser %}selected{% endif %}>
+                                        Superuser
+                                    </option>
+                                {% endif %}
+                                <option value="moderador" {% if usuario_editar.is_moderador %}selected{% endif %}>
+                                    Moderador
+                                </option>
+                                <option value="usuario" {% if usuario_editar.is_usuario_comum %}selected{% endif %}>
+                                    Usuário Comum
+                                </option>
+                            </select>
+                            <small class="form-text text-muted">
+                                {% if request.user.is_superuser %}
+                                    <strong>Superuser:</strong> Acesso completo ao sistema<br>
+                                {% endif %}
+                                <strong>Moderador:</strong> Pode gerenciar usuários e conteúdo<br>
+                                <strong>Usuário Comum:</strong> Acesso básico ao sistema
+                            </small>
+                        </div>
+                        
+                        <div class="form-group mt-4">
+                            <button type="submit" class="btn btn-success">
+                                <i class="fas fa-save"></i> Salvar Alterações
+                            </button>
+                            <a href="{% url 'acervo:gerenciar_usuarios' %}" class="btn btn-secondary">
+                                <i class="fas fa-times"></i> Cancelar
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

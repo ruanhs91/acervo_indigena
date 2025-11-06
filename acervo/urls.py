@@ -23,4 +23,6 @@ urlpatterns = [
     path('moderacao/rejeitar/<str:tipo>/<int:pk>/', views.rejeicao_conteudo, name='rejeicao_conteudo'),
     path('imagem/editar/<int:pk>/', views.editar_imagem, name='editar_imagem'),
     path('imagem/excluir/<int:pk>/', views.excluir_imagem, name='excluir_imagem'),
+    path('gerenciar_usuarios/', views.gerenciar_usuarios, name='gerenciar_usuarios'),
+    path('editar_usuario/<int:user_id>/', views.editar_tipo_usuario, name='editar_tipo_usuario'),
 ]
