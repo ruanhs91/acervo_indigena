@@ -23,6 +23,35 @@
     box-shadow: none;   
 }
 
+.nav-tabs {
+    border-bottom: 2px solid #dcdcdc;
+    margin-top: 50px;
+}
+.nav-tabs .nav-link {
+    color: #414141;
+    font-weight: 600;
+    border: none;
+    border-bottom: 3px solid transparent;
+    transition: all 0.3s ease;
+}
+.nav-tabs .nav-link:hover {
+    border-color: #b30808;
+    color: #b30808;
+}
+.nav-tabs .nav-link.active {
+    color: #fff;
+    background-color: #b30808;
+    border-color: #b30808;
+    border-radius: 6px 6px 0 0;
+}
+.tab-pane {
+    animation: fadeIn 0.6s ease;
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
 .povo-conteudo {
     display: flex;
     justify-content: center;
@@ -152,164 +181,159 @@
 }
 </style>
 
-
 <main class="inicio1 min-vh-100">
-    <h2 class="titulo-inicio mb-3 fw-bold">Povos Indígenas</h2>
-    <div class="text-povos">
-        <div>Conheça no mapa abaixo a localização das aldeias e comunidades</div>
-    </div>
+  <h2 class="titulo-inicio mb-3 fw-bold">Povos Indígenas</h2>
+  <div class="text-povos">
+    <div>Conheça no mapa abaixo a localização das aldeias e comunidades</div>
+  </div>
 
-    <div class="map-container">
-        <img src="{% static 'dashboard/map1.png' %}" usemap="#image-map" alt="mapa rn">
-    </div>
+  <div class="map-container">
+    <img src="{% static 'dashboard/map1.png' %}" usemap="#image-map" alt="mapa rn">
+  </div>
 
-    <div class="menu-povos">
-        <button onclick="mostrarInfo('cablocos')">Cablocos de Assu</button>
-        <button onclick="mostrarInfo('catu')">Catu</button>
-        <button onclick="mostrarInfo('mendonca')">Mendonça</button>
-        <button onclick="mostrarInfo('sagi')">Sagi/Trabanda</button>
-        <button onclick="mostrarInfo('tapuia')">Tapuia Paiacu</button>
-        <button onclick="mostrarInfo('tarairiú')">Tapuia Tarairiú</button>
-        <button onclick="mostrarInfo('warao')">Warao</button>
-    </div>
-    
-    <!-- CATU -->
-    <div id="catu" class="texto-povo" style="display:none;">
-        <h3 class="titulo-povo" style="margin-top: 40px;">Catu</h3>
-        <div class="povo-conteudo">
-            <div class="povo-img">
-                <img class="img-povo1" src="{% static 'dashboard/catu.jpg' %}" alt="Catu">
-                <p class="legenda-imagem">Fonte: Espaço indígena potiguara Catu</p>
-            </div>
-            <div class="povo-texto">
-                <p>{{ povos.catu.conteudo }}</p>
-            </div>
-        </div>
-    </div>
+  <ul class="nav nav-tabs justify-content-center mb-4" id="povosTabs" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" id="cablocos-tab" data-bs-toggle="tab" data-bs-target="#cablocos" type="button" role="tab">Cablocos de Assu</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="catu-tab" data-bs-toggle="tab" data-bs-target="#catu" type="button" role="tab">Catu</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="mendonca-tab" data-bs-toggle="tab" data-bs-target="#mendonca" type="button" role="tab">Mendonça</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="sagi-tab" data-bs-toggle="tab" data-bs-target="#sagi" type="button" role="tab">Sagi/Trabanda</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="tapuia-tab" data-bs-toggle="tab" data-bs-target="#tapuia" type="button" role="tab">Tapuia Paiacu</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="tarairiu-tab" data-bs-toggle="tab" data-bs-target="#tarairiu" type="button" role="tab">Tapuia Tarairiú</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="warao-tab" data-bs-toggle="tab" data-bs-target="#warao" type="button" role="tab">Warao</button>
+    </li>
+  </ul>
 
-    <!-- TAPUIA PAIACU -->
-    <div id="tapuia" class="texto-povo" style="display:none;">
-        <h3 class="titulo-povo" style="margin-top: 40px;">{{ povos.tapuia.titulo }}</h3>
-        <div class="povo-conteudo-tapuia">
-            <div class="povo-texto" style="width: 100%;">
-                <p>Os Tapuia Paiacu são um povo indígena com uma rica história de resistência no Rio Grande do Norte. Sua trajetória é marcada por lutas pela terra e pela preservação de suas tradições culturais frente aos processos coloniais e de expansão territorial.</p>
-                
-                <p>Originalmente habitando a região do Seridó, os Paiacu desenvolveram estratégias de adaptação e sobrevivência em um ambiente semiárido. Sua organização social e conhecimento do território foram fundamentais para sua resistência ao longo dos séculos, mantendo viva sua identidade cultural mesmo diante das pressões externas.</p>
-                
-                <p>Atualmente, os Tapuia Paiacu continuam sua luta pelo reconhecimento étnico e territorial, reafirmando sua presença no estado através de manifestações culturais, práticas tradicionais e da educação como ferramenta de fortalecimento identitário para as futuras gerações.</p>
-            </div>
-            <div class="povo-img-grande">
-                <img class="img-povo-grande" src="{% static 'dashboard/paiacu.jpg' %}" alt="Lúcia Paiacu Tabajara">
-                <p class="legenda-imagem">Fonte: Guerreira potiguar - Lúcia Paiacu Tabajara</p>
-            </div>
-        </div>
-    </div>
+  <div class="tab-content" id="povosTabsContent">
 
     <!-- CABOCLOS DE ASSU -->
-    <div id="cablocos" class="texto-povo" style="display:none;">
-        <h3 class="titulo-povo" style="margin-top: 40px;">Caboclos de Assu</h3>
-        <div class="povo-conteudo-tapuia">
-            <div class="povo-texto" style="width: 100%;">
-                <p>Os Caboclos, pertencentes da divisão Tapuia (essa classificação é baseada na ideia de que eles têm características físicas, bem como valores sociais e práticas únicas que os distinguem das demais pessoas em seu entorno), é um povo resistente que vem das terras áridas do sertão do Rio Grande do Norte, entre Assu e Paraú, que têm demonstrado força e determinação na luta étnica e política. A trajetória de suas vidas é marcada pelo enfrentamento diário de problemas causados pelas persistentes estiagens e pela dificuldade de obter áreas de terra para o desenvolvimento de atividades agrícolas, com vegetação mais seca com muitas cactáceas e plantas de porte mais baixo. A partir da manutenção das famílias em seu território e da organização política, os Caboclos têm trabalhado para obter o reconhecimento de seus direitos como povo indígena.</p>
+    <div class="tab-pane fade show active" id="cablocos" role="tabpanel" aria-labelledby="cablocos-tab">
+      <h3 class="titulo-povo" style="margin-top: 40px;">Caboclos de Assu</h3>
+      <div class="povo-conteudo-tapuia">
+        <div class="povo-texto" style="width: 100%;">
+          <p>Os Caboclos, pertencentes da divisão Tapuia (essa classificação é baseada na ideia de que eles têm características físicas, bem como valores sociais e práticas únicas que os distinguem das demais pessoas em seu entorno), é um povo resistente que vem das terras áridas do sertão do Rio Grande do Norte, entre Assu e Paraú, que têm demonstrado força e determinação na luta étnica e política. A trajetória de suas vidas é marcada pelo enfrentamento diário de problemas causados pelas persistentes estiagens e pela dificuldade de obter áreas de terra para o desenvolvimento de atividades agrícolas, com vegetação mais seca com muitas cactáceas e plantas de porte mais baixo. A partir da manutenção das famílias em seu território e da organização política, os Caboclos têm trabalhado para obter o reconhecimento de seus direitos como povo indígena.</p>
 
-                <p>A estatura baixa, os pés chatos - que "mais parecia um bolão" -, o “nariz labrojeiro” e as mulheres “abalofadas”, com cabelos pretos e longos são características físicas que refletem uma visão colonizadora e estereotipada, desconsiderando a complexidade cultural e física desses povos. São mencionados seus hábitos alimentares, suas práticas matrimoniais (casamentos endogâmicos) e sua liberalidade sexual, e é através dessas características específicas que os colonizadores justificariam sua subjugação forçada. Os caboclos são identificados como "Tapuios", o que constitui uma forma de depreciação que representa uma especificidade e uma certa ideia de inferioridade. Isso cria uma fronteira étnica entre a comunidade e as outras áreas próximas, o que leva a rixas, desconfianças e desprezo.</p>
+          <p>A estatura baixa, os pés chatos - que "mais parecia um bolão" -, o “nariz labrojeiro” e as mulheres “abalofadas”, com cabelos pretos e longos são características físicas que refletem uma visão colonizadora e estereotipada, desconsiderando a complexidade cultural e física desses povos. São mencionados seus hábitos alimentares, suas práticas matrimoniais (casamentos endogâmicos) e sua liberalidade sexual, e é através dessas características específicas que os colonizadores justificariam sua subjugação forçada. Os caboclos são identificados como "Tapuios", o que constitui uma forma de depreciação que representa uma especificidade e uma certa ideia de inferioridade. Isso cria uma fronteira étnica entre a comunidade e as outras áreas próximas, o que leva a rixas, desconfianças e desprezo.</p>
 
-                <p>Com o avanço da colonização e a expansão das fazendas, muitos indígenas da região foram deslocados e incorporados a sistemas de trabalho exploratórios. Apesar das dificuldades, os Caboclos resistiram, estabelecendo-se nas terras onde atualmente vivem. Hoje, a comunidade ainda existe, busca visibilidade e reconhecimento por meio de mobilizações políticas, como a criação da Associação Comunitária e a participação em audiências públicas e assembleias indígenas no estado do Rio Grande do Norte.</p>
-            </div>
+          <p>Com o avanço da colonização e a expansão das fazendas, muitos indígenas da região foram deslocados e incorporados a sistemas de trabalho exploratórios. Apesar das dificuldades, os Caboclos resistiram, estabelecendo-se nas terras onde atualmente vivem. Hoje, a comunidade ainda existe, busca visibilidade e reconhecimento por meio de mobilizações políticas, como a criação da Associação Comunitária e a participação em audiências públicas e assembleias indígenas no estado do Rio Grande do Norte.</p>
         </div>
+      </div>
+    </div>
+
+    <!-- CATU -->
+    <div class="tab-pane fade" id="catu" role="tabpanel" aria-labelledby="catu-tab">
+      <h3 class="titulo-povo" style="margin-top: 40px;">Catu</h3>
+      <div class="povo-conteudo">
+        <div class="povo-img">
+          <img class="img-povo1" src="{% static 'dashboard/catu.jpg' %}" alt="Catu">
+          <p class="legenda-imagem">Fonte: Espaço indígena potiguara Catu</p>
+        </div>
+        <div class="povo-texto">
+          <p>{{ povos.catu.conteudo }}</p>
+        </div>
+      </div>
     </div>
 
     <!-- MENDONÇA -->
-    <div id="mendonca" class="texto-povo" style="display:none;">
-        <h3 class="titulo-povo" style="margin-top: 40px;">Mendonça</h3>
-        <div class="povo-conteudo-tapuia">
-            <div class="povo-texto" style="width: 100%;">
-                <p>Originalmente, os Mendonça habitavam o território que hoje constitui o estado do Rio Grande do Norte, mas devido a processos históricos de colonização e conflitos, foram deslocados para áreas como a comunidade Amarelão, que está situada no município de João Câmara. Esse nome refere-se ao antigo ritual de culto ao sol, onde os Mendonça saíam de manhã cedo, ainda escuro, para cantar e tocar maracás nos primeiros raios de sol. São de uma etnia que pertence à divisão dos Tapuia que atualmente, ainda existe, preservando sua cultura e tradições. Em termos demográficos, é a maior comunidade indígena do RN, que reuniu famílias de tupis fugidos, sendo um grupo formado por mais de duas mil pessoas que se identificam como uma grande família.</p>
-            </div>
-
-            <div class="povo-img-grande" style="text-align: center; margin: 30px auto;">
-                <img class="img-povo-grande" src="{% static 'dashboard/amarelãomendonça.PNG' %}" alt="Comunidade Amarelão Mendonça" style="display: block; margin: 0 auto; max-width: 800px; width: 100%; height: auto; border-radius: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.15);">
-                <p class="legenda-imagem">Crianças indígenas de Mendonça do Amarelão (RN). Foto: Reprodução.</p>
-            </div>
-
-            <div class="povo-texto" style="width: 100%;">
-                <p>Eles tentaram retomar o território pela primeira vez nos anos 90, quando enfrentaram repressões e resistência, obtendo uma parte do território de volta. Atualmente, os Mendonça continuam a fortalecer suas práticas culturais e a lutar pelo reconhecimento e direitos, participando de Assembleias. As famílias estão organizadas em uma Associação Comunitária, onde são promovidas grandes variedades de atividades culturais, sendo uma delas a festa da castanha, que é realizada anualmente. Festa essa que valoriza o trabalho do beneficiamento da castanha, já que os Mendonça trabalhavam nas fazendas com colheita de algodão e agave, e agora se dedicam à agricultura e ao trabalho com as castanhas de caju. Um dos objetivos seria também dar maior visibilidade à própria identidade indígena.</p>
-            </div>
+    <div class="tab-pane fade" id="mendonca" role="tabpanel" aria-labelledby="mendonca-tab">
+      <h3 class="titulo-povo" style="margin-top: 40px;">Mendonça</h3>
+      <div class="povo-conteudo-tapuia">
+        <div class="povo-texto" style="width: 100%;">
+          <p>Originalmente, os Mendonça habitavam o território que hoje constitui o estado do Rio Grande do Norte, mas devido a processos históricos de colonização e conflitos, foram deslocados para áreas como a comunidade Amarelão, que está situada no município de João Câmara. Esse nome refere-se ao antigo ritual de culto ao sol, onde os Mendonça saíam de manhã cedo, ainda escuro, para cantar e tocar maracás nos primeiros raios de sol. São de uma etnia que pertence à divisão dos Tapuia que atualmente, ainda existe, preservando sua cultura e tradições. Em termos demográficos, é a maior comunidade indígena do RN, que reuniu famílias de tupis fugidos, sendo um grupo formado por mais de duas mil pessoas que se identificam como uma grande família.</p>
         </div>
+
+        <div class="povo-img-grande" style="text-align: center; margin: 30px auto;">
+          <img class="img-povo-grande" src="{% static 'dashboard/amarelãomendonça.PNG' %}" alt="Comunidade Amarelão Mendonça" style="display: block; margin: 0 auto; max-width: 800px; width: 100%; height: auto; border-radius: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.15);">
+          <p class="legenda-imagem">Crianças indígenas de Mendonça do Amarelão (RN). Foto: Reprodução.</p>
+        </div>
+
+        <div class="povo-texto" style="width: 100%;">
+          <p>Eles tentaram retomar o território pela primeira vez nos anos 90, quando enfrentaram repressões e resistência, obtendo uma parte do território de volta. Atualmente, os Mendonça continuam a fortalecer suas práticas culturais e a lutar pelo reconhecimento e direitos, participando de Assembleias. As famílias estão organizadas em uma Associação Comunitária, onde são promovidas grandes variedades de atividades culturais, sendo uma delas a festa da castanha, que é realizada anualmente. Festa essa que valoriza o trabalho do beneficiamento da castanha, já que os Mendonça trabalhavam nas fazendas com colheita de algodão e agave, e agora se dedicam à agricultura e ao trabalho com as castanhas de caju. Um dos objetivos seria também dar maior visibilidade à própria identidade indígena.</p>
+        </div>
+      </div>
     </div>
 
     <!-- SAGI / TRABANDA -->
-    <div id="sagi" class="texto-povo" style="display:none;">
-        <h3 class="titulo-povo" style="margin-top: 40px;">Sagi / Trabanda</h3>
-        <div class="povo-conteudo-tapuia">
-            <div class="povo-texto" style="width: 100%;">
-                <p>Os indígenas da comunidade Sagi/Trabanda estão localizados no litoral sul do Rio Grande do Norte, na região de Baía Formosa, onde o mar e a mata se encontram. São grupos que mantêm vivas tradições culturais ligadas ao território, à pesca artesanal e à relação sagrada com a natureza. Ao longo das gerações, a comunidade construiu uma identidade baseada na coletividade, no respeito aos mais velhos e na preservação de costumes herdados de seus antepassados Tapuias.</p>
+    <div class="tab-pane fade" id="sagi" role="tabpanel" aria-labelledby="sagi-tab">
+      <h3 class="titulo-povo" style="margin-top: 40px;">Sagi / Trabanda</h3>
+      <div class="povo-conteudo-tapuia">
+        <div class="povo-texto" style="width: 100%;">
+          <p>Os indígenas da comunidade Sagi/Trabanda estão localizados no litoral sul do Rio Grande do Norte, na região de Baía Formosa, onde o mar e a mata se encontram. São grupos que mantêm vivas tradições culturais ligadas ao território, à pesca artesanal e à relação sagrada com a natureza. Ao longo das gerações, a comunidade construiu uma identidade baseada na coletividade, no respeito aos mais velhos e na preservação de costumes herdados de seus antepassados Tapuias.</p>
 
-                <p>Durante o processo de colonização e expansão costeira, os povos dessa região sofreram forte pressão territorial e cultural, o que levou muitos deles à migração e à reorganização em comunidades menores. Mesmo diante dessas transformações, Sagi/Trabanda mantém a força de sua ancestralidade e a consciência de pertencimento ao território, sendo um importante ponto de referência para o reconhecimento dos povos indígenas do litoral potiguar.</p>
+          <p>Durante o processo de colonização e expansão costeira, os povos dessa região sofreram forte pressão territorial e cultural, o que levou muitos deles à migração e à reorganização em comunidades menores. Mesmo diante dessas transformações, Sagi/Trabanda mantém a força de sua ancestralidade e a consciência de pertencimento ao território, sendo um importante ponto de referência para o reconhecimento dos povos indígenas do litoral potiguar.</p>
 
-                <p>Hoje, a comunidade luta pelo reconhecimento étnico e pela valorização de suas práticas culturais, através de iniciativas de educação indígena, eventos comunitários e da transmissão oral de saberes. O fortalecimento da identidade indígena e a preservação ambiental do território são pilares fundamentais para garantir o futuro das próximas gerações que habitam Sagi/Trabanda.</p>
-            </div>
-
-            <div class="povo-img-grande" style="text-align: center; margin: 40px auto;">
-                <img class="img-povo-grande" src="{% static 'dashboard/sagi.png' %}" alt="Comunidade Sagi/Trabanda" style="display: block; margin: 0 auto; max-width: 800px; width: 100%; height: auto; border-radius: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.15);">
-                <p class="legenda-imagem">Fonte: Comunidade Indígena Sagi/Trabanda — Baía Formosa, RN</p>
-            </div>
+          <p>Hoje, a comunidade luta pelo reconhecimento étnico e pela valorização de suas práticas culturais, através de iniciativas de educação indígena, eventos comunitários e da transmissão oral de saberes. O fortalecimento da identidade indígena e a preservação ambiental do território são pilares fundamentais para garantir o futuro das próximas gerações que habitam Sagi/Trabanda.</p>
         </div>
+
+        <div class="povo-img-grande" style="text-align: center; margin: 40px auto;">
+          <img class="img-povo-grande" src="{% static 'dashboard/sagi.png' %}" alt="Comunidade Sagi/Trabanda" style="display: block; margin: 0 auto; max-width: 800px; width: 100%; height: auto; border-radius: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.15);">
+          <p class="legenda-imagem">Fonte: Comunidade Indígena Sagi/Trabanda — Baía Formosa, RN</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAPUIA PAIACU -->
+    <div class="tab-pane fade" id="tapuia" role="tabpanel" aria-labelledby="tapuia-tab">
+      <h3 class="titulo-povo" style="margin-top: 40px;">Tapuia Paiacu</h3>
+      <div class="povo-conteudo-tapuia">
+        <div class="povo-texto" style="width: 100%;">
+          <p>Os Tapuia Paiacu são um povo indígena com uma rica história de resistência no Rio Grande do Norte. Sua trajetória é marcada por lutas pela terra e pela preservação de suas tradições culturais frente aos processos coloniais e de expansão territorial.</p>
+
+          <p>Originalmente habitando a região do Seridó, os Paiacu desenvolveram estratégias de adaptação e sobrevivência em um ambiente semiárido. Sua organização social e conhecimento do território foram fundamentais para sua resistência ao longo dos séculos, mantendo viva sua identidade cultural mesmo diante das pressões externas.</p>
+
+          <p>Atualmente, os Tapuia Paiacu continuam sua luta pelo reconhecimento étnico e territorial, reafirmando sua presença no estado através de manifestações culturais, práticas tradicionais e da educação como ferramenta de fortalecimento identitário para as futuras gerações.</p>
+        </div>
+        <div class="povo-img-grande">
+          <img class="img-povo-grande" src="{% static 'dashboard/paiacu.jpg' %}" alt="Lúcia Paiacu Tabajara">
+          <p class="legenda-imagem">Fonte: Guerreira potiguar - Lúcia Paiacu Tabajara</p>
+        </div>
+      </div>
     </div>
 
     <!-- TAPUIA TARAIRIÚ -->
-    <div id="tarairiú" class="texto-povo" style="display:none;">
-        <h3 class="titulo-povo" style="margin-top: 40px;">Tapuia Tarairiú</h3>
-        <div class="povo-conteudo">
-            <div class="povo-img">
-                <img class="img-povo1" src="{% static 'dashboard/tarairiu.png' %}" alt="Tapuia Tarairiú">
-                <p class="legenda-imagem">Fonte: Representação indígena Tarairiú</p>
-            </div>
-            <div class="povo-texto">
-                <p>Os Tarairiú, parte do grupo Tapuia, habitavam o sertão semiárido do Nordeste brasileiro, incluindo o Rio Grande do Norte, Paraíba e Pernambuco. Eles eram nômades e divididos em vários povos, como os janduís, canindés e panatis. Suas aldeias principais estavam localizadas às margens dos rios Açu e Apodi, além de outros locais estratégicos.</p>
-
-                <p>Fisicamente, na visão do colonizador, os homens eram altos e fortes, enquanto as mulheres eram mais baixas e robustas. Viviam da caça, pesca e agricultura, plantando mandioca e milho, e faziam festas religiosas, bebendo uma bebida fermentada de mel chamada “Uvd”. Tinham costumes como o uso de piercings em rituais de passagem e pintavam-se com urucum e jenipapo.</p>
-
-                <p>Com o início da colonização, especialmente com a chegada dos holandeses e, depois, dos portugueses, esses povos enfrentaram conflitos, culminando na “Guerra dos Bárbaros” no século XVII. Muitos Tarairiú foram mortos, escravizados ou aldeados em missões religiosas. A falta de terras e a intensa miscigenação resultaram na perda de suas tradições e identidade cultural.</p>
-            </div>
+    <div class="tab-pane fade" id="tarairiu" role="tabpanel" aria-labelledby="tarairiu-tab">
+      <h3 class="titulo-povo" style="margin-top: 40px;">Tapuia Tarairiú</h3>
+      <div class="povo-conteudo">
+        <div class="povo-img">
+          <img class="img-povo1" src="{% static 'dashboard/tarairiu.png' %}" alt="Tapuia Tarairiú">
+          <p class="legenda-imagem">Fonte: Representação indígena Tarairiú</p>
         </div>
+        <div class="povo-texto">
+          <p>Os Tarairiú, parte do grupo Tapuia, habitavam o sertão semiárido do Nordeste brasileiro, incluindo o Rio Grande do Norte, Paraíba e Pernambuco. Eles eram nômades e divididos em vários povos, como os janduís, canindés e panatis. Suas aldeias principais estavam localizadas às margens dos rios Açu e Apodi, além de outros locais estratégicos.</p>
+
+          <p>Fisicamente, na visão do colonizador, os homens eram altos e fortes, enquanto as mulheres eram mais baixas e robustas. Viviam da caça, pesca e agricultura, plantando mandioca e milho, e faziam festas religiosas, bebendo uma bebida fermentada de mel chamada “Uvd”. Tinham costumes como o uso de piercings em rituais de passagem e pintavam-se com urucum e jenipapo.</p>
+
+          <p>Com o início da colonização, especialmente com a chegada dos holandeses e, depois, dos portugueses, esses povos enfrentaram conflitos, culminando na “Guerra dos Bárbaros” no século XVII. Muitos Tarairiú foram mortos, escravizados ou aldeados em missões religiosas. A falta de terras e a intensa miscigenação resultaram na perda de suas tradições e identidade cultural.</p>
+        </div>
+      </div>
     </div>
 
     <!-- WARAO -->
-    <div id="warao" class="texto-povo" style="display:none;">
-    <h3 class="titulo-povo" style="margin-top: 40px;">Warao</h3>
-
-    <div class="povo-conteudo">
+    <div class="tab-pane fade" id="warao" role="tabpanel" aria-labelledby="warao-tab">
+      <h3 class="titulo-povo" style="margin-top: 40px;">Warao</h3>
+      <div class="povo-conteudo">
         <div class="povo-img">
-        <img class="img-povo1" src="{% static 'dashboard/warao.png' %}" alt="Povo Warao">
-        <p class="legenda-imagem">Fonte: GettyImages</p>
+          <img class="img-povo1" src="{% static 'dashboard/warao.png' %}" alt="Povo Warao">
+          <p class="legenda-imagem">Fonte: GettyImages</p>
         </div>
-
         <div class="povo-texto">
-        <p>
-            O povo Warao, cujo nome significa <i>“povo da água”</i>, é um grupo indígena que pertence à divisão Tupi.
-            Habitavam o delta do rio Orinoco, na Venezuela, e enfrentaram deslocamentos forçados devido a crises
-            socioeconômicas e ambientais. Desde 2014, migraram para o Brasil, encontrando-se atualmente em estados como
-            Roraima, Amazonas e, mais recentemente, no Rio Grande do Norte.
-        </p>
+          <p>O povo Warao, cujo nome significa <i>“povo da água”</i>, é um grupo indígena que pertence à divisão Tupi. Habitavam o delta do rio Orinoco, na Venezuela, e enfrentaram deslocamentos forçados devido a crises socioeconômicas e ambientais. Desde 2014, migraram para o Brasil, encontrando-se atualmente em estados como Roraima, Amazonas e, mais recentemente, no Rio Grande do Norte.</p>
 
-        <p>
-            Sua luta inclui a busca por melhores condições de vida e saúde, como também a história da construção da
-            barragem no Caño Manamo, que impactou gravemente sua organização social e territorial. Hoje, os Warao
-            enfrentam desafios em sua nova realidade, incluindo vulnerabilidades sociais e de saúde.
-        </p>
+          <p>Sua luta inclui a busca por melhores condições de vida e saúde, como também a história da construção da barragem no Caño Manamo, que impactou gravemente sua organização social e territorial. Hoje, os Warao enfrentam desafios em sua nova realidade, incluindo vulnerabilidades sociais e de saúde.</p>
         </div>
+      </div>
     </div>
-    </div>
-
-    <script>
-        function mostrarInfo(id) {
-            document.querySelectorAll('.texto-povo').forEach(div => {
-                div.style.display = 'none';
-            });
-            document.getElementById(id).style.display = 'block';
-        }
-    </script>
+  </div>
 </main>
-
 {% endblock %}
