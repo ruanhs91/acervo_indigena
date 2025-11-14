@@ -24,10 +24,7 @@
                 <a class="nav-link dropdown-toggle {% if page|default:''|slice:':6' == 'acervo' %}active{% endif %}"
                     href="/acervo/"
                     id="acervoDropdown"
-                    role="button"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                >
+                    role="button"data-bs-toggle="dropdown"aria-expanded="false">
                     ACERVO
                     </a>
                     <ul class="dropdown-menu" arialabelledby="acervoDropdown">
@@ -44,12 +41,12 @@
 
                         {% if user.foto_perfil %}
                             <img src="{{ user.foto_perfil.url }}"
-                            class="rounded-circle" style="width: 30px; height: 30px; object-fit: cover;">
+                            class="rounded-circle" style="width: 20px; height: 20px; object-fit: cover;"> <!-- tamanho temporario da foto-->
                         {% else %}
                             <i class="bi bi-person-circle" style="font-size: 1.6rem;"></i>
                         {% endif %}
 
-                        <span class="username">{{ user.username }}</span>
+                        <span class="username" style='color:white;'>{{ user.username }}</span>
                     </button>
 
                     <ul class="dropdown-menu dropdown-menu-end">
@@ -83,6 +80,21 @@
     
     <main class="flex-grow-1">
         {% block content %}{% endblock %}
+        <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header" style="border-bottom: none;">
+                        <h5 class="modal-title w-100 text-center" id="logoutModalLabel">Logout</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                    </div>
+                    <div class="modal-body text-center">Tem certeza que deseja sair da sua conta?</div>
+                    <div class="modal-footer" style="border-top: none;">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Não</button>
+                        <a href="{% url 'acervo:logout' %}" class="btn btn-danger">Sim</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
     
     <footer class="footer-custom">

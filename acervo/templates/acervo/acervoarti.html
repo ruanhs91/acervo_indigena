@@ -1,0 +1,141 @@
+{% extends "acervo/base.html" %}
+{% load static %}
+
+{% block title %}Acervo — Artigos{% endblock %}
+
+{% block content %}
+<main class="inicio min-vh-100">
+    <div class="container-fluid">
+        <h2 class="titulo-inicio mb-4 fw-bold">Acervo - artigos</h2>
+
+        <div class="d-flex justify-content-between align-items-center mb-4 px-3">
+            <form method="get" action="{% url 'acervo:listar_artigos' %}" class="d-flex align-items-center flex-grow-1 me-3" id="filterForm">
+
+                <div class="input-group me-2">
+                    <input type="text" name="query" class="form-control" placeholder="Buscar artigos..."
+                        value="{{ filtro_form.query.value|default:'' }}">
+                    <button class="btn btn-secondary" type="submit"><i class="bi bi-search"></i></button>
+                </div>
+
+                <button type="button" class="btn btn-secondary d-flex align-items-center"
+                        data-bs-toggle="modal" data-bs-target="#filterModal">
+                    <i class="bi bi-funnel"></i>
+                </button>
+
+                <input type="hidden" id="data_inicio" name="data_inicio" value="{{ filtro_form.data_inicio.value|default:'' }}">
+                <input type="hidden" id="data_fim" name="data_fim" value="{{ filtro_form.data_fim.value|default:'' }}">
+            </form>
+
+            <div class="dropdown">
+                <button class="btn dropdown-toggle d-flex align-items-center gap-1" type="button" data-bs-toggle="dropdown"
+                        style="background-color: #1A4623; color:white;">
+                    <i class="bi bi-plus-lg"></i> Adicionar
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item d-flex align-items-center gap-2" href="{% url 'acervo:upload_artigo' %}">
+                        <i class="bi bi-file-earmark-text"></i> Artigo
+                    </a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="modal fade" id="filterModal" tabindex="-1" aria-labelledby="filterModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+
+                    <div class="modal-header border-0 pb-0">
+                        <h5 class="modal-title" id="filterModalLabel">Filtragem por data</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label class="form-label">Data de início</label>
+                            <input type="date" class="form-control" id="modal_data_inicio"
+                                   value="{{ filtro_form.data_inicio.value|default:'' }}">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Data de fim</label>
+                            <input type="date" class="form-control" id="modal_data_fim"
+                                   value="{{ filtro_form.data_fim.value|default:'' }}">
+                        </div>
+                    </div>
+
+                    <div class="modal-footer border-0 pt-0">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-success" id="applyFilter">Aplicar filtro</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+
+            {% if artigos %}
+                <div class="row g-4">
+
+                    {% for artigo in artigos %}
+                    <div class="col-lg-4 col-md-6 col-sm-12">
+                        <div class="card h-100 shadow-sm">
+
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="card-title">{{ artigo.titulo_artigo }}</h5>
+
+                                <p class="card-text text-muted flex-grow-1">
+                                    {{ artigo.descricao_artigo|truncatewords:40 }}
+                                </p>
+
+                                <p class="card-text mt-auto">
+                                    <small class="text-muted">Autor: {{ artigo.autor_artigo|default:'Desconhecido' }}</small>
+                                </p>
+
+                                <a href="{{ artigo.arquivo.url }}" target="_blank" class="btn w-100 mt-3"style="background: linear-gradient(135deg, #3a8a3a, #2f7d2f); color: #fff; border: none;"><i class="bi bi-file-earmark-arrow-down"></i> Abrir artigo</a>
+                            </div>
+
+                            {% if user.is_authenticated and user.is_moderador or user.is_superuser %}
+                            <div class="card-footer d-flex justify-content-center gap-2 bg-transparent border-0">
+                                <a href="{% url 'acervo:editar_artigo' artigo.pk %}" class="btn btn-sm btn-outline-primary">
+                                    <i class="bi bi-pencil-square"></i> Editar
+                                </a>
+
+                                <a href="{% url 'acervo:excluir_artigo' artigo.pk %}"
+                                   class="btn btn-sm btn-outline-danger"
+                                   onclick="return confirm('Tem certeza que deseja excluir este artigo?');">
+                                    <i class="bi bi-trash"></i> Excluir
+                                </a>
+                            </div>
+                            {% endif %}
+
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                </div>
+
+                <div class="row mt-4">
+                    <div class="col-12">
+                        {% include 'includes/pagination.html' %}
+                    </div>
+                </div>
+
+            {% else %}
+                <p class="text-center">Nenhum artigo encontrado.</p>
+            {% endif %}
+
+        </div>
+    </div>
+</main>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('applyFilter').addEventListener('click', function() {
+        document.getElementById('data_inicio').value = document.getElementById('modal_data_inicio').value;
+        document.getElementById('data_fim').value = document.getElementById('modal_data_fim').value;
+        document.getElementById('filterForm').submit();
+    });
+});
+</script>
+
+{% endblock %}

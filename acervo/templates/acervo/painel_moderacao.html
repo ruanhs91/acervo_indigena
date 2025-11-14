@@ -140,6 +140,47 @@
       <p class="text-muted ms-3">Nenhum vídeo pendente.</p>
     {% endif %}
   </section>
+  <section class="mb-5">
+    <h3 class="fw-semibold mb-4" style="color:#8b0000">
+        <i class="bi bi-mic"></i> Áudios
+    </h3>
+
+    {% if audios %}
+      <div class="row g-4">
+        {% for audio in audios %}
+          <div class="col-12 col-md-6 col-lg-4">
+            <div class="card h-100 shadow-sm">
+              <div class="card-body d-flex flex-column">
+                <h5 class="card-title">{{ audio.titulo_audio }}</h5>
+
+                <p class="card-text text-muted">{{ audio.descricao_audio }}</p>
+
+                <audio controls class="w-100 mb-2">
+                    <source src="{{ audio.audio.url }}" type="audio/mpeg">
+                    Seu navegador não suporta reprodução de áudio.
+                </audio>
+
+                <p class="mb-2"><strong>Autor:</strong> {{ audio.autor_audio }}</p>
+
+                <div class="mt-auto d-flex gap-2">
+                  <a href="{% url 'acervo:aprovar_conteudo' 'audio' audio.id %}" class="btn btn-success btn-sm flex-fill">
+                    <i class="bi bi-check-lg"></i> Aprovar
+                  </a>
+                  <a href="{% url 'acervo:rejeicao_conteudo' 'audio' audio.id %}" class="btn btn-danger btn-sm flex-fill">
+                    <i class="bi bi-x-lg"></i> Rejeitar
+                  </a>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="text-muted ms-3">Nenhum áudio pendente.</p>
+    {% endif %}
+</section>
+
 
 </main>
 {% endblock %}

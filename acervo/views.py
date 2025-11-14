@@ -1,9 +1,9 @@
 from django.contrib import messages
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Imagem, Artigos, Link, Videos, UsuarioAdaptado
+from .models import Imagem, Artigos, Link, Videos, UsuarioAdaptado, Audio
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.models import Group
-from .forms import ImagemForm, cadastroform, LoginForm, ArtigoForm, LinkForm, VideoForm, PerfilForm, ImagemFiltroForm
+from .forms import ImagemForm, cadastroform, LoginForm, ArtigoForm, LinkForm, VideoForm, PerfilForm, ImagemFiltroForm, AudioForm
 from django.contrib.auth.decorators import login_required, user_passes_test 
 from django.db.models import Q
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger 
@@ -98,22 +98,173 @@ def listar_imagens(request): #view de listagem de imagens com filtro e paginaç�
 
 def listar_artigos(request): #view de listagem de artigos, ajeitar 
     artigos = Artigos.objects.filter(aprovado='A').order_by('data_envio')
+    filtro_form=ImagemFiltroForm(request.GET or None)
+
+    if filtro_form.is_valid():
+        query = filtro_form.cleaned_data.get('query')
+        data_inicio = filtro_form.cleaned_data.get('data_inicio')
+        data_fim = filtro_form.cleaned_data.get('data_fim')
+
+        if query:
+            artigos = artigos.filter(
+                Q(titulo_artigo__icontains=query) |
+                Q(descricao_artigo__icontains=query) |
+                Q(autor_artigo__icontains=query)
+            )
+        if data_inicio:
+            artigos = artigos.filter(data_envio__date__gte=data_inicio)
+        if data_fim:
+            artigos = artigos.filter(data_envio__date__lte=data_fim)
+    
+    itens_por_pagina = 9
+    paginator = Paginator(artigos, itens_por_pagina)
+    page_number = request.GET.get('page')
+
+    params=request.GET.copy()
+    if 'page' in params:
+        params.pop('page')
+
+    try: 
+        page_obj = paginator.get_page(page_number)
+    except PageNotAnInteger:
+        page_obj = paginator.get_page(1)
+    except EmptyPage:
+        page_obj = paginator.get_page(paginator.num_pages)
+
     context = {
-        "artigos": artigos,
+        "artigos": page_obj,
+        'page_obj': page_obj,
+        'filtro_form': filtro_form, 
+        'querystring': params.urlencode(),
+        'page': 'acervo',
     }
     return render(request, "acervo/acervoarti.html", context)
 
 def listar_links(request): #view de listagem de links, ajeitar
     links = Link.objects.filter(aprovado='A').order_by('data_envio')
+    filtro_form=ImagemFiltroForm(request.GET or None)
+
+    if filtro_form.is_valid():
+        query = filtro_form.cleaned_data.get('query')
+        data_inicio = filtro_form.cleaned_data.get('data_inicio')
+        data_fim = filtro_form.cleaned_data.get('data_fim')
+
+        if query:
+            links = links.filter(
+                Q(titulo_link__icontains=query) |
+                Q(descricao_link__icontains=query) |
+                Q(autor__icontains=query)
+            )
+        if data_inicio:
+            links = links.filter(data_envio__date__gte=data_inicio)
+        if data_fim:
+            links = links.filter(data_envio__date__lte=data_fim)
+    itens_por_pagina = 9 
+    paginator = Paginator(links, itens_por_pagina)
+    page_number = request.GET.get('page')
+
+    params=request.GET.copy()
+    if 'page' in params:
+        params.pop('page')
+    try:
+        page_obj = paginator.get_page(page_number)
+    except PageNotAnInteger:
+        page_obj = paginator.get_page(1)
+    except EmptyPage:
+        page_obj = paginator.get_page(paginator.num_pages)
+
     context = {
-        "links": links,
+        "links": page_obj,
+        'page_obj': page_obj, 
+        'filtro_form': filtro_form,
+        'querystring': params.urlencode(),
+        'page': 'acervo',
     }
     return render(request, "acervo/acervolinks.html", context)
 
+def listar_audios(request): 
+    audios = Audio.objects.filter(aprovado='A').order_by('data_envio')
+    filtro_form=ImagemFiltroForm(request.GET or None)
+
+    if filtro_form.is_valid():
+        query = filtro_form.cleaned_data.get('query')
+        data_inicio = filtro_form.cleaned_data.get('data_inicio')
+        data_fim = filtro_form.cleaned_data.get('data_fim')
+
+        if query:
+            audios = audios.filter(
+                Q(titulo_audio__icontains=query) |
+                Q(descricao_audio__icontains=query) |
+                Q(autor_audio__icontains=query)
+            )
+        if data_inicio:
+            audios = audios.filter(data_envio__date__gte=data_inicio)
+        if data_fim:
+            audios = audios.filter(data_envio__date__lte=data_fim)
+    
+    itens_por_pagina = 9
+    paginator = Paginator(audios, itens_por_pagina)
+    page_number = request.GET.get('page')
+
+    params=request.GET.copy()
+    if 'page' in params:
+        params.pop('page')
+    try:
+        page_obj = paginator.get_page(page_number)
+    except PageNotAnInteger:
+        page_obj = paginator.get_page(1)
+    except EmptyPage:
+        page_obj = paginator.get_page(paginator.num_pages)
+
+    context = {
+        "audios": page_obj,
+        'page_obj': page_obj, 
+        'filtro_form': filtro_form,
+        'querystring': params.urlencode(),
+        'page': 'acervo',
+    }
+    return render(request, "acervo/acervoaudio.html", context)
+
 def listar_videos(request): #view de listagem de vídeos, ajeitar
     videos = Videos.objects.filter(aprovado='A').order_by('data_envio')
+    filtro_form=ImagemFiltroForm(request.GET or None)
+
+    if filtro_form.is_valid():
+        query = filtro_form.cleaned_data.get('query')
+        data_inicio = filtro_form.cleaned_data.get('data_inicio')
+        data_fim = filtro_form.cleaned_data.get('data_fim')
+
+        if query:
+            videos = videos.filter(
+                Q(titulo_video__icontains=query) |
+                Q(descricao_video__icontains=query) |
+                Q(autor_video__icontains=query)
+            )
+        if data_inicio:
+            videos = videos.filter(data_envio__date__gte=data_inicio)
+        if data_fim:
+            videos = videos.filter(data_envio__date__lte=data_fim)
+    itens_por_pagina = 9
+    paginator = Paginator(videos, itens_por_pagina)
+    page_number = request.GET.get('page')
+
+    params=request.GET.copy()
+    if 'page' in params:
+        params.pop('page')
+
+    try:
+        page_obj = paginator.get_page(page_number)
+    except PageNotAnInteger:
+        page_obj = paginator.get_page(1)
+    except EmptyPage:
+        page_obj = paginator.get_page(paginator.num_pages)
+
     context = {
-        "videos": videos,
+        "videos": page_obj,
+        'page_obj': page_obj,
+        'filtro_form': filtro_form, 
+        'querystring': params.urlencode(),
+        'page': 'acervo',
     }
     return render(request, "acervo/acervovids.html", context)
 
@@ -143,7 +294,7 @@ def upload_artigo(request): #view de upload de artigo
             arquivo = form.save(commit=False)
             arquivo.enviado_usuario = request.user 
             arquivo.save()
-            return redirect('acervo:listar_imagens') #trocar por listar_artigos
+            return redirect('acervo:listar_artigos') 
     else:
         form = ArtigoForm()
     context = {
@@ -153,6 +304,24 @@ def upload_artigo(request): #view de upload de artigo
     return render(request, 'acervo/upload_artigo.html', context)
 
 @login_required 
+def upload_audio(request): #view de upload de áudio
+    if request.method == 'POST':
+        form = AudioForm(request.POST, request.FILES)
+        if form.is_valid():
+            audio = form.save(commit=False)
+            audio.enviado_usuario = request.user
+            audio.aprovado ='P'
+            audio.save()
+            return redirect('acervo:listar_audios') 
+    else: 
+        form = AudioForm()
+    context = {
+        'form': form,
+        'page': 'acervo',
+    }
+    return render(request, 'acervo/upload_audio.html', context)
+
+@login_required 
 def upload_link(request): #view de upload de link
     if request.method == 'POST':
         form = LinkForm(request.POST)
@@ -160,7 +329,7 @@ def upload_link(request): #view de upload de link
             link = form.save(commit=False)
             link.enviado_usuario = request.user
             link.save()
-            return redirect('acervo:listar_imagens') #trocar por listar_links
+            return redirect('acervo:listar_links') 
     else: 
         form = LinkForm()
     context = {
@@ -177,7 +346,7 @@ def upload_video(request): #view de upload de vídeo
             video.enviado_usuario = request.user
             video.aprovado ='P'
             video.save()
-            return redirect('acervo:listar_imagens') #trocar por listar_videos
+            return redirect('acervo:listar_videos') 
         else:
             messages.error(request, "Envie um arquivo em formato de vídeo.")
     else: 
@@ -198,7 +367,8 @@ def painel_moderacao(request):
     artigos = Artigos.objects.filter(aprovado='P')
     links = Link.objects.filter(aprovado='P')
     videos = Videos.objects.filter(aprovado='P')
-    return render(request, "acervo/painel_moderacao.html", {'imagens': imagens, 'artigos': artigos, 'links': links, 'videos': videos, 'page': 'acervo'})
+    audios = Audio.objects.filter(aprovado='P')
+    return render(request, "acervo/painel_moderacao.html", {'imagens': imagens, 'artigos': artigos, 'links': links, 'videos': videos, 'audios': audios, 'page': 'acervo'})
 
 @login_required
 @user_passes_test(is_moderador)
@@ -212,6 +382,8 @@ def aprovar_conteudo(request, tipo, pk): #aprovação dos conteúdos do acervo a
         conteudo = get_object_or_404(Link, pk=pk)
     elif tipo == "video":
         conteudo = get_object_or_404(Videos, pk=pk)
+    elif tipo == "audio":
+        conteudo = get_object_or_404(Audio, pk=pk)
     else:
         return redirect('acervo:painel_moderacao')
     
@@ -230,6 +402,8 @@ def rejeicao_conteudo(request, tipo, pk): #rejeição
         conteudo = get_object_or_404(Link, pk=pk)
     elif tipo == "video":
         conteudo = get_object_or_404(Videos, pk=pk)
+    elif tipo == "audio":
+        conteudo = get_object_or_404(Audio, pk=pk)
     else:
         return redirect('acervo:painel_moderacao')
     
@@ -270,7 +444,7 @@ def editar_artigo(request, pk):
         form = ArtigoForm(request.POST, request.FILES, instance=artigo)
         if form.is_valid():
             form.save()
-            return redirect('acervo:listar_imagens') #trocar por listar_artigos
+            return redirect('acervo:listar_artigos') #trocar por listar_artigos
     else:
         form = ArtigoForm(instance=artigo)
     context = {
@@ -285,7 +459,7 @@ def editar_artigo(request, pk):
 def excluir_artigo(request, pk):
     artigo = get_object_or_404(Artigos, pk=pk)
     artigo.delete()
-    return redirect('acervo:listar_imagens') #trocar por listar_artigos
+    return redirect('acervo:listar_artigos') 
 
 @login_required
 @user_passes_test(is_moderador)

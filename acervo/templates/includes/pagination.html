@@ -45,7 +45,7 @@
     </ul>
 </nav>
 <div class="text-center text-muted small mt-1">
-    Mostrando {{ page_obj.start_index }} - {{ page_obj.end_index }} de {{ page_obj.paginator.count }} imagens{{ page_obj.paginator.count|pluralize:"" }}
+    Mostrando {{ page_obj.start_index }} - {{ page_obj.end_index }} de {{ page_obj.paginator.count }} item{{ page_obj.paginator.count|pluralize:"ns" }}
 </div>
 <div class="text-center small mt-2">
     {% if page_obj.has_previous %}

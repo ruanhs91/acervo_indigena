@@ -5,9 +5,10 @@
 {% block title %}Envio de links — Povos Indígenas do RN{% endblock %}
 {% block content %}
 
-<div class="container d-flex justify-content-center align-items-center upload-card" style="min-height: 87vh;">
-    <div class="card shadow-lg p-4" style="width: 500px; border-radius: 10px; background: linear-gradient(150deg, #8b0000, #9c1a1a);">
+<div class="container d-flex justify-content-center align-items-center upload-card" style="min-height: 100vh; margin-top: 40px; margin-bottom:40px;">
+    <div class="card shadow-lg p-4" style="width: 600px; border-radius: 10px; background: linear-gradient(150deg, #8b0000, #9c1a1a);">
         <h2 class="text-center mb-4" style="color:#f1f1f1">Envio de links</h2>
+         <h5 class="text-center mb-4" style="color:#f1f1f1; font-size:14px;">Os links enviados serão discutidos no fórum de discussão antes de irem para o acervo.</h5>
 
         <form method="post">
             {% csrf_token %}
@@ -20,6 +21,10 @@
                 {{ form.descricao_link }}
             </div>
             <div class="mb-3">
+                <label for ="id_discussao" class="form-label" style='color: #f1f1f1;'>Discussão</label>
+                {{ form.discussao }}
+            </div>
+            <div class="mb-3">
                 <label for="id_autor" class="form-label" style="color: #f1f1f1">Autor (opcional)</label>
                 {{ form.autor }}
             </div>
@@ -28,7 +33,7 @@
                 {{ form.url }}
             </div>
             <div class="d-flex justify-content-between align-items-center">
-                <a href="{% url 'acervo:listar_imagens' %}" class="text-decoration-underline fw-semibold" style="color:#1a73e8;">Voltar</a> 
+                <a href="{% url 'acervo:listar_imagens' %}" class="text-decoration-underline fw-semibold" style="color:#ADD8E6;">Voltar</a> 
 
                 <button type="submit" class="btn btn-success-gradient fw-bold px-5 py-2">Enviar <i class="bi bi-arrow-right-short arrow-icon"></i></button>
             </div>

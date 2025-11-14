@@ -1,42 +1,51 @@
 {% extends "acervo/base.html" %}
 {% load static %}
 
-{% block title %}Editar imagem — Povos Indígenas do RN{% endblock %}
+{% block title %}Editar artigo — Povos Indígenas do RN{% endblock %}
 
 {% block content %}
 <div class="container d-flex justify-content-center align-items-center upload-card" style="min-height: 100vh; margin-top:40px; margin-bottom:40px;">
     <div class="card shadow-lg p-4" style="width: 550px; border-radius: 10px; background: linear-gradient(150deg, #8b0000, #9c1a1a);">
-        <h2 class="text-center mb-4" style="color:#f1f1f1">Editar imagem do acervo</h2>
+        <h2 class="text-center mb-4" style="color:#f1f1f1">Editar artigo do acervo</h2>
 
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
+
             <div class="mb-3">
-                <label for="id_titulo_img" class="form-label" style="color: #f1f1f1">Título</label>
-                {{ form.titulo_img }}
+                <label for="id_titulo_artigo" class="form-label" style="color: #f1f1f1">Título</label>
+                {{ form.titulo_artigo }}
             </div>
+
             <div class="mb-3">
-                <label for="id_descricao_img" class="form-label" style="color: #f1f1f1">Descrição</label>
-                {{ form.descricao_img }}
+                <label for="id_descricao_artigo" class="form-label" style="color: #f1f1f1">Descrição</label>
+                {{ form.descricao_artigo }}
             </div>
+
             <div class="mb-3">
-                <label for="id_autor_img" class="form-label" style="color: #f1f1f1;">Autor</label>
-                {{ form.autor_img }}
+                <label for="id_autor_artigo" class="form-label" style="color: #f1f1f1;">Autor</label>
+                {{ form.autor_artigo }}
             </div>
+
             <div class="mb-4">
-                <label class="form-label" style="color: #f1f1f1">Imagem atual</label><br>
-                {% if imagem.imagem %}
-                    <img src="{{ imagem.imagem.url }}" alt="Imagem atual" class="img-thumbnail mb-3" style="max-height: 200px;">
+                <label class="form-label" style="color: #f1f1f1">Arquivo atual</label><br>
+
+                {% if artigo.arquivo %}
+                    <a href="{{ artigo.arquivo.url }}" target="_blank" class="btn btn-outline-light mb-3">
+                        <i class="bi bi-file-earmark"></i> Abrir arquivo
+                    </a>
                 {% else %}
-                    <p style="color:#f1f1f1">Nenhuma imagem enviada.</p>
+                    <p style="color:#f1f1f1">Nenhum arquivo enviado.</p>
                 {% endif %}
+
                 <div class="mb-4">
-                    <label class="form-label" style="color: #f1f1f1">Alterar imagem</label>
+                    <label class="form-label" style="color: #f1f1f1">Alterar arquivo</label>
                 </div>
-                {{ form.imagem }}
+                {{ form.arquivo }}
             </div>
 
             <div class="d-flex justify-content-between align-items-center">
                 <a href="{% url 'acervo:listar_artigos' %}" class="text-decoration-underline fw-semibold" style="color:#ADD8E6;">Voltar</a>
+
                 <button type="submit" class="btn btn-success-gradient fw-bold px-5 py-2">
                     Salvar alterações <i class="bi bi-check-lg arrow-icon"></i>
                 </button>

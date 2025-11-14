@@ -6,7 +6,7 @@
 {% block content %}
 <main class="inicio min-vh-100">
     <div class="container-fluid">
-        <h2 class="titulo-inicio mb-4 fw-bold">Acervo</h2>
+        <h2 class="titulo-inicio mb-4 fw-bold">Acervo - imagens</h2>
         
         <div class="d-flex justify-content-between align-items-center mb-4 px-3">
             <form method="get" action="{% url 'acervo:listar_imagens' %}" class="d-flex align-items-center flex-grow-1 me-3" id="filterForm">
@@ -30,6 +30,7 @@
                     <li><a class="dropdown-item btn-verde d-flex align-items-center gap-2" href="{% url 'acervo:upload_artigo' %}"><i class="bi bi-file-earmark-text"></i>Artigo</a></li>
                     <li><a class="dropdown-item btn-verde d-flex align-items-center gap-2" href="{% url 'acervo:upload_link' %}"><i class="bi bi-link-45deg"></i>Link</a></li>
                     <li><a class="dropdown-item btn-verde d-flex align-items-center gap-2" href="{% url 'acervo:upload_video' %}"><i class="bi bi-play-btn"></i>Vídeo</a></li>
+                    <li><a class="dropdown-item btn-verde d-flex align-items-center gap-2" href="{% url 'acervo:upload_audio' %}"><i class="bi bi-music-note-beamed"></i>Áudio</a></li>
                 </ul>
             </div>
         </div>
@@ -132,22 +133,6 @@
             {% else %}
                 <p class="text-center">Nenhuma imagem encontrada.</p>
             {% endif %}
-        </div>
-
-        <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header" style="border-bottom: none;">
-                        <h5 class="modal-title w-100 text-center" id="logoutModalLabel">Logout</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
-                    </div>
-                    <div class="modal-body text-center">Tem certeza que deseja sair da sua conta?</div>
-                    <div class="modal-footer" style="border-top: none;">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Não</button>
-                        <a href="{% url 'acervo:logout' %}" class="btn btn-danger">Sim</a>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 </main>

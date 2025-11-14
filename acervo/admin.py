@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Imagem, Link, Artigos, Videos, UsuarioAdaptado
+from .models import Imagem, Link, Artigos, Videos, UsuarioAdaptado, Audio
 
 @admin.register(UsuarioAdaptado)
 class UsuarioAdaptadoAdmin(admin.ModelAdmin):
@@ -31,4 +31,10 @@ class VideosAdmin(admin.ModelAdmin):
     list_display = ("id", "titulo_video", "enviado_usuario", "data_envio", "aprovado")
     list_filter = ("aprovado", "data_envio")
     search_fields = ("titulo_video", "descricao_video", "autor_video")
+    list_editable = ("aprovado",)
+@admin.register(Audio)
+class AudioAdmin(admin.ModelAdmin):
+    list_display = ("id", "titulo_audio", "enviado_usuario", "data_envio", "aprovado")
+    list_filter = ("aprovado", "data_envio")
+    search_fields = ("titulo_audio", "descricao_audio", "autor_audio")
     list_editable = ("aprovado",)
