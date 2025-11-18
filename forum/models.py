@@ -5,6 +5,7 @@ class Topico(models.Model):
     titulo = models.CharField(max_length=250)
     autor = models.ForeignKey(UsuarioAdaptado, on_delete=models.CASCADE)
     criado= models.DateTimeField(auto_now_add=True)
+    discussao = models.TextField(default='', max_length=2000)
     imagem = models.OneToOneField(Imagem, on_delete=models.CASCADE, null=True, blank=True)
     artigo = models.OneToOneField(Artigos, on_delete=models.CASCADE, null=True, blank=True)
     link = models.OneToOneField(Link, on_delete=models.CASCADE, null = True, blank = True)
