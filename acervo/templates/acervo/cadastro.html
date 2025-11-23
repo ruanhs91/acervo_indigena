@@ -6,48 +6,8 @@
 
 {% block content %}
 
-<style>
-    .input-group-text {
-        background-color: #f8f9fa;
-        border-right: none;
-    }
-    
-    .form-control {
-        border-left: none;
-    }
-    
-    .input-group .form-control:focus {
-        border-color: #ced4da;
-        box-shadow: none;
-    }
-    
-    .input-group:focus-within .input-group-text {
-        border-color: #8b0000;
-        background-color: #fff;
-    }
-    
-    .section-title {
-        color: #8b0000;
-        font-weight: 600;
-        border-bottom: 2px solid #8b0000;
-        padding-bottom: 8px;
-    }
-    
-    .btn-success-gradient {
-        background: linear-gradient(135deg, #3a8a3a, #2f7d2f);
-        border: none;
-        color: white;
-        transition: all 0.3s ease;
-    }
-    .btn-success-gradient:hover {
-        background: linear-gradient(135deg, #3a8a3a, #2f7d2f);
-        transform: scale(1.05);
-        color: #fff;
-    }
-</style>
-
-<div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
-    <div class="card shadow-sm p-4" style="width: 700px; border-radius: 10px;">
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh; margin-top: 40px; margin-bottom: 40px;">
+    <div class="card shadow-sm p-4" style="width: 500px; border-radius: 10px;">
         <h2 class="text-center mb-4">Criar conta</h2>
         <form method="post">
             {% csrf_token %}
@@ -59,141 +19,116 @@
                 </div>
             {% endif %}
 
-            <div class="row">
-                <!-- Nome Completo -->
-                <div class="col-md-6 mb-3">
-                    {{ form.first_name.label_tag }}
-                    <div class="input-group">
-                        {{ form.first_name }}
-                        <span class="input-group-text">
-                            <i class="bi bi-person-circle"></i>
-                        </span>
-                    </div>
-                    {% if form.first_name.errors %}
-                        <div class="text-danger small mt-1">
-                            {% for error in form.first_name.errors %}
-                                {{ error }}
-                            {% endfor %}
-                        </div>
-                    {% endif %}
+            <div class="mb-3">
+                {{ form.first_name.label_tag }}
+                <div class="input-group">
+                    {{ form.first_name }}
+                    <span class="input-group-text">
+                        <i class="bi bi-person-circle"></i>
+                    </span>
                 </div>
-
-                <!-- Usuário -->
-                <div class="col-md-6 mb-3">
-                    {{ form.username.label_tag }}
-                    <div class="input-group">
-                        {{ form.username }}
-                        <span class="input-group-text">
-                            <i class="bi bi-at"></i>
-                        </span>
+                {% if form.first_name.errors %}
+                    <div class="text-danger small mt-1">
+                        {% for error in form.first_name.errors %}
+                            {{ error }}
+                        {% endfor %}
                     </div>
-                    {% if form.username.errors %}
-                        <div class="text-danger small mt-1">
-                            {% for error in form.username.errors %}
-                                {{ error }}
-                            {% endfor %}
-                        </div>
-                    {% endif %}
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+                {{ form.username.label_tag }}
+                <div class="input-group">
+                    {{ form.username }}
+                    <span class="input-group-text">
+                        <i class="bi bi-at"></i>
+                    </span>
+                </div>
+                {% if form.username.errors %}
+                    <div class="text-danger small mt-1">
+                        {% for error in form.username.errors %}
+                            {{ error }}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+                {{ form.email.label_tag }}
+                <div class="input-group">
+                    {{ form.email }}
+                    <span class="input-group-text">
+                        <i class="bi bi-envelope"></i>
+                    </span>
+                </div>
+                {% if form.email.errors %}
+                    <div class="text-danger small mt-1">
+                        {% for error in form.email.errors %}
+                            {{ error }}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+                {{ form.password1.label_tag }}
+                <div class="input-group">
+                    {{ form.password1 }}
+                    <span class="input-group-text">
+                        <i class="bi bi-key"></i>
+                    </span>
+                </div>
+                {% if form.password1.errors %}
+                    <div class="text-danger small mt-1">
+                        {% for error in form.password1.errors %}
+                            {{ error }}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+                {{ form.password2.label_tag }}
+                <div class="input-group">
+                    {{ form.password2 }}
+                    <span class="input-group-text">
+                        <i class="bi bi-key-fill"></i>
+                    </span>
+                </div>
+                {% if form.password2.errors %}
+                    <div class="text-danger small mt-1">
+                        {% for error in form.password2.errors %}
+                            {{ error }}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+                {{ form.uf.label_tag }}
+                <div class="input-group">
+                    {{ form.uf }}
+                    <span class="input-group-text">
+                        <i class="bi bi-map"></i>
+                    </span>
                 </div>
             </div>
 
-            <div class="row">
-                <!-- Email -->
-                <div class="col-md-6 mb-3">
-                    {{ form.email.label_tag }}
-                    <div class="input-group">
-                        {{ form.email }}
-                        <span class="input-group-text">
-                            <i class="bi bi-envelope"></i>
-                        </span>
-                    </div>
-                    {% if form.email.errors %}
-                        <div class="text-danger small mt-1">
-                            {% for error in form.email.errors %}
-                                {{ error }}
-                            {% endfor %}
-                        </div>
-                    {% endif %}
+            <div class="mb-3">
+                {{ form.nome_cidade.label_tag }}
+                <div class="input-group">
+                    {{ form.nome_cidade }}
+                    <span class="input-group-text">
+                        <i class="bi bi-building"></i>
+                    </span>
                 </div>
-
-                <!-- Senha -->
-                <div class="col-md-6 mb-3">
-                    {{ form.password1.label_tag }}
-                    <div class="input-group">
-                        {{ form.password1 }}
-                        <span class="input-group-text">
-                            <i class="bi bi-key"></i>
-                        </span>
+                {% if form.nome_cidade.errors %}
+                    <div class="text-danger small mt-1">
+                        {% for error in form.nome_cidade.errors %}
+                            {{ error }}
+                        {% endfor %}
                     </div>
-                    {% if form.password1.errors %}
-                        <div class="text-danger small mt-1">
-                            {% for error in form.password1.errors %}
-                                {{ error }}
-                            {% endfor %}
-                        </div>
-                    {% endif %}
-                </div>
-            </div>
-
-            <div class="row">
-                <!-- Confirmar Senha -->
-                <div class="col-md-6 mb-3">
-                    {{ form.password2.label_tag }}
-                    <div class="input-group">
-                        {{ form.password2 }}
-                        <span class="input-group-text">
-                            <i class="bi bi-key-fill"></i>
-                        </span>
-                    </div>
-                    {% if form.password2.errors %}
-                        <div class="text-danger small mt-1">
-                            {% for error in form.password2.errors %}
-                                {{ error }}
-                            {% endfor %}
-                        </div>
-                    {% endif %}
-                </div>
-
-                <!-- UF -->
-                <div class="col-md-6 mb-3">
-                    {{ form.uf.label_tag }}
-                    <div class="input-group">
-                        {{ form.uf }}
-                        <span class="input-group-text">
-                            <i class="bi bi-map"></i>
-                        </span>
-                    </div>
-                    {% if form.uf.errors %}
-                        <div class="text-danger small mt-1">
-                            {% for error in form.uf.errors %}
-                                {{ error }}
-                            {% endfor %}
-                        </div>
-                    {% endif %}
-                </div>
-            </div>
-
-            <div class="row">
-                <!-- Cidade -->
-                <div class="col-md-6 mb-3">
-                    {{ form.nome_cidade.label_tag }}
-                    <div class="input-group">
-                        {{ form.nome_cidade }}
-                        <span class="input-group-text">
-                            <i class="bi bi-building"></i>
-                        </span>
-                    </div>
-                    {% if form.nome_cidade.errors %}
-                        <div class="text-danger small mt-1">
-                            {% for error in form.nome_cidade.errors %}
-                                {{ error }}
-                            {% endfor %}
-                        </div>
-                    {% endif %}
-                </div>
-                
-                <!-- Espaço vazio para alinhar -->
-                <div class="col-md-6"></div>
+                {% endif %}
             </div>
 
             <button type="submit" class="btn btn-success-gradient w-100 mt-3">
@@ -201,7 +136,7 @@
             </button>
         </form>
         <p class="text-center mt-3">
-            Já tenho uma conta! <a href="{% url 'acervo:login' %}" style="color: #8b0000;">Fazer login</a>
+            Já tenho uma conta! <a href="{% url 'acervo:login' %}">Fazer login</a>
         </p>
     </div>
 </div>

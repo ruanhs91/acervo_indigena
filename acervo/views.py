@@ -1,7 +1,7 @@
 from django.contrib import messages
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, resolve_url
 from .models import Imagem, Artigos, Link, Videos, UsuarioAdaptado, Audio
-from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth import login, authenticate, logout, update_session_auth_hash
 from django.contrib.auth.models import Group
 from .forms import ImagemForm, cadastroform, LoginForm, ArtigoForm, LinkForm, VideoForm, PerfilForm, ImagemFiltroForm, AudioForm
 from django.contrib.auth.decorators import login_required, user_passes_test 
@@ -17,7 +17,8 @@ def login_view(request): #view de login
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request,user)
-                return redirect('acervo:listar_imagens')
+                next_url = request.META.get('HTTP_REFERER') or resolve_url('acervo:listar_imagens')
+                return redirect(next_url)
             else:
                 messages.error(request, "Usuário ou senha incorretos.⚠️")
         else:
@@ -48,7 +49,8 @@ def cadastro_view(request): #view de cadastro, ainda ajeitar
 
 def logout_view(request): #view de logout
     logout(request)
-    return redirect('acervo:listar_imagens')
+    next_url = request.META.get('HTTP_REFERER') or resolve_url('acervo:listar_imagens')
+    return redirect(next_url)
 
 def listar_imagens(request): #view de listagem de imagens com filtro e paginação
     imagens = Imagem.objects.filter(aprovado='A').order_by('-data_envio')
@@ -363,11 +365,11 @@ def is_moderador(user): #checagem do grupo moderador
 @login_required
 @user_passes_test(is_moderador) #exclusivo para moderadores e superusuários
 def painel_moderacao(request): 
-    imagens = Imagem.objects.filter(aprovado='P')
-    artigos = Artigos.objects.filter(aprovado='P')
-    links = Link.objects.filter(aprovado='P')
-    videos = Videos.objects.filter(aprovado='P')
-    audios = Audio.objects.filter(aprovado='P')
+    imagens = Imagem.objects.filter(aprovado='P').order_by('data_envio')
+    artigos = Artigos.objects.filter(aprovado='P').order_by('data_envio')
+    links = Link.objects.filter(aprovado='P').order_by('data_envio')
+    videos = Videos.objects.filter(aprovado='P').order_by('data_envio')
+    audios = Audio.objects.filter(aprovado='P').order_by('data_envio')
     return render(request, "acervo/painel_moderacao.html", {'imagens': imagens, 'artigos': artigos, 'links': links, 'videos': videos, 'audios': audios, 'page': 'acervo'})
 
 @login_required
@@ -491,11 +493,14 @@ def perfil_view(request):
     if request.method == 'POST':
         form = PerfilForm(request.POST, request.FILES, instance=request.user)
         if form.is_valid():
-            user = form.save(commit=False)
             password = form.cleaned_data.get('password')
             if password:
+                user = form.save(commit=False)
                 user.set_password(password)
-            user.save()
+                user.save()
+                update_session_auth_hash(request, user)
+            else:
+                form.save()
             return redirect('acervo:listar_imagens')
     else:
         form = PerfilForm(instance=request.user)
@@ -504,9 +509,7 @@ def perfil_view(request):
         'form': form,
         'page': 'acervo',
     }
-    
     return render(request, 'acervo/perfil.html', context)
-
 #gerenciamento de usuários 
 def superuser_or_moderador(view_func):
     def wrapper(request, *args, **kwargs):

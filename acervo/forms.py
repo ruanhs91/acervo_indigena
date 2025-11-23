@@ -126,14 +126,23 @@ class AudioForm(forms.ModelForm):
 
 class PerfilForm(forms.ModelForm):
     password = forms.CharField(
-        widget=forms.PasswordInput(render_value=True),
+        widget=forms.PasswordInput(render_value=True, attrs={'class': 'form-control'}),
         required=False,
         label="Nova Senha"
     )
+    
     class Meta:
         model = UsuarioAdaptado
         fields = ['first_name', 'username', 'email', 'nome_cidade', 'uf', 'foto_perfil']
-    
+        widgets = {
+            'first_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'username': forms.TextInput(attrs={'class': 'form-control'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control'}),
+            'nome_cidade': forms.TextInput(attrs={'class': 'form-control'}),
+            'uf': forms.TextInput(attrs={'class': 'form-control', 'maxlength': '2'}),
+            'foto_perfil': forms.FileInput(attrs={'class': 'form-control'}),
+        }
+
     def clean_username(self): #mensagem de erro user já existentee
         username = self.cleaned_data.get('username')
         if UsuarioAdaptado.objects.filter(username=username).exclude(pk=self.instance.pk).exists():

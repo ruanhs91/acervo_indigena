@@ -4,21 +4,20 @@
 
 {% block content %}
 <main class="inicio min-vh-100">
-    <h2 class="titulo-inicio mb-3 fw-bold text-center">Meu Perfil</h2>
     <div class="container mt-4">
         <div class="row justify-content-center">
-            <div class="col-md-4 mb-4">
-                <div class="card shadow-sm text-center p-4">
+            <div class="col-md-8 col-lg-6">
+                <div class="text-center mb-5">
                     <div class="d-flex justify-content-center mb-3">
                         {% if user.foto_perfil %}
-                            <img src="{{ user.foto_perfil.url }}" class="rounded-circle" 
+                            <img src="{{ user.foto_perfil.url }}" class="rounded-circle shadow" 
                                  style="width: 120px; height: 120px; object-fit: cover;" alt="Foto de perfil">
                         {% else %}
                             <i class="bi bi-person-circle text-secondary" style="font-size: 120px;"></i>
                         {% endif %}
                     </div>
-                    <h4 class="mb-1">{{ user.get_first_name }}</h4>
-                    <h4 class="mb-1">@{{ user.username }}</h4>
+                    <h2 class="mb-1">{{ user.get_first_name }}</h2>
+                    <p class="text-muted mb-2">@{{ user.username }}</p>
                     <div class="mb-3">
                         {% if user.is_superuser %}
                             <span class="badge bg-warning text-dark">Superusuário</span>
@@ -28,77 +27,119 @@
                             <span class="badge bg-secondary">Usuário Comum</span>
                         {% endif %}
                     </div>
-                    <div class="d-flex justify-content-between">
-                            <span><i class="bi bi-clock-history"></i> Último acesso:</span>
-                            <strong class="text-muted">{{ user.last_login|date:"d/m/Y H:i"|default:"Nunca" }}</strong>
+                    
+                    <div class="d-flex justify-content-center gap-4 text-muted small">
+                        <div>
+                            <i class="bi bi-calendar-check me-1"></i>
+                            Membro desde {{ user.date_joined|date:"d/m/Y" }}
+                        </div>
+                        <div>
+                            <i class="bi bi-clock-history me-1"></i>
+                            {% if user.last_login %}
+                                Último acesso {{ user.last_login|date:"d/m/Y H:i" }}
+                            {% else %}
+                                Nunca acessou
+                            {% endif %}
+                        </div>
                     </div>
-                    <p class="mb-2">
-                            <i class="bi bi-calendar-check text-success"></i>
-                            <strong>Membro desde:</strong><br>
-                            <span class="text-muted">{{ user.date_joined|date:"d/m/Y" }}</span>
-                    </p>
-                </div>
-            </div>
-
-            <div class="col-md-8">
-                <div class="card p-4 shadow-sm">
-                    <h5 class="mb-3">Editar informações</h5>
-                    <form method="post" enctype="multipart/form-data">
-                        {% csrf_token %}
+                    
+                    {% if user.uf or user.nome_cidade %}
+                    <div class="mt-2 text-muted small">
+                        <i class="bi bi-geo-alt me-1"></i>
+                        {% if user.nome_cidade %}<span>{{ user.nome_cidade }} - </span>{% endif %}
+                        {% if user.uf %}<span>{{ user.uf }}</span>{% endif %}
                         
-                        <div class="mb-3">
-                            <label for="{{ form.first_name.id_for_label }}" class="form-label fw-bold">
-                                <i class="bi bi-person text-success"></i> Nome
-                            </label>
-                            {{ form.first_name }}
-                            {% if form.first_name.errors %}
-                                <div class="text-danger small mt-1">{{ form.first_name.errors }}</div>
-                            {% endif %}
-                        </div>
+                    </div>
+                    {% endif %}
+                </div>
 
-                        <div class="mb-3">
-                            <label for="{{ form.username.id_for_label }}" class="form-label fw-bold">
-                                <i class="bi bi-at text-success"></i> Usuário
-                            </label>
-                            {{ form.username }}
-                            {% if form.username.errors %}
-                                <div class="text-danger small mt-1">{{ form.username.errors }}</div>
-                            {% endif %}
-                        </div>
+                <div class="card  ">
+                    <div class="card-header bg-light border-0 py-3">
+                        <h5 class="card-title mb-0 fw-bold">
+                            <i class="bi bi-pencil-square me-2"></i>Editar informações
+                        </h5>
+                    </div>
+                    <div class="card-body p-4">
+                        <form method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="{{ form.first_name.id_for_label }}" class="form-label fw-bold">
+                                        <i class="bi bi-person me-1"></i>Nome
+                                    </label>
+                                    {{ form.first_name }}
+                                    {% if form.first_name.errors %}
+                                        <div class="text-danger small mt-1">{{ form.first_name.errors }}</div>
+                                    {% endif %}
+                                </div>
 
-                        <div class="mb-3">
-                            <label for="{{ form.email.id_for_label }}" class="form-label fw-bold">
-                                <i class="bi bi-envelope text-success"></i> E-mail
-                            </label>
-                            {{ form.email }}
-                            {% if form.email.errors %}
-                                <div class="text-danger small mt-1">{{ form.email.errors }}</div>
-                            {% endif %}
-                        </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="{{ form.username.id_for_label }}" class="form-label fw-bold">
+                                        <i class="bi bi-at me-1"></i>Usuário
+                                    </label>
+                                    {{ form.username }}
+                                    {% if form.username.errors %}
+                                        <div class="text-danger small mt-1">{{ form.username.errors }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
 
-                        <div class="mb-3">
-                            <label for="{{ form.password.id_for_label }}" class="form-label fw-bold">
-                                <i class="bi bi-lock text-success"></i> Nova Senha
-                            </label>
-                            {{ form.password }}
-                            {% if form.password.errors %}
-                                <div class="text-danger small mt-1">{{ form.password.errors }}</div>
-                            {% endif %}
-                        </div>
+                            <div class="mb-3">
+                                <label for="{{ form.email.id_for_label }}" class="form-label fw-bold">
+                                    <i class="bi bi-envelope me-1"></i>E-mail
+                                </label>
+                                {{ form.email }}
+                                {% if form.email.errors %}
+                                    <div class="text-danger small mt-1">{{ form.email.errors }}</div>
+                                {% endif %}
+                            </div>
 
-                        <div class="mb-3">
-                            <label for="{{form.foto_perfil.id_for_label}}" class="form-label fw-bold">
-                                <i class="bi bi-camera text-success"></i> Foto de Perfil
-                            </label>
-                            <input type="file" name="foto_perfil" id="foto_perfil" class="form-control" 
-                                   accept=".jpg,.jpeg,.png">
-                            <small class="text-muted">Formatos: JPG, PNG. Máx: 2MB</small>
-                        </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="{{ form.uf.id_for_label }}" class="form-label fw-bold">
+                                        <i class="bi bi-map me-1"></i>UF
+                                    </label>
+                                    {{ form.uf }}
+                                    {% if form.uf.errors %}
+                                        <div class="text-danger small mt-1">{{ form.uf.errors }}</div>
+                                    {% endif %}
+                                </div>
 
-                        <button type="submit" class="btn btn-success w-100">
-                            <i class="bi bi-check-circle"></i> Salvar Alterações
-                        </button>
-                    </form>
+                                <div class="col-md-6 mb-3">
+                                    <label for="{{ form.nome_cidade.id_for_label }}" class="form-label fw-bold">
+                                        <i class="bi bi-building me-1"></i>Cidade
+                                    </label>
+                                    {{ form.nome_cidade }}
+                                    {% if form.nome_cidade.errors %}
+                                        <div class="text-danger small mt-1">{{ form.nome_cidade.errors }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="{{ form.password.id_for_label }}" class="form-label fw-bold">
+                                    <i class="bi bi-lock me-1"></i>Nova senha
+                                </label>
+                                {{ form.password }}
+                                {% if form.password.errors %}
+                                    <div class="text-danger small mt-1">{{ form.password.errors }}</div>
+                                {% endif %}
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="foto_perfil" class="form-label fw-bold">
+                                    <i class="bi bi-camera me-1"></i>Foto de perfil
+                                </label>
+                                <input type="file" name="foto_perfil" id="foto_perfil" class="form-control" 
+                                       accept=".jpg,.jpeg,.png">
+                            </div>
+
+                            <button type="submit" class="btn btn-success-gradient w-100 py-2 fw-bold">
+                                <i class="bi bi-check-circle me-2"></i>Salvar alterações
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
