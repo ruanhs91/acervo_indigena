@@ -39,6 +39,7 @@
     gap: 25px;
     flex-wrap: wrap;
     justify-content: center;
+    align-items: center;
 }
 .nav a {
     text-decoration: none;
@@ -46,6 +47,9 @@
     color: white;
     white-space: nowrap;
     font-size: 14px;
+    display: flex;
+    align-items: center;
+    height: 30px;
 }
 
 .nav a:hover {
@@ -60,7 +64,7 @@
 
 .footer-custom {
     background: #8b0000;
-    color: white;
+    color: white !important;
     padding: 25px 0;
     margin-top: auto;
     width: 100%;
@@ -92,8 +96,19 @@
     text-align: right;
 }
 
+.footer-custom,
+.footer-custom p,
+.footer-custom .small,
+.footer-custom .fw-bold,
+.footer-custom .mb-1,
+.footer-custom .mb-0,
+.footer-custom span,
+.footer-custom div {
+    color: white !important;
+}
+
 .footer-custom a {
-    color: white;
+    color: white !important;
     text-decoration: none;
     display: inline-flex;
     align-items: center;
@@ -108,16 +123,25 @@
     .footer-container {
         flex-direction: column;
         text-align: center;
-        gap: 15px;
+        gap: 20px;
+        padding: 0 15px;
     }
     
     .footer-section:first-child,
     .footer-section:last-child {
         text-align: center;
     }
-}
-
-@media (max-width: 768px) {
+    
+    .footer-section {
+        min-width: 100%;
+        padding: 8px 0;
+    }
+    
+    .footer-custom {
+        padding: 20px 0;
+        height: auto !important;
+    }
+    
     .header {
         padding: 10px 15px;
         justify-content: center;
@@ -134,15 +158,34 @@
     
     .nav {
         gap: 10px;
+        align-items: center;
     }
     
     .nav a {
         font-size: 12px;
         padding: 5px 8px;
+        height: 25px;
     }
 }
 
 @media (max-width: 480px) {
+    .footer-container {
+        gap: 15px;
+        padding: 0 10px;
+    }
+    
+    .footer-section {
+        padding: 5px 0;
+    }
+    
+    .footer-custom {
+        padding: 15px 0;
+    }
+    
+    .footer-custom a {
+        font-size: 14px;
+    }
+    
     .header {
         flex-direction: column;
         gap: 10px;
@@ -159,11 +202,13 @@
     
     .nav {
         gap: 8px;
+        align-items: center;
     }
     
     .nav a {
         font-size: 11px;
         padding: 4px 6px;
+        height: 22px;
     }
 }
 
@@ -219,7 +264,7 @@
     text-align: center;
 }
 .text-povos { 
-    text-align: center;   /*povos começa aq*/
+    text-align: center;
     color: #8b0000;
 }
 
@@ -359,6 +404,9 @@
     background: none;
     border: none;
     padding: 0;
+    display: flex;
+    align-items: center;
+    height: 30px;
 }
 
 .nav .dropdown-toggle:hover,
@@ -366,7 +414,6 @@
     text-decoration: underline;
                
 }
-
 
 .nav .dropdown-menu {
     border: none;
@@ -377,7 +424,6 @@
     border-radius: 6px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
-
 
 .nav .dropdown-item {
     color: white;
