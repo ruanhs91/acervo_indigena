@@ -1,0 +1,67 @@
+{% extends "acervo/base.html" %}
+{% load static %}
+
+{% block title %}Editar áudio — Povos Indígenas do RN{% endblock %}
+
+{% block content %}
+<div class="container d-flex justify-content-center align-items-center upload-card"
+     style="min-height: 100vh; margin-top:40px; margin-bottom:40px;">
+
+    <div class="card shadow-lg p-4"
+         style="width: 550px; border-radius: 10px; background: linear-gradient(150deg, #8b0000, #9c1a1a);">
+
+        <h2 class="text-center mb-4" style="color:#f1f1f1">
+            Editar áudio do acervo
+        </h2>
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <div class="mb-3">
+                <label for="id_titulo_audio" class="form-label" style="color:#f1f1f1">Título</label>
+                {{ form.titulo_audio }}
+            </div>
+
+            <div class="mb-3">
+                <label for="id_descricao_audio" class="form-label" style="color:#f1f1f1">Descrição</label>
+                {{ form.descricao_audio }}
+            </div>
+
+            <div class="mb-3">
+                <label for="id_autor_audio" class="form-label" style="color:#f1f1f1;">Autor</label>
+                {{ form.autor_audio }}
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label" style="color:#f1f1f1">Áudio atual</label><br>
+
+                {% if audio.audio %}
+                    <audio controls class="w-100 mb-3">
+                        <source src="{{ audio.audio.url }}">
+                    </audio>
+                {% else %}
+                    <p style="color:#f1f1f1">Nenhum áudio enviado.</p>
+                {% endif %}
+
+                <div class="mb-2 mt-3">
+                    <label class="form-label" style="color:#f1f1f1">Alterar arquivo</label>
+                </div>
+                {{ form.audio }}
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center">
+                <a href="{% url 'acervo:listar_audios' %}"
+                   class="text-decoration-underline fw-semibold"
+                   style="color:#ADD8E6;">
+                    Voltar
+                </a>
+
+                <button type="submit" class="btn btn-success-gradient fw-bold px-5 py-2">
+                    Salvar alterações <i class="bi bi-check-lg arrow-icon"></i>
+                </button>
+            </div>
+
+        </form>
+    </div>
+</div>
+{% endblock %}

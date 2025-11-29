@@ -1,0 +1,205 @@
+{% extends "acervo/base.html" %}
+{% load static %}
+
+{% block title %}Acervo — Vídeos{% endblock %}
+
+{% block content %}
+<main class="inicio min-vh-100">
+    <div class="container-fluid">
+        <h2 class="titulo-inicio mb-4 fw-bold">Acervo - vídeos</h2>
+        
+        <div class="d-flex justify-content-between align-items-center mb-4 px-3">
+            <form method="get" action="{% url 'acervo:listar_videos' %}" class="d-flex align-items-center flex-grow-1 me-3" id="filterForm">
+                
+                <div class="input-group me-2">
+                    <input type="text" name="query" class="form-control"
+                           placeholder="Buscar vídeos..."
+                           value="{{ filtro_form.query.value|default:'' }}">
+                    <button class="btn btn-secondary" type="submit">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </div>
+
+                <button type="button" class="btn btn-secondary d-flex align-items-center"
+                        data-bs-toggle="modal" data-bs-target="#filterModal">
+                    <i class="bi bi-funnel"></i>
+                </button>
+
+                <input type="hidden" id="data_inicio" name="data_inicio" value="{{ filtro_form.data_inicio.value|default:'' }}">
+                <input type="hidden" id="data_fim" name="data_fim" value="{{ filtro_form.data_fim.value|default:'' }}">
+            </form>
+
+            <div class="dropdown">
+                <button class="btn dropdown-toggle d-flex align-items-center gap-1"
+                        type="button" data-bs-toggle="dropdown"
+                        style="background-color: #1A4623; color:white;">
+                    <i class="bi bi-plus-lg"></i> Adicionar
+                </button>
+
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item btn-verde d-flex align-items-center gap-2" href="{% url 'acervo:upload_imagem' %}">
+                        <i class="bi bi-image"></i>Imagem</a></li>
+
+                    <li><a class="dropdown-item btn-verde d-flex align-items-center gap-2" href="{% url 'acervo:upload_artigo' %}">
+                        <i class="bi bi-file-earmark-text"></i>Artigo</a></li>
+
+                    <li><a class="dropdown-item btn-verde d-flex align-items-center gap-2" href="{% url 'acervo:upload_link' %}">
+                        <i class="bi bi-link-45deg"></i>Link</a></li>
+
+                    <li><a class="dropdown-item btn-verde d-flex align-items-center gap-2" href="{% url 'acervo:upload_video' %}">
+                        <i class="bi bi-play-btn"></i>Vídeo</a></li>
+
+                    <li><a class="dropdown-item btn-verde d-flex align-items-center gap-2" href="{% url 'acervo:upload_audio' %}">
+                        <i class="bi bi-music-note-beamed"></i>Áudio</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="modal fade" id="filterModal" tabindex="-1" aria-labelledby="filterModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    
+                    <div class="modal-header border-0 pb-0">
+                        <h5 class="modal-title">Filtragem por data</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="modal_data_inicio" class="form-label">Data de início</label>
+                            <input type="date" class="form-control" id="modal_data_inicio"
+                                   value="{{ filtro_form.data_inicio.value|default:'' }}">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="modal_data_fim" class="form-label">Data de fim</label>
+                            <input type="date" class="form-control" id="modal_data_fim"
+                                   value="{{ filtro_form.data_fim.value|default:'' }}">
+                        </div>
+                    </div>
+
+                    <div class="modal-footer border-0 pt-0">
+                        <button type="button"
+                                class="btn btn-danger"
+                                data-bs-dismiss="modal"
+                                style="background: linear-gradient(150deg, #d32f2f, #b71c1c)">Cancelar</button>
+
+                        <button type="button"
+                                class="btn btn-success"
+                                id="applyFilter"
+                                style="background: linear-gradient(135deg, #3a8a3a, #2f7d2f);">
+                            Aplicar filtro
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+
+            {% if videos %}
+                <div class="row g-4">
+
+                    {% for video in videos %}
+                    <div class="col-lg-4 col-md-6 col-sm-12">
+
+                        <div class="card h-100 shadow-sm">
+                            
+                            <div class="video-container position-relative" style="height: 250px; overflow: hidden;">
+                                <video class="w-100 h-100"
+                                       style="object-fit: cover;"
+                                       data-bs-toggle="modal"
+                                       data-bs-target="#videoModal{{ forloop.counter }}">
+                                    <source src="{{ video.video.url }}">
+                                </video>
+
+                                <button class="btn btn-light btn-sm position-absolute top-0 end-0 m-2 rounded-circle"
+                                        style="width: 35px; height: 35px; opacity: 0.8;"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#videoModal{{ forloop.counter }}"
+                                        title="tela cheia">
+                                    <i class="bi bi-arrows-fullscreen"></i>
+                                </button>
+                            </div>
+
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="card-title">{{ video.titulo_video }}</h5>
+                                <p class="card-text flex-grow-1">{{ video.descricao_video|truncatewords:40 }}</p>
+                                <p class="card-text mt-auto">
+                                    <small class="text-muted">Autor: {{ video.autor_video }}</small>
+                                </p>
+                            </div>
+
+                            {% if user.is_authenticated and user.is_moderador or user.is_superuser %}
+                            <div class="card-footer bg-transparent border-0 pt-0">
+                                <div class="d-flex justify-content-center gap-2">
+                                    <a href="{% url 'acervo:editar_video' video.pk %}" class="btn btn-sm btn-outline-primary">
+                                        <i class="bi bi-pencil-square"></i> Editar
+                                    </a>
+
+                                    <a href="{% url 'acervo:excluir_video' video.pk %}" class="btn btn-sm btn-outline-danger"
+                                       onclick="return confirm('Tem certeza que deseja excluir este vídeo?');">
+                                        <i class="bi bi-trash"></i> Excluir
+                                    </a>
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="modal fade" id="videoModal{{ forloop.counter }}" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog modal-xl modal-dialog-centered">
+                            <div class="modal-content border-0 bg-transparent">
+                                
+                                <div class="modal-header border-0 position-absolute top-0 end-0 z-3">
+                                    <button type="button" class="btn btn-light btn-sm rounded-circle"
+                                            data-bs-dismiss="modal">
+                                        <i class="bi bi-x-lg"></i>
+                                    </button>
+                                </div>
+
+                                <div class="modal-body p-0 text-center">
+                                    <video controls class="w-100" style="max-height: 85vh; object-fit: contain;">
+                                        <source src="{{ video.video.url }}">
+                                    </video>
+
+                                    <div class="bg-dark bg-opacity-75 text-white p-3 mt-2 rounded">
+                                        <h5 class="mb-1">{{ video.titulo_video }}</h5>
+                                        <p class="small mb-1">{{ video.descricao_video }}</p>
+                                        <p class="small mb-0">Autor: {{ video.autor_video }}</p>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    {% endfor %}
+                </div>
+
+                <div class="row mt-4">
+                    <div class="col-12">
+                        {% include 'includes/pagination.html' %}
+                    </div>
+                </div>
+
+            {% else %}
+                <p class="text-center">Nenhum vídeo encontrado.</p>
+            {% endif %}
+
+        </div>
+    </div>
+</main>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('applyFilter').addEventListener('click', function() {
+        document.getElementById('data_inicio').value = document.getElementById('modal_data_inicio').value;
+        document.getElementById('data_fim').value = document.getElementById('modal_data_fim').value;
+        document.getElementById('filterForm').submit();
+    });
+});
+</script>
+
+{% endblock %}

@@ -12,99 +12,98 @@
                 <div class="card shadow-sm mb-4 w-100" style="border-radius: 10px;">
                     <div class="card-body">
                         <div class="d-flex align-items-center mb-3">
+
                             {% if topico.autor.foto_perfil %}
-                                <img src="{{ topico.autor.foto_perfil.url }}"
-                                     class="rounded-circle me-2"
-                                     style="width: 42px; height: 42px; object-fit: cover;">
+                                <img src="{{ topico.autor.foto_perfil.url }}" class="rounded-circle me-2" style="width: 42px; height: 42px; object-fit: cover;">
                             {% else %}
-                                <i class="bi bi-person-circle text-secondary"
-                                   style="font-size:30px;"></i>
+                                <i class="bi bi-person-circle text-secondary" style="font-size:30px;"></i>
                             {% endif %}
 
                             <p class="text-muted m-0">
                                 <strong>{{ topico.autor }}</strong> —
                                 {{ topico.criado|date:"d/m/Y H:i" }}
                             </p>
+
                             {% if topico.imagem %}
-                            <span class="badge text-white ms-2 mt-1" style="background: linear-gradient(150deg, #2ecc71, #1e8449);"><i class="bi bi-image"></i> Imagem</span>
+                                <span class="badge text-white ms-2 mt-1" style="background: linear-gradient(150deg, #2ecc71, #1e8449);">
+                                    <i class="bi bi-image"></i>
+                                </span>
                             {% elif topico.artigo %}
-                            <span class="badge text-white ms-2 mt-1"style="background: linear-gradient(150deg, #2ecc71, #1e8449);"><i class="bi bi-file-earmark-text"></i> Artigo</span>
-
-{% elif topico.link %}
-    <span class="badge text-white ms-2 mt-1"
-          style="background: linear-gradient(135deg, #3a8a3a, #2f7d2f);">
-        <i class="bi bi-link-45deg"></i> Link
-    </span>
-
-{% elif topico.videos %}
-    <span class="badge text-white ms-2 mt-1"
-          style="background: linear-gradient(135deg, #3a8a3a, #2f7d2f);">
-        <i class="bi bi-camera-video"></i> Vídeo
-    </span>
-
-{% elif topico.audio %}
-    <span class="badge text-white ms-2 mt-1"
-          style="background: linear-gradient(135deg, #3a8a3a, #2f7d2f);">
-        <i class="bi bi-mic"></i> Áudio
-    </span>
-{% endif %}
+                                <span class="badge text-white ms-2 mt-1" style="background: linear-gradient(150deg, #2ecc71, #1e8449);">
+                                    <i class="bi bi-file-earmark-text"></i>
+                                </span>
+                            {% elif topico.link %}
+                                <span class="badge text-white ms-2 mt-1" style="background: linear-gradient(150deg, #2ecc71, #1e8449);">
+                                    <i class="bi bi-link-45deg"></i>
+                                </span>
+                            {% elif topico.videos %}
+                                <span class="badge text-white ms-2 mt-1" style="background: linear-gradient(150deg, #2ecc71, #1e8449);">
+                                    <i class="bi bi-camera-video"></i>
+                                </span>
+                            {% elif topico.audio %}
+                                <span class="badge text-white ms-2 mt-1" style="background: linear-gradient(150deg, #2ecc71, #1e8449);">
+                                    <i class="bi bi-mic"></i>
+                                </span>
+                            {% endif %}
                         </div>
+
                         <h4 class="fw-bold mb-1">{{ topico.titulo }}</h4>
 
                         {% if topico.imagem %}
-                            <img src="{{ topico.imagem.imagem.url }}"
-                                class="rounded mb-3"
-                                style="max-width: 320px; max-height: 360px; object-fit: contain;">
+                            <img src="{{ topico.imagem.imagem.url }}" class="rounded mb-3" style="max-width: 320px; max-height: 360px; object-fit: contain;">
                         {% endif %}
 
                         {% if topico.videos %}
-                            <video controls class="w-100 rounded mb-3">
+                            <video controls class="rounded mb-3" style="max-width: 320px; max-height: 360px; object-fit: contain;">
                                 <source src="{{ topico.videos.video.url }}">
                             </video>
                         {% endif %}
 
                         {% if topico.audio %}
                             <audio controls class="w-100 mb-3">
-                                <source src="{{ topico.audio.arquivo.url }}">
+                                <source src="{{ topico.audio.audio.url }}">
                             </audio>
                         {% endif %}
 
                         {% if topico.link %}
-                            <a href="{{ topico.link.url }}" target="_blank"
-                               class="btn btn-outline-info mb-3">
+                            <a href="{{ topico.link.url }}" target="_blank" class="btn" style="background: linear-gradient(150deg, #4facfe, #235fd1); color: white; border:none;">
                                 Abrir link <i class="bi bi-box-arrow-up-right"></i>
                             </a>
                         {% endif %}
 
                         {% if topico.artigo %}
-                            <a href="{{ topico.artigo.arquivo.url }}" target="_blank"
-                                class="btn btn-outline-primary mb-3">
+                            <a href="{{ topico.artigo.arquivo.url }}" target="_blank" class="btn mb-3" style="background: linear-gradient(150deg, #4facfe, #235fd1); color: white; border:none;">
                                 Abrir artigo
                             </a>
                         {% endif %}
                         <p style="white-space: pre-line;">{{ topico.discussao }}</p>
+                        <form action="{% url 'forum:reagir' topico.id 'like' %}" method="post" class="d-inline">
+                            {% csrf_token %}
+                            <button type="submit" class="btn mt-3 btn-outline-success">
+                                <i class="bi bi-hand-thumbs-up"></i> {{ topico.likes }}
+                            </button>
+                        </form>
+
+                        <form action="{% url 'forum:reagir' topico.id 'dislike' %}" method="post" class="d-inline">
+                            {% csrf_token %}
+                            <button type="submit" class="btn mt-3 btn-outline-danger">
+                                <i class="bi bi-hand-thumbs-down"></i> {{ topico.deslikes }}
+                            </button>
+                        </form>
                         <form action="{% url 'forum:detail_topico' topico.id %}" method="get" class="d-inline">
-                            <button type="submit"class="btn mt-3"style="background: linear-gradient(150deg, #4facfe, #235fd1); color: white; border:none;">
+                            <button type="submit" class="btn mt-3" style="background: linear-gradient(150deg, #2ecc71, #1e8449); border:none; color:white;">
                                 <i class="bi bi-chat-left-text"></i> Ver comentários
                             </button>
                         </form>
 
-    
                         {% if user.is_authenticated and user.is_moderador or user.is_superuser %}
-                            <form action="{% url 'forum:excluir_topico' topico.id %}"
-                                  method="post"
-                                  class="d-inline"
-                                  onclick="return confirm('Tem certeza que deseja excluir este tópico?');">
+                            <form action="{% url 'forum:excluir_topico' topico.id %}" method="post" class="d-inline" onclick="return confirm('Tem certeza que deseja excluir este tópico?');">
                                 {% csrf_token %}
-                                <button type="submit"
-                                        class="btn btn-danger mt-3"
-                                        style="background: linear-gradient(135deg, #ff4e50 #c31432); color: white; border:none;">
+                                <button type="submit" class="btn btn-danger mt-3" style="background: linear-gradient(135deg, #ff4e50, #c31432); color: white; border:none;">
                                     <i class="bi bi-trash"></i> Excluir tópico
                                 </button>
                             </form>
                         {% endif %}
-                        
-
                     </div>
                 </div>
             {% endfor %}
@@ -112,10 +111,12 @@
             <p class="text-muted">Nenhum tópico de discussão disponível.</p>
         {% endif %}
 
+        <div class="row mt-4">
+            <div class="col-12">
+                {% include 'includes/pagination.html' %}
+            </div>
+        </div>
     </div>
 </main>
 {% endblock %}
-
-
-
 

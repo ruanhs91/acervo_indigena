@@ -1,0 +1,53 @@
+{% extends "acervo/base.html" %}
+{% load static %}
+
+{% block title %}Editar link — Povos Indígenas do RN{% endblock %}
+
+{% block content %}
+<div class="container d-flex justify-content-center align-items-center upload-card" 
+     style="min-height: 100vh; margin-top:40px; margin-bottom:40px;">
+    
+    <div class="card shadow-lg p-4" 
+         style="width: 550px; border-radius: 10px; background: linear-gradient(150deg, #8b0000, #9c1a1a);">
+        
+        <h2 class="text-center mb-4" style="color:#f1f1f1">Editar link do acervo</h2>
+
+        <form method="post">
+            {% csrf_token %}
+
+            <div class="mb-3">
+                <label for="id_titulo_link" class="form-label" style="color: #f1f1f1">Título</label>
+                {{ form.titulo_link }}
+            </div>
+
+            <div class="mb-3">
+                <label for="id_descricao_link" class="form-label" style="color: #f1f1f1">Descrição</label>
+                {{ form.descricao_link }}
+            </div>
+
+            <div class="mb-3">
+                <label for="id_autor_link" class="form-label" style="color: #f1f1f1;">Autor</label>
+                {{ form.autor }}
+            </div>
+
+            <div class="mb-4">
+                <label for="id_url" class="form-label" style="color: #f1f1f1;">URL</label>
+                {{ form.url }}
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center">
+                <a href="{% url 'acervo:listar_links' %}" 
+                   class="text-decoration-underline fw-semibold" 
+                   style="color:#ADD8E6;">
+                    Voltar
+                </a>
+
+                <button type="submit" class="btn btn-success-gradient fw-bold px-5 py-2">
+                    Salvar alterações <i class="bi bi-check-lg arrow-icon"></i>
+                </button>
+            </div>
+        </form>
+
+    </div>
+</div>
+{% endblock %}

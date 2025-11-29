@@ -1,0 +1,66 @@
+{% extends "acervo/base.html" %}
+{% load static %}
+
+{% block title %}Editar vídeo — Povos Indígenas do RN{% endblock %}
+
+{% block content %}
+<div class="container d-flex justify-content-center align-items-center upload-card"
+     style="min-height: 100vh; margin-top:40px; margin-bottom:40px;">
+
+    <div class="card shadow-lg p-4"
+         style="width: 550px; border-radius: 10px; background: linear-gradient(150deg, #8b0000, #9c1a1a);">
+
+        <h2 class="text-center mb-4" style="color:#f1f1f1">Editar vídeo do acervo</h2>
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <div class="mb-3">
+                <label class="form-label" style="color: #f1f1f1">Título</label>
+                {{ form.titulo_video }}
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label" style="color: #f1f1f1">Descrição</label>
+                {{ form.descricao_video }}
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label" style="color: #f1f1f1;">Autor</label>
+                {{ form.autor_video }}
+            </div>
+
+            <!-- Vídeo atual -->
+{% if video.video %}
+<div class="mb-4">
+    <label class="form-label" style="color: #f1f1f1;">Vídeo atual</label>
+    <div class="d-flex justify-content-center">
+        <video controls style="max-width: 340px; max-height: 260px; border-radius: 8px;">
+            <source src="{{ video.video.url }}">
+        </video>
+    </div>
+</div>
+{% endif %}
+
+<!-- Alterar vídeo -->
+<div class="mb-4">
+    <label class="form-label" style="color: #f1f1f1;">Alterar vídeo</label>
+    {{ form.video }}
+</div>
+
+            <div class="d-flex justify-content-between align-items-center">
+                <a href="{% url 'acervo:listar_videos' %}"
+                   class="text-decoration-underline fw-semibold"
+                   style="color:#ADD8E6;">
+                    Voltar
+                </a>
+
+                <button type="submit" class="btn btn-success-gradient fw-bold px-5 py-2">
+                    Salvar alterações <i class="bi bi-check-lg"></i>
+                </button>
+            </div>
+        </form>
+
+    </div>
+</div>
+{% endblock %}

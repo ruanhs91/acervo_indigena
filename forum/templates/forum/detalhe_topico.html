@@ -1,0 +1,111 @@
+{% extends 'acervo/base.html' %}
+{% block title %}Comentários - Fórum — Povos Indígenas do RN{% endblock %}
+
+{% block content %}
+<main class="inicio min-vh-100">
+    <div class="container-fluid px-3 px-md-5 py-4">
+
+        <h2 class="titulo-inicio mb-4 fw-bold">Comentários</h2>
+
+        <h3 class="fw mb-3">{{ topico.titulo }}</h3>
+        
+        {% if topico.imagem %}
+            <img src="{{ topico.imagem.imagem.url }}"
+                 class="rounded mb-3"
+                 style="max-width: 320px; max-height: 360px; object-fit: contain;">
+        {% endif %}
+
+        {% if topico.videos %}
+            <video controls class="rounded mb-3" style="max-width: 320px;">
+                <source src="{{ topico.videos.video.url }}">
+                Seu navegador não consegue reproduzir o vídeo...
+            </video>
+        {% endif %}
+
+        {% if topico.audio %}
+            <audio controls class="rounded mb-3" style="max-width: 320px;">
+                <source src="{{ topico.audio.audio.url }}" type="audio/mpeg">
+                Seu navegador não consegue reproduzir o áudio...
+            </audio>
+        {% endif %}
+                        
+        {% if topico.link %}
+            <p><a href="{{ topico.link.url }}" target="_blank">{{ topico.link.url }}</a></p>
+        {% endif %}
+
+        <p>{{ topico.conteudo|linebreaks }}</p>
+        <h5>{{ topico.autor_nome }}</h5>
+        <h5>{{ topico.descricao }}</h5>
+        <h4 class="fw mb-3">{{ topico.discussao }}</h4>
+
+        <div class="mt-5">
+            <h4 class="fw-bold mb-4">Comentários ({{ comentarios|length }})</h4>
+
+            <style>.comentario-card {position: relative;}.btn-excluir-hover {
+                    position: absolute;
+                    top: 8px;
+                    right: 8px;
+                    opacity: 0;
+                    transition: 0.3s ease-in-out;
+                }
+                .comentario-card:hover .btn-excluir-hover {
+                    opacity: 1;
+                }
+            </style>
+
+            {% for comentario in comentarios %}
+                <div class="card shadow-sm mb-4 w-100 comentario-card" style="border-radius: 10px;">
+
+                    {% if comentario.autor == request.user or request.user.is_staff %}
+                        <form action="{% url 'forum:excluir_comentario' comentario.id %}"
+                              method="post"
+                              class="btn-excluir-hover">
+                            {% csrf_token %}
+                            <button class="btn btn-danger btn-sm" title="Excluir comentário">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </form>
+                    {% endif %}
+
+                    <div class="card-body">
+
+                        <div class="d-flex align-items-center mb-3">
+                            {% if comentario.autor.foto_perfil %}
+                                <img src="{{ comentario.autor.foto_perfil.url }}"
+                                     class="rounded-circle me-2"
+                                     style="width: 42px; height: 42px; object-fit: cover;">
+                            {% else %}
+                                <i class="bi bi-person-circle text-secondary"
+                                   style="font-size:30px;"></i>
+                            {% endif %}
+
+                            <p class="text-muted m-0">
+                                <strong>{{ comentario.autor }}</strong> —
+                                {{ comentario.criado|date:"d/m/Y H:i" }}
+                            </p>
+                        </div>
+
+                        <h6 class="mb-3">{{ comentario.coment|linebreaks }}</h6>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="card shadow-sm p-3 mb-5 w-100">
+            <h5 class="fw-bold mb-3">Adicionar comentário</h5>
+
+            <form action="{% url 'forum:detail_topico' topico.id %}" method="POST">
+                {% csrf_token %}
+                
+                {{ form.coment }}
+
+                <button type="submit" class="btn btn-outline-primary mt-3"
+        style="border-width: 2px; padding: 10px 22px; font-weight: 600;">
+    Enviar comentário
+</button>
+            </form>
+        </div>
+
+    </div>
+</main>
+{% endblock %}

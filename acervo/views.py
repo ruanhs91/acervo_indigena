@@ -314,7 +314,7 @@ def upload_audio(request): #view de upload de áudio
             audio.enviado_usuario = request.user
             audio.aprovado ='P'
             audio.save()
-            return redirect('acervo:listar_audios') 
+            return redirect('acervo:listar_imagens') 
     else: 
         form = AudioForm()
     context = {
@@ -471,7 +471,7 @@ def editar_link(request, pk):
         form = LinkForm(request.POST, instance=link)
         if form.is_valid():
             form.save()
-            return redirect('acervo:listar_imagens') #trocar por listar_links
+            return redirect('acervo:listar_links') 
     else:
         form = LinkForm(instance=link)
     context = {
@@ -480,13 +480,61 @@ def editar_link(request, pk):
         'page': 'acervo',
     }
     return render(request, 'acervo/editar_link.html', context)
+@login_required 
+@user_passes_test(is_moderador)
+def editar_video(request, pk):
+    video = get_object_or_404(Videos, pk=pk)
+    if request.method == 'POST':
+        form = VideoForm(request.POST, request.FILES, instance=video)
+        if form.is_valid():
+            form.save()
+            return redirect('acervo:listar_videos') 
+    else:
+        form = VideoForm(instance=video)
+    context = {
+        'form': form,
+        'video': video,
+        'page': 'acervo',
+    }
+    return render(request, 'acervo/editar_video.html', context)
+
+@login_required 
+@user_passes_test(is_moderador)
+def excluir_video(request, pk):
+    video = get_object_or_404(Videos, pk=pk)
+    video.delete()
+    return redirect('acervo:listar_videos')
+@login_required 
+@user_passes_test(is_moderador)
+def editar_audio(request, pk):
+    audio = get_object_or_404(Audio, pk=pk)
+    if request.method == 'POST':
+        form = AudioForm(request.POST, request.FILES, instance=audio)
+        if form.is_valid():
+            form.save()
+            return redirect('acervo:listar_audios') 
+    else:
+        form = AudioForm(instance=audio)
+    context = {
+        'form': form,
+        'audio': audio,
+        'page': 'acervo',
+    }
+    return render(request, 'acervo/editar_audio.html', context)
+
+@login_required
+@user_passes_test(is_moderador)
+def excluir_audio(request, pk):
+    audio = get_object_or_404(Audio, pk=pk)
+    audio.delete()
+    return redirect('acervo:listar_audios')
 
 @login_required
 @user_passes_test(is_moderador)
 def excluir_link(request, pk):
     link = get_object_or_404(Link, pk=pk)
     link.delete()
-    return redirect('acervo:listar_imagens') #trocar por listar_links
+    return redirect('acervo:listar_links') #trocar por listar_links
 
 @login_required
 def perfil_view(request):
