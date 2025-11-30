@@ -24,50 +24,76 @@
     box-shadow: none;
 }
 
-.map-button {
+.map-marker {
     position: absolute;
-    background: rgba(179, 8, 8, 0.9);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transform: translate(-50%, -50%);
+    z-index: 20;
+    cursor: pointer;
+    transition: transform 0.18s ease;
+}
+
+.map-button {
+    background: #b30808;
     color: transparent;
     border: 2px solid #fff;
     padding: 0;
     border-radius: 50%;
     font-size: 0;
     cursor: pointer;
-    transition: transform 0.18s ease, box-shadow 0.18s ease;
-    z-index: 20;
+    transition: all 0.18s ease;
     width: 28px;
     height: 28px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-
-    transform: translate(-50%, -50%);
     box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-}
-
-.map-button::after{
-    content: "";
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.95);
-    display: block;
 }
 
 .map-button:hover,
 .map-button:focus {
-    transform: translate(-50%, -50%) scale(1.25);
-    outline: none;
+    transform: scale(1.25);
+    background: #b30808;
     box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    outline: none;
 }
 
-.btn-warao { top: 12%; left: 46%; }
-.btn-tapuia-paiacu { top: 38%; left: 26%; }
-.btn-cablocos { top: 42%; left: 48%; }
-.btn-mendonca { top: 24%; left: 72%; }
-.btn-tapuia-tarairiu { top: 44%; left: 78%; }
-.btn-catu { top: 58%; left: 78%; }
-.btn-sagi { top: 74%; left: 82%; }
+.marker-label {
+    margin-top: 5px;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 0.8em;
+    font-weight: 600;
+    color: #600000;
+    white-space: nowrap;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    transition: all 0.18s ease;
+    opacity: 0;
+    transform: translateY(-5px);
+}
+
+.map-marker:hover .marker-label,
+.map-marker:focus-within .marker-label {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.map-marker:hover,
+.map-marker:focus-within {
+    transform: translate(-50%, -50%) scale(1.05);
+    z-index: 25;
+}
+
+.marker-warao { top: 32%; left: 39%; }
+.marker-tapuia-paiacu { top: 48%; left: 30%; }
+.marker-cablocos { top: 50%; left: 48%; }
+.marker-mendonca { top: 38%; left: 70%; }
+.marker-tapuia-tarairiu { top: 46%; left: 80%; }
+.marker-catu { top: 62%; left: 85%; }
+.marker-sagi { top: 67%; left: 88%; }
 
 .sr-only {
   position: absolute;
@@ -193,14 +219,19 @@
         width: 24px;
         height: 24px;
     }
+    
+    .marker-label {
+        font-size: 0.7em;
+        padding: 2px 6px;
+    }
 
-    .btn-warao { top: 11%; left: 46%; }
-    .btn-tapuia-paiacu { top: 36%; left: 28%; }
-    .btn-cablocos { top: 40%; left: 48%; }
-    .btn-mendonca { top: 22%; left: 72%; }
-    .btn-tapuia-tarairiu { top: 42%; left: 77%; }
-    .btn-catu { top: 56%; left: 78%; }
-    .btn-sagi { top: 72%; left: 82%; }
+    .marker-warao { top: 32%; left: 38%; }
+    .marker-tapuia-paiacu { top: 50%; left: 28%; }
+    .marker-cablocos { top: 48%; left: 48%; }
+    .marker-mendonca { top: 40%; left: 73%; }
+    .marker-tapuia-tarairiu { top: 48%; left: 83%; }
+    .marker-catu { top: 60%; left: 86%; }
+    .marker-sagi { top: 65%; left: 90%; }
 
     .img-vertical {
         max-height: 380px;
@@ -256,39 +287,59 @@
   <div class="text-povos">
     <div>Conheça no mapa abaixo a localização das aldeias e comunidades</div>
   </div>
-
   <div class="map-container">
-    <img src="{% static 'dashboard/map1.png' %}" class="map-image" alt="mapa rn">
+      <img src="{% static 'dashboard/mapaa.jpg' %}" class="map-image" alt="mapa rn">
 
-    <button class="map-button btn-warao" onclick="showTab('warao-tab')" aria-label="Warao" title="Warao">
-      <span class="sr-only">Warao</span>
-    </button>
+      <div class="map-marker marker-warao" onclick="showTab('warao-tab')" tabindex="0">
+        <button class="map-button" aria-label="Warao" title="Warao">
+          <span class="sr-only">Warao</span>
+        </button>
+        <div class="marker-label">Warao</div>
+      </div>
 
-    <button class="map-button btn-tapuia-paiacu" onclick="showTab('tapuia-tab')" aria-label="Tapuia Paiacu" title="Tapuia Paiacu">
-      <span class="sr-only">Tapuia Paiacu</span>
-    </button>
+      <div class="map-marker marker-tapuia-paiacu" onclick="showTab('tapuia-tab')" tabindex="0">
+        <button class="map-button" aria-label="Tapuia Paiacu" title="Tapuia Paiacu">
+          <span class="sr-only">Tapuia Paiacu</span>
+        </button>
+        <div class="marker-label">Tapuia Paiacu</div>
+      </div>
 
-    <button class="map-button btn-cablocos" onclick="showTab('cablocos-tab')" aria-label="Cablocos de Assu" title="Cablocos de Assu">
-      <span class="sr-only">Cablocos de Assu</span>
-    </button>
+      <div class="map-marker marker-cablocos" onclick="showTab('cablocos-tab')" tabindex="0">
+        <button class="map-button" aria-label="Cablocos de Assu" title="Cablocos de Assu">
+          <span class="sr-only">Cablocos de Assu</span>
+        </button>
+        <div class="marker-label">Cablocos de Assu</div>
+      </div>
 
-    <button class="map-button btn-mendonca" onclick="showTab('mendonca-tab')" aria-label="Mendonça" title="Mendonça">
-      <span class="sr-only">Mendonça</span>
-    </button>
+      <div class="map-marker marker-mendonca" onclick="showTab('mendonca-tab')" tabindex="0">
+        <button class="map-button" aria-label="Mendonça" title="Mendonça">
+          <span class="sr-only">Mendonça</span>
+        </button>
+        <div class="marker-label">Mendonça</div>
+      </div>
 
-    <button class="map-button btn-tapuia-tarairiu" onclick="showTab('tarairiu-tab')" aria-label="Tapuia Tarairiú" title="Tapuia Tarairiú">
-      <span class="sr-only">Tapuia Tarairiú</span>
-    </button>
+      <div class="map-marker marker-tapuia-tarairiu" onclick="showTab('tarairiu-tab')" tabindex="0">
+        <button class="map-button" aria-label="Tapuia Tarairiú" title="Tapuia Tarairiú">
+          <span class="sr-only">Tapuia Tarairiú</span>
+        </button>
+        <div class="marker-label">Tapuia Tarairiú</div>
+      </div>
 
-    <button class="map-button btn-catu" onclick="showTab('catu-tab')" aria-label="Catu" title="Catu">
-      <span class="sr-only">Catu</span>
-    </button>
+      <div class="map-marker marker-catu" onclick="showTab('catu-tab')" tabindex="0">
+        <button class="map-button" aria-label="Catu" title="Catu">
+          <span class="sr-only">Catu</span>
+        </button>
+        <div class="marker-label">Catu</div>
+      </div>
 
-    <button class="map-button btn-sagi" onclick="showTab('sagi-tab')" aria-label="Sagi/Trabanda" title="Sagi/Trabanda">
-      <span class="sr-only">Sagi/Trabanda</span>
-    </button>
+      <div class="map-marker marker-sagi" onclick="showTab('sagi-tab')" tabindex="0">
+        <button class="map-button" aria-label="Sagi/Trabanda" title="Sagi/Trabanda">
+          <span class="sr-only">Sagi/Trabanda</span>
+        </button>
+        <div class="marker-label">Sagi/Trabanda</div>
+      </div>
   </div>
-
+ 
   <ul class="nav nav-tabs justify-content-center mb-4" id="povosTabs" role="tablist">
     <li class="nav-item" role="presentation">
       <button class="nav-link active" id="cablocos-tab" data-bs-toggle="tab" data-bs-target="#cablocos" type="button" role="tab">Cablocos de Assu</button>
