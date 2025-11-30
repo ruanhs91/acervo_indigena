@@ -7,6 +7,7 @@
 
 <style>
 .map-container {
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -14,7 +15,7 @@
     width: 100%;
 }
 
-.map-container img {
+.map-image {
     max-width: 90%;  
     height: auto;
     display: block;
@@ -22,6 +23,35 @@
     border: none;       
     box-shadow: none;   
 }
+
+.map-button {
+    position: absolute;
+    background: rgba(179, 8, 8, 0.7);
+    color: transparent;
+    border: none;
+    padding: 8px;
+    border-radius: 50%;
+    font-size: 0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 10;
+    width: 24px;
+    height: 24px;
+}
+
+.map-button:hover {
+    background: rgba(179, 8, 8, 0.9);
+    transform: scale(1.2);
+}
+
+/* Posições dos botões AJUSTADAS para ficar sobre os pontos */
+.btn-warao { top: 18%; left: 52%; }
+.btn-tapuia-paiacu { top: 35%; left: 35%; }
+.btn-cablocos { top: 40%; left: 45%; }
+.btn-mendonca { top: 32%; left: 42%; }
+.btn-tapuia-tarainu { top: 45%; left: 40%; }
+.btn-catu { top: 55%; left: 60%; }
+.btn-sagi { top: 75%; left: 65%; }
 
 .nav-tabs {
     border-bottom: 2px solid #dcdcdc;
@@ -132,7 +162,23 @@
     .map-container img {
         max-width: 95%;
     }
-     .img-vertical {
+    
+    .map-button {
+        width: 20px;
+        height: 20px;
+        padding: 6px;
+    }
+    
+    /* Ajuste das posições para mobile */
+    .btn-warao { top: 15%; left: 50%; }
+    .btn-tapuia-paiacu { top: 32%; left: 33%; }
+    .btn-cablocos { top: 38%; left: 43%; }
+    .btn-mendonca { top: 30%; left: 40%; }
+    .btn-tapuia-tarainu { top: 43%; left: 38%; }
+    .btn-catu { top: 53%; left: 58%; }
+    .btn-sagi { top: 73%; left: 63%; }
+
+    .img-vertical {
         max-height: 380px;
         width: 100%;
     }
@@ -188,7 +234,16 @@
   </div>
 
   <div class="map-container">
-    <img src="{% static 'dashboard/map1.png' %}" usemap="#image-map" alt="mapa rn">
+    <img src="{% static 'dashboard/map1.png' %}" class="map-image" alt="mapa rn">
+    
+    <!-- Botões clicáveis no mapa - sem nomes -->
+    <button class="map-button btn-warao" onclick="showTab('warao-tab')" title="Warao"></button>
+    <button class="map-button btn-tapuia-paiacu" onclick="showTab('tapuia-tab')" title="Tapuia Paiacu"></button>
+    <button class="map-button btn-cablocos" onclick="showTab('cablocos-tab')" title="Cablocos de Assu"></button>
+    <button class="map-button btn-mendonca" onclick="showTab('mendonca-tab')" title="Mendonça"></button>
+    <button class="map-button btn-tapuia-tarainu" onclick="showTab('tarairiu-tab')" title="Tapuia Tarainú"></button>
+    <button class="map-button btn-catu" onclick="showTab('catu-tab')" title="Catu"></button>
+    <button class="map-button btn-sagi" onclick="showTab('sagi-tab')" title="Sagi/Trabanda"></button>
   </div>
 
   <ul class="nav nav-tabs justify-content-center mb-4" id="povosTabs" role="tablist">
@@ -224,7 +279,7 @@
         <div class="povo-texto" style="width: 100%;">
           <p>Os Caboclos, pertencentes da divisão Tapuia (essa classificação é baseada na ideia de que eles têm características físicas, bem como valores sociais e práticas únicas que os distinguem das demais pessoas em seu entorno), é um povo resistente que vem das terras áridas do sertão do Rio Grande do Norte, entre Assu e Paraú, que têm demonstrado força e determinação na luta étnica e política. A trajetória de suas vidas é marcada pelo enfrentamento diário de problemas causados pelas persistentes estiagens e pela dificuldade de obter áreas de terra para o desenvolvimento de atividades agrícolas, com vegetação mais seca com muitas cactáceas e plantas de porte mais baixo. A partir da manutenção das famílias em seu território e da organização política, os Caboclos têm trabalhado para obter o reconhecimento de seus direitos como povo indígena.</p>
 
-          <p>A estatura baixa, os pés chatos - que "mais parecia um bolão" -, o “nariz labrojeiro” e as mulheres “abalofadas”, com cabelos pretos e longos são características físicas que refletem uma visão colonizadora e estereotipada, desconsiderando a complexidade cultural e física desses povos. São mencionados seus hábitos alimentares, suas práticas matrimoniais (casamentos endogâmicos) e sua liberalidade sexual, e é através dessas características específicas que os colonizadores justificariam sua subjugação forçada. Os caboclos são identificados como "Tapuios", o que constitui uma forma de depreciação que representa uma especificidade e uma certa ideia de inferioridade. Isso cria uma fronteira étnica entre a comunidade e as outras áreas próximas, o que leva a rixas, desconfianças e desprezo.</p>
+          <p>A estatura baixa, os pés chatos - que "mais parecia um bolão" -, o "nariz labrojeiro" e as mulheres "abalofadas", com cabelos pretos e longos são características físicas que refletem uma visão colonizadora e estereotipada, desconsiderando a complexidade cultural e física desses povos. São mencionados seus hábitos alimentares, suas práticas matrimoniais (casamentos endogâmicos) e sua liberalidade sexual, e é através dessas características específicas que os colonizadores justificariam sua subjugação forçada. Os caboclos são identificados como "Tapuios", o que constitui uma forma de depreciação que representa uma especificidade e uma certa ideia de inferioridade. Isso cria uma fronteira étnica entre a comunidade e as outras áreas próximas, o que leva a rixas, desconfianças e desprezo.</p>
 
           <p>Com o avanço da colonização e a expansão das fazendas, muitos indígenas da região foram deslocados e incorporados a sistemas de trabalho exploratórios. Apesar das dificuldades, os Caboclos resistiram, estabelecendo-se nas terras onde atualmente vivem. Hoje, a comunidade ainda existe, busca visibilidade e reconhecimento por meio de mobilizações políticas, como a criação da Associação Comunitária e a participação em audiências públicas e assembleias indígenas no estado do Rio Grande do Norte.</p>
         </div>
@@ -310,11 +365,11 @@
           <p class="legenda-imagem">Fonte: Representação indígena Tarairiú</p>
         </div>
         <div class="povo-texto">
-          <p>Os Tarairiú, parte do grupo Tapuia, habitavam o sertão semiárido do Nordeste brasileiro, incluindo o Rio Grande do Norte, Paraíba e Pernambuco. Eles eram nômades e divididos em vários povos, como os janduís, canindés e panatis. Suas aldeias principais estavam localizadas às margens dos rios Açu e Apodi, além de outros locais estratégicos.</p>
+          <p>Os Tarairiú, parte do grupo Tapuia, habitavam o sertão semiárido do Nordeste brasileiro, incluindo o Rio Grande do Norte, Paraíba e Pernambuco. Eram nômades e divididos em vários povos, como os janduís, canindés e panatis. Suas aldeias principais estavam localizadas às margens dos rios Açu e Apodi, além de outros locais estratégicos.</p>
 
-          <p>Fisicamente, na visão do colonizador, os homens eram altos e fortes, enquanto as mulheres eram mais baixas e robustas. Viviam da caça, pesca e agricultura, plantando mandioca e milho, e faziam festas religiosas, bebendo uma bebida fermentada de mel chamada “Uvd”. Tinham costumes como o uso de piercings em rituais de passagem e pintavam-se com urucum e jenipapo.</p>
+          <p>Fisicamente, na visão do colonizador, os homens eram altos e fortes, enquanto as mulheres eram mais baixas e robustas. Viviam da caça, pesca e agricultura, plantando mandioca e milho, e faziam festas religiosas, bebendo uma bebida fermentada de mel chamada "Uvd". Tinham costumes como o uso de piercings em rituais de passagem e pintavam-se com urucum e jenipapo.</p>
 
-          <p>Com o início da colonização, especialmente com a chegada dos holandeses e, depois, dos portugueses, esses povos enfrentaram conflitos, culminando na “Guerra dos Bárbaros” no século XVII. Muitos Tarairiú foram mortos, escravizados ou aldeados em missões religiosas. A falta de terras e a intensa miscigenação resultaram na perda de suas tradições e identidade cultural.</p>
+          <p>Com o início da colonização, especialmente com a chegada dos holandeses e, depois, dos portugueses, esses povos enfrentaram conflitos, culminando na "Guerra dos Bárbaros" no século XVII. Muitos Tarairiú foram mortos, escravizados ou aldeados em missões religiosas. A falta de terras e a intensa miscigenação resultaram na perda de suas tradições e identidade cultural.</p>
         </div>
       </div>
     </div>
@@ -328,7 +383,7 @@
           <p class="legenda-imagem">Fonte: GettyImages</p>
         </div>
         <div class="povo-texto">
-          <p>O povo Warao, cujo nome significa <i>“povo da água”</i>, é um grupo indígena que pertence à divisão Tupi. Habitavam o delta do rio Orinoco, na Venezuela, e enfrentaram deslocamentos forçados devido a crises socioeconômicas e ambientais. Desde 2014, migraram para o Brasil, encontrando-se atualmente em estados como Roraima, Amazonas e, mais recentemente, no Rio Grande do Norte.</p>
+          <p>O povo Warao, cujo nome significa <i>"povo da água"</i>, é um grupo indígena que pertence à divisão Tupi. Habitavam o delta do rio Orinoco, na Venezuela, e enfrentaram deslocamentos forçados devido a crises socioeconômicas e ambientais. Desde 2014, migraram para o Brasil, encontrando-se atualmente em estados como Roraima, Amazonas e, mais recentemente, no Rio Grande do Norte.</p>
 
           <p>Sua luta inclui a busca por melhores condições de vida e saúde, como também a história da construção da barragem no Caño Manamo, que impactou gravemente sua organização social e territorial. Hoje, os Warao enfrentam desafios em sua nova realidade, incluindo vulnerabilidades sociais e de saúde.</p>
         </div>
@@ -336,4 +391,21 @@
     </div>
   </div>
 </main>
+
+<script>
+function showTab(tabId) {
+    // Encontra o botão da tab pelo ID e clica nele
+    const tabButton = document.getElementById(tabId);
+    if (tabButton) {
+        tabButton.click();
+        
+        // Rola a página para as tabs
+        document.querySelector('.nav-tabs').scrollIntoView({ 
+            behavior: 'smooth',
+            block: 'start'
+        });
+    }
+}
+</script>
+
 {% endblock %}

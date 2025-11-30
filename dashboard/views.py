@@ -4,27 +4,15 @@ def inicio(request):
     textos = {
         "objetivo": {
             "titulo": "Qual o objetivo desse site?",
-            "conteudo": """A invenção da escrita marcou um momento crucial na preservação e transmissão do conhecimento humano. 
-            A necessidade de registrar e conservar os saberes e costumes levou à criação de sites dedicados ao cuidado e organização 
-            de documentos e memórias. No contexto dos povos indígenas do Rio Grande do Norte, o desenvolvimento deste site surge como 
-            uma resposta a essa necessidade histórica, proporcionando um espaço digital para registrar a herança cultural e histórica 
-            dos povos tradicionais do RN. Nosso objetivo é garantir que o conhecimento e histórias desses povos não se percam no tempo, 
-            mas sejam preservadas e compartilhadas de maneira acessível."""
-        },
-        "desenvolvimento": {
-            "titulo": "Por que desenvolvemos esse site?",
-            "conteudo": """Esse site foi desenvolvido com o intuito de atender ao aumento da demanda por informações e registros sobre 
-            as culturas indígenas, que muitas vezes são esquecidas ou mal compreendidas. Ao reunir informações valiosas sobre a história, 
-            a cultura e os desafios enfrentados pelos povos indígenas do Rio Grande do Norte, buscamos não apenas preservar esse conhecimento, 
-            mas também promover uma maior compreensão e valorização. Este espaço serve como um repositório virtual que apoia o reconhecimento 
-            e o respeito por estas comunidades, refletindo a importância de manter viva a memória cultural."""
+            "conteudo": """Este site foi criado para preservar e compartilhar a herança cultural e histórica dos povos indígenas do Rio Grande do Norte, garantindo que seus saberes e memórias não se percam. Ele surge como resposta à necessidade de registrar e organizar informações sobre essas culturas, muitas vezes negligenciadas, servindo como um repositório digital acessível que promove o reconhecimento e o respeito por essas comunidades."""
         },
         "importancia": {
             "titulo": "Qual a importância desse site?",
-            "conteudo": """Além de sua função como arquivo digital, o site tem o papel de facilitar a aproximação entre diferentes grupos de pessoas. 
-            Ao oferecer acesso a informações bem organizadas, pretendemos estimular a curiosidade e o interesse em conhecer mais sobre os povos 
-            indígenas e suas tradições. Acreditamos que, ao promover a educação e a informação, podemos contribuir para um mundo onde o conhecimento 
-            cultural dos povos indígenas do RN é protegido e lembrado."""
+            "conteudo": """Além de funcionar como um arquivo digital, o site busca aproximar pessoas e culturas, fornecendo informações organizadas que estimulam a curiosidade e o aprendizado. Ao educar e informar, contribui para a valorização e proteção do conhecimento indígena, fortalecendo a memória cultural e incentivando um maior entendimento entre diferentes grupos."""
+        },
+        "quem_somos": {
+            "titulo": "Quem Somos?",
+            "conteudo": """Somos Rebeca Lourenço Fernandes Bento e Ruan Henry Silva Carlos, concluintes do curso técnico em Informática do IFRN - Campus Pau dos Ferros. Este site foi desenvolvido como nosso Trabalho de Conclusão de Curso (TCC), com o objetivo de contribuir para a preservação e divulgação da cultura indígena do Rio Grande do Norte, unindo nossos conhecimentos técnicos à valorização da história e tradições dos povos originários de nossa região."""
         }
     }
 
@@ -56,7 +44,7 @@ def povos(request):
 def conhecimentos(request):
     textos_conhecimentos = {
         'introd': {
-            "introducao_conheci": """Apesar do Rio Grande do Norte ter um grande histórico de chacina e apagamento dos povos indígenas, ainda permanecem várias tradições de origem indígena no nosso estado no cotidiano, evidenciando que sobreviveram à passagem do tempo. O indígena não se “apagou” totalmente; tanto suas comunidades quanto a sua cultura ainda resistem e convivem no nosso cotidiano, como nas festas, comidas típicas, nomes de cidades, alimentos e palavras usadas no nosso vocabulário diário.  A seguir algumas das tradições e conhecimentos: """
+            "introducao_conheci": """Apesar do Rio Grande do Norte ter um grande histórico de chacina e apagamento dos povos indígenas, ainda permanecem várias tradições de origem indígena no nosso estado no cotidiano, evidenciando que sobreviveram à passagem do tempo. O indígena não se "apagou" totalmente; tanto suas comunidades quanto a sua cultura ainda resistem e convivem no nosso cotidiano, como nas festas, comidas típicas, nomes de cidades, alimentos e palavras usadas no nosso vocabulário diário.  A seguir algumas das tradições e conhecimentos: """
         }
     }
 

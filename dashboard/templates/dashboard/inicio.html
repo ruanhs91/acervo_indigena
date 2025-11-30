@@ -13,13 +13,36 @@ body, main {
   color: #111;
 }
 
-h2, h3 {
+.titulo-inicio {
+  font-weight: 700;
+  color:  #600000;
+  margin-top: 85px;
+  margin-bottom: 35px; 
+  text-align: center;
+}
+
+.texto-inicio,
+.texto-inicio1,
+.texto-inicio2 {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 0 15px;
+}
+
+.texto-inicio {
+  margin-top: 80px !important;
+}
+
+.texto-inicio h3,
+.texto-inicio1 h3,
+.texto-inicio2 h3 {
   font-weight: 700;
   color: #111;
   margin-top: 40px;
-  margin-bottom: 10px; 
+  margin-bottom: 10px;
+  text-align: left;
+  width: 100%;
 }
-
 
 p {
   line-height: 1.9;
@@ -29,133 +52,61 @@ p {
   color: #111;
 }
 
-.povo-texto p {
-  font-family: 'Poppins', sans-serif;
-  font-weight: 400;
-  font-size: 1.05rem;
-  color: #111;
-  line-height: 1.9;
-  text-align: justify;
-}
-
-.slidesh-container {
+.quem-somos-img {
   display: flex;
   justify-content: center;
-  margin-bottom: 30px;
+  margin: 40px 0 20px 0;
 }
 
-.slidesh {
+.quem-somos-img img {
+  max-width: 800px;
   width: 100%;
-  max-width: 1000px;
-  position: relative;
-  overflow: hidden;
+  height: auto;
   border-radius: 10px;
   box-shadow: 0 3px 12px rgba(0, 0, 0, 0.15);
 }
 
-.slidesh img {
-  width: 100%;
-  height: 350px;
-  object-fit: cover;
-  object-position: center;
-  display: block;
-  border-radius: 10px;
-}
-
-.prev, .next {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  padding: 10px 16px;
-  color: white;
-  font-weight: bold;
-  font-size: 20px;
-  background-color: rgba(0, 0, 0, 0.4);
-  border-radius: 50%;
-  cursor: pointer;
-  user-select: none;
-  transition: background-color 0.3s ease;
-}
-
-.prev:hover, .next:hover {
-  background-color: rgba(0, 0, 0, 0.6);
-}
-
-.prev { left: 10px; }
-.next { right: 10px; }
-
-.texto-inicio,
-.texto-inicio1 {
-  max-width: 900px;
-  margin: 40px auto;
-  padding: 0 15px;
-}
-
 @media (max-width: 768px) {
-  .slidesh img {
-    height: 220px;
-  }
   h3 {
     font-size: 1.1rem;
   }
   p {
     font-size: 0.95rem;
   }
+  .quem-somos-img img {
+    max-width: 100%;
+  }
+  .texto-inicio {
+    margin-top: 50px !important;
+  }
+  .titulo-inicio {
+    margin-top: 60px;
+  }
 }
 
 </style>
 
 <main class="inicio min-vh-100">
-  <h2 class="titulo-inicio mb-3 fw-bold text-center">Início</h2>
-
-  <div class="slidesh-container">
-    <div class="slidesh">
-      <div class="slide"><img src="{% static 'dashboard/slide1.jpg' %}" alt="Imagem 1"></div>
-      <div class="slide"><img src="{% static 'dashboard/slide2.jpg' %}" alt="Imagem 2"></div>
-      <div class="slide"><img src="{% static 'dashboard/slide3.jpg' %}" alt="Imagem 3"></div>
-      <div class="slide"><img src="{% static 'dashboard/slide4.jpg' %}" alt="Imagem 4"></div>
-      <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-      <a class="next" onclick="plusSlides(1)">&#10095;</a>
-    </div>
-  </div>
+  <h2 class="titulo-inicio mb-3 fw-bold">Início</h2>
 
   <div class="texto-inicio">
-    <h3>{{ textos.objetivo.titulo }}</h3>
+    <h3>Qual o objetivo desse site?</h3>
     <p>{{ textos.objetivo.conteudo }}</p>
   </div>
 
   <div class="texto-inicio1">
-    <h3>{{ textos.desenvolvimento.titulo }}</h3>
-    <p>{{ textos.desenvolvimento.conteudo }}</p>
-
-    <h3>{{ textos.importancia.titulo }}</h3>
+    <h3>Qual a importância desse site?</h3>
     <p>{{ textos.importancia.conteudo }}</p>
   </div>
+
+  <div class="texto-inicio2">
+    <h3>Quem Somos?</h3>
+    <p>{{ textos.quem_somos.conteudo }}</p>
+    
+    <div class="quem-somos-img">
+      <img src="{% static 'dashboard/nois.jpg' %}" alt="Rebeca Lourenço Fernandes Bento e Ruan Henry Silva Carlos - Criadores do site">
+    </div>
+  </div>
 </main>
-
-<script>
-let slideIndex = 1;
-
-function showSlides(n) {
-  let slides = document.getElementsByClassName("slide");
-  if (slides.length === 0) return;
-  if (n > slides.length) { slideIndex = 1; }
-  if (n < 1) { slideIndex = slides.length; }
-
-  for (let i = 0; i < slides.length; i++) {
-    slides[i].style.display = "none";
-  }
-  slides[slideIndex - 1].style.display = "block";
-}
-
-function plusSlides(n) {
-  showSlides(slideIndex += n);
-}
-
-document.addEventListener("DOMContentLoaded", function() {
-  showSlides(slideIndex);
-  setInterval(function() { plusSlides(1); }, 4000);
-});
-</script>
 
 {% endblock %}
