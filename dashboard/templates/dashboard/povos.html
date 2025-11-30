@@ -16,42 +16,70 @@
 }
 
 .map-image {
-    max-width: 90%;  
+    max-width: 90%;
     height: auto;
     display: block;
     border-radius: 12px;
-    border: none;       
-    box-shadow: none;   
+    border: none;
+    box-shadow: none;
 }
 
 .map-button {
     position: absolute;
-    background: rgba(179, 8, 8, 0.7);
+    background: rgba(179, 8, 8, 0.9);
     color: transparent;
-    border: none;
-    padding: 8px;
+    border: 2px solid #fff;
+    padding: 0;
     border-radius: 50%;
     font-size: 0;
     cursor: pointer;
-    transition: all 0.3s ease;
-    z-index: 10;
-    width: 24px;
-    height: 24px;
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+    z-index: 20;
+    width: 28px;
+    height: 28px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    transform: translate(-50%, -50%);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
 }
 
-.map-button:hover {
-    background: rgba(179, 8, 8, 0.9);
-    transform: scale(1.2);
+.map-button::after{
+    content: "";
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.95);
+    display: block;
 }
 
-/* Posições dos botões AJUSTADAS para ficar sobre os pontos */
-.btn-warao { top: 18%; left: 52%; }
-.btn-tapuia-paiacu { top: 35%; left: 35%; }
-.btn-cablocos { top: 40%; left: 45%; }
-.btn-mendonca { top: 32%; left: 42%; }
-.btn-tapuia-tarainu { top: 45%; left: 40%; }
-.btn-catu { top: 55%; left: 60%; }
-.btn-sagi { top: 75%; left: 65%; }
+.map-button:hover,
+.map-button:focus {
+    transform: translate(-50%, -50%) scale(1.25);
+    outline: none;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+}
+
+.btn-warao { top: 12%; left: 46%; }
+.btn-tapuia-paiacu { top: 38%; left: 26%; }
+.btn-cablocos { top: 42%; left: 48%; }
+.btn-mendonca { top: 24%; left: 72%; }
+.btn-tapuia-tarairiu { top: 44%; left: 78%; }
+.btn-catu { top: 58%; left: 78%; }
+.btn-sagi { top: 74%; left: 82%; }
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
 
 .nav-tabs {
     border-bottom: 2px solid #dcdcdc;
@@ -85,15 +113,15 @@
 .povo-conteudo {
     display: flex;
     justify-content: center;
-    align-items: flex-start;       
+    align-items: flex-start;
     gap: 30px;
     max-width: 1000px;
-    margin: 0 auto 60px auto; 
-    padding-bottom: 40px;     
+    margin: 0 auto 60px auto;
+    padding-bottom: 40px;
 }
 
 .povo-img {
-    flex: 0 0 35%;             
+    flex: 0 0 35%;
     text-align: center;
 }
 
@@ -152,31 +180,27 @@
 }
 
 .img-vertical {
-    max-height: 480px; 
-    width: auto;       
+    max-height: 480px;
+    width: auto;
     object-fit: cover;
     border-radius: 12px;
 }
 
 @media (max-width: 900px) {
-    .map-container img {
-        max-width: 95%;
-    }
-    
+    .map-image { max-width: 95%; }
+
     .map-button {
-        width: 20px;
-        height: 20px;
-        padding: 6px;
+        width: 24px;
+        height: 24px;
     }
-    
-    /* Ajuste das posições para mobile */
-    .btn-warao { top: 15%; left: 50%; }
-    .btn-tapuia-paiacu { top: 32%; left: 33%; }
-    .btn-cablocos { top: 38%; left: 43%; }
-    .btn-mendonca { top: 30%; left: 40%; }
-    .btn-tapuia-tarainu { top: 43%; left: 38%; }
-    .btn-catu { top: 53%; left: 58%; }
-    .btn-sagi { top: 73%; left: 63%; }
+
+    .btn-warao { top: 11%; left: 46%; }
+    .btn-tapuia-paiacu { top: 36%; left: 28%; }
+    .btn-cablocos { top: 40%; left: 48%; }
+    .btn-mendonca { top: 22%; left: 72%; }
+    .btn-tapuia-tarairiu { top: 42%; left: 77%; }
+    .btn-catu { top: 56%; left: 78%; }
+    .btn-sagi { top: 72%; left: 82%; }
 
     .img-vertical {
         max-height: 380px;
@@ -202,12 +226,12 @@
         width: 100%;
         margin-top: 20px;
     }
-    
+
     .povo-conteudo-tapuia {
         max-width: 90%;
         text-align: center;
     }
-    
+
     .povo-img-grande {
         max-width: 100%;
         margin: 0 auto;
@@ -235,15 +259,34 @@
 
   <div class="map-container">
     <img src="{% static 'dashboard/map1.png' %}" class="map-image" alt="mapa rn">
-    
-    <!-- Botões clicáveis no mapa - sem nomes -->
-    <button class="map-button btn-warao" onclick="showTab('warao-tab')" title="Warao"></button>
-    <button class="map-button btn-tapuia-paiacu" onclick="showTab('tapuia-tab')" title="Tapuia Paiacu"></button>
-    <button class="map-button btn-cablocos" onclick="showTab('cablocos-tab')" title="Cablocos de Assu"></button>
-    <button class="map-button btn-mendonca" onclick="showTab('mendonca-tab')" title="Mendonça"></button>
-    <button class="map-button btn-tapuia-tarainu" onclick="showTab('tarairiu-tab')" title="Tapuia Tarainú"></button>
-    <button class="map-button btn-catu" onclick="showTab('catu-tab')" title="Catu"></button>
-    <button class="map-button btn-sagi" onclick="showTab('sagi-tab')" title="Sagi/Trabanda"></button>
+
+    <button class="map-button btn-warao" onclick="showTab('warao-tab')" aria-label="Warao" title="Warao">
+      <span class="sr-only">Warao</span>
+    </button>
+
+    <button class="map-button btn-tapuia-paiacu" onclick="showTab('tapuia-tab')" aria-label="Tapuia Paiacu" title="Tapuia Paiacu">
+      <span class="sr-only">Tapuia Paiacu</span>
+    </button>
+
+    <button class="map-button btn-cablocos" onclick="showTab('cablocos-tab')" aria-label="Cablocos de Assu" title="Cablocos de Assu">
+      <span class="sr-only">Cablocos de Assu</span>
+    </button>
+
+    <button class="map-button btn-mendonca" onclick="showTab('mendonca-tab')" aria-label="Mendonça" title="Mendonça">
+      <span class="sr-only">Mendonça</span>
+    </button>
+
+    <button class="map-button btn-tapuia-tarairiu" onclick="showTab('tarairiu-tab')" aria-label="Tapuia Tarairiú" title="Tapuia Tarairiú">
+      <span class="sr-only">Tapuia Tarairiú</span>
+    </button>
+
+    <button class="map-button btn-catu" onclick="showTab('catu-tab')" aria-label="Catu" title="Catu">
+      <span class="sr-only">Catu</span>
+    </button>
+
+    <button class="map-button btn-sagi" onclick="showTab('sagi-tab')" aria-label="Sagi/Trabanda" title="Sagi/Trabanda">
+      <span class="sr-only">Sagi/Trabanda</span>
+    </button>
   </div>
 
   <ul class="nav nav-tabs justify-content-center mb-4" id="povosTabs" role="tablist">
@@ -394,13 +437,10 @@
 
 <script>
 function showTab(tabId) {
-    // Encontra o botão da tab pelo ID e clica nele
     const tabButton = document.getElementById(tabId);
     if (tabButton) {
         tabButton.click();
-        
-        // Rola a página para as tabs
-        document.querySelector('.nav-tabs').scrollIntoView({ 
+        document.querySelector('.nav-tabs').scrollIntoView({
             behavior: 'smooth',
             block: 'start'
         });
