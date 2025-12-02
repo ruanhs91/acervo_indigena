@@ -29,13 +29,13 @@
                     </a>
                     <ul class="dropdown-menu" arialabelledby="acervoDropdown">
                       <li><a class="dropdown-item align-items-center gap-2 d-flex" href="{% url 'acervo:listar_imagens' %}"><i class="bi bi-image"></i>Imagens</a></li>
-                      <li><a class="dropdown-item align-items-center gap-2 d-flex" href="{% url 'acervo:listar_imagens' %}"><i class="bi bi-link-45deg"></i>Links</a></li>
-                      <li><a class="dropdown-item align-items-center gap-2 d-flex" href="{% url 'acervo:listar_imagens' %}"><i class="bi bi-play-btn"></i>Vídeos</a></li>
+                      <li><a class="dropdown-item align-items-center gap-2 d-flex" href="{% url 'acervo:listar_links' %}"><i class="bi bi-link-45deg"></i>Links</a></li>
+                      <li><a class="dropdown-item align-items-center gap-2 d-flex" href="{% url 'acervo:listar_videos' %}"><i class="bi bi-play-btn"></i>Vídeos</a></li>
                       <li><a class="dropdown-item align-items-center gap-2 d-flex" href="{% url 'acervo:listar_artigos' %}"><i class="bi bi-file-earmark-text"></i>Artigos</a></li>
-                      <li><a class="dropdown-item align-items-center gap-2 d-flex" href="{% url 'acervo:listar_imagens' %}"><i class="bi bi-music-note-beamed"></i>Áudios</a></li>
+                      <li><a class="dropdown-item align-items-center gap-2 d-flex" href="{% url 'acervo:listar_audios' %}"><i class="bi bi-music-note-beamed"></i>Áudios</a></li>
                     </ul>
                   </div>
-                <a href="{% url 'forum:topicos' %}" class="{% if page == 'topicos' %}active{% endif %}">FÓRUM</a>
+                <a href="{% url 'forum:topicos' %}" class="{% if page == 'topicos' %}active{% endif %}"style=color:#2ECC71;text-decoration:underline;>FÓRUM</a>
                 <div class="dropdown">
                     {% if user.is_authenticated %}
                     <button class="btn dropdown-toggle d-flex align-items-center gap-2 border-0 bg-transparent" type="button" data-bs-toggle="dropdown" style="color: #1A4623;">

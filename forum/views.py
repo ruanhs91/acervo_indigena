@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.views.generic import ListView
-from .models import Topico, Comentario, UsuarioAdaptado, Reagir
+from .models import Topico, Comentario as ComentarioModel, UsuarioAdaptado, Reagir
 from acervo.views import is_moderador
 from .forms import ComentarioForm
 from django.contrib import messages
@@ -31,39 +31,41 @@ def excluir_topico(request, pk):
 
 def detail_topico(request, id):
     topico = get_object_or_404(Topico, id=id)
-    comentarios = Comentario.objects.filter(topico=topico)
+    comentarios = ComentarioModel.objects.filter(topico=topico, parent=None).order_by('-criado')
+
 
     if request.method == "POST":
         form = ComentarioForm(request.POST)
+
         if form.is_valid():
             novo = form.save(commit=False)
-
-            try:
-                usuario_adaptado = request.user
-            except UsuarioAdaptado.DoesNotExist:
-                messages.error(request, "Conta inválida para postar comentário.")
+            if not request.user.is_authenticated:
                 return redirect('forum:detail_topico', id=id)
-
-
-            novo.autor = usuario_adaptado
+            
+            novo.autor = request.user
             novo.topico = topico
+
+            parent_id = request.POST.get('parent_id')
+            if parent_id:
+                parent = ComentarioModel.objects.get(id=parent_id, topico= topico)
+                if parent:
+                    novo.parent = parent
             novo.save()
 
-            messages.success(request, "Comentário enviado!")
             return redirect('forum:detail_topico', id=id)
-
     else:
         form = ComentarioForm()
+    context = {
+        'topico': topico,
+        'comentarios': comentarios,
+        'form': form,
+    }
+    return render(request, 'forum/detalhe_topico.html', context)
 
-    return render(request, "forum/detalhe_topico.html", {
-        "topico": topico,
-        "comentarios": comentarios,
-        "form": form
-    })
 
 @login_required
 def excluir_comentario(request, pk):
-    comentario = get_object_or_404(Comentario, id=pk)
+    comentario = get_object_or_404(ComentarioModel, id=pk)
 
     if not (
         comentario.autor == request.user 

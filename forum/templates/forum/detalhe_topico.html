@@ -1,111 +1,355 @@
 {% extends 'acervo/base.html' %}
-{% block title %}Comentários - Fórum — Povos Indígenas do RN{% endblock %}
+{% block title %}Discussão - Fórum — Povos Indígenas do RN{% endblock %}
 
 {% block content %}
-<main class="inicio min-vh-100">
-    <div class="container-fluid px-3 px-md-5 py-4">
 
-        <h2 class="titulo-inicio mb-4 fw-bold">Comentários</h2>
-
-        <h3 class="fw mb-3">{{ topico.titulo }}</h3>
-        
-        {% if topico.imagem %}
-            <img src="{{ topico.imagem.imagem.url }}"
-                 class="rounded mb-3"
-                 style="max-width: 320px; max-height: 360px; object-fit: contain;">
-        {% endif %}
-
-        {% if topico.videos %}
-            <video controls class="rounded mb-3" style="max-width: 320px;">
-                <source src="{{ topico.videos.video.url }}">
-                Seu navegador não consegue reproduzir o vídeo...
-            </video>
-        {% endif %}
-
-        {% if topico.audio %}
-            <audio controls class="rounded mb-3" style="max-width: 320px;">
-                <source src="{{ topico.audio.audio.url }}" type="audio/mpeg">
-                Seu navegador não consegue reproduzir o áudio...
-            </audio>
-        {% endif %}
-                        
-        {% if topico.link %}
-            <p><a href="{{ topico.link.url }}" target="_blank">{{ topico.link.url }}</a></p>
-        {% endif %}
-
-        <p>{{ topico.conteudo|linebreaks }}</p>
-        <h5>{{ topico.autor_nome }}</h5>
-        <h5>{{ topico.descricao }}</h5>
-        <h4 class="fw mb-3">{{ topico.discussao }}</h4>
-
-        <div class="mt-5">
-            <h4 class="fw-bold mb-4">Comentários ({{ comentarios|length }})</h4>
-
-            <style>.comentario-card {position: relative;}.btn-excluir-hover {
+ <style>
+                .comentario-card { 
+                    position: relative; 
+                    border: none;
+                    border-radius: 10px;
+                }
+                .btn-excluir-hover {
                     position: absolute;
-                    top: 8px;
-                    right: 8px;
+                    top: 12px;
+                    right: 12px;
                     opacity: 0;
                     transition: 0.3s ease-in-out;
                 }
-                .comentario-card:hover .btn-excluir-hover {
-                    opacity: 1;
+                .comentario-card:hover .btn-excluir-hover { opacity: 1; }
+                
+                .resposta-container { 
+                    display: flex; 
+                    align-items: flex-start;
+                    margin-bottom: 1rem;
+                }
+                .setinha-resposta {
+                    font-size: 16px;
+                    margin-right: 12px;
+                    color: #6c757d;
+                    margin-top: 12px;
+                }
+                .resposta-card { 
+                    flex: 1;
+                    background-color: #f8f9fa;
+                    border: 1px solid #e9ecef;
+                }
+                .media-preview {
+                    max-width: 320px; 
+                    max-height: 360px; 
+                    object-fit: contain;
+                }
+                .avatar {
+                    width: 42px;
+                    height: 42px;
+                    object-fit: cover;
+                }
+                .avatar-sm {
+                    width: 32px;
+                    height: 32px;
+                    object-fit: cover;
+                }
+                
+                .btn-resposta:hover {
+                    color: #0056b3;
+                }
+                .respostas-count {
+                    background-color: #e9ecef;
+                    border-radius: 12px;
+                    padding: 2px 8px;
+                    font-size: 0.8rem;
+                    margin-left: 5px;
                 }
             </style>
 
-            {% for comentario in comentarios %}
-                <div class="card shadow-sm mb-4 w-100 comentario-card" style="border-radius: 10px;">
+<main class="inicio min-vh-100">
+    <div class="container-fluid px-3 px-md-5 py-4">
+        <div class="mb-5">
+            <h2 class="titulo-inicio mb-4 fw-bold">Discussão</h2>
+            <h3 class="fw-bold text-dark mb-3">{{ topico.titulo }}</h3>
 
-                    {% if comentario.autor == request.user or request.user.is_staff %}
-                        <form action="{% url 'forum:excluir_comentario' comentario.id %}"
-                              method="post"
-                              class="btn-excluir-hover">
-                            {% csrf_token %}
-                            <button class="btn btn-danger btn-sm" title="Excluir comentário">
-                                <i class="bi bi-trash"></i>
-                            </button>
-                        </form>
-                    {% endif %}
+            <div class="mb-3">
+                {% if topico.imagem %}
+                    <img src="{{ topico.imagem.imagem.url }}"
+                         class="rounded mb-3 media-preview"
+                         alt="Imagem do tópico">
+                {% endif %}
 
-                    <div class="card-body">
+                {% if topico.videos %}
+                    <video controls class="rounded mb-3 media-preview">
+                        <source src="{{ topico.videos.video.url }}">
+                        Seu navegador não consegue reproduzir o vídeo...
+                    </video>
+                {% endif %}
 
-                        <div class="d-flex align-items-center mb-3">
-                            {% if comentario.autor.foto_perfil %}
-                                <img src="{{ comentario.autor.foto_perfil.url }}"
-                                     class="rounded-circle me-2"
-                                     style="width: 42px; height: 42px; object-fit: cover;">
-                            {% else %}
-                                <i class="bi bi-person-circle text-secondary"
-                                   style="font-size:30px;"></i>
-                            {% endif %}
+                {% if topico.audio %}
+                    <audio controls class="rounded mb-3 media-preview">
+                        <source src="{{ topico.audio.audio.url }}" type="audio/mpeg">
+                        Seu navegador não consegue reproduzir o áudio...
+                    </audio>
+                {% endif %}
+            </div>
 
-                            <p class="text-muted m-0">
-                                <strong>{{ comentario.autor }}</strong> —
-                                {{ comentario.criado|date:"d/m/Y H:i" }}
-                            </p>
-                        </div>
-
-                        <h6 class="mb-3">{{ comentario.coment|linebreaks }}</h6>
-                    </div>
+            {% if topico.link %}
+                <div class="mb-3">
+                    <a href="{{ topico.link.url }}" target="_blank" class="btn btn-outline-secondary btn-sm">
+                        <i class="bi bi-link-45deg"></i> Abrir link
+                    </a>
                 </div>
-            {% endfor %}
+            {% endif %}
+
+            {% if topico.artigo %}
+                <div class="mb-4">
+                    <a href="{{ topico.artigo.artigo.url }}" target="_blank" class="btn btn-outline-secondary btn-sm">
+                        <i class="bi bi-file-earmark-text"></i> 
+                    </a>
+                </div>
+            {% endif %}
+
+            <div class="bg-light p-4 rounded mb-3">
+                <p class="mb-3">{{ topico.conteudo|linebreaks }}</p>
+                <p class="text-muted mb-2"><strong>Autor:</strong> {{ topico.autor_nome }}</p>
+                <h5 class="fw-bold text-dark mt-4">{{ topico.discussao }}</h5>
+            </div>
         </div>
 
-        <div class="card shadow-sm p-3 mb-5 w-100">
-            <h5 class="fw-bold mb-3">Adicionar comentário</h5>
+        <div class="mt-5">
+            <h4 class="fw-bold mb-4 border-bottom pb-2">Comentários ({{ comentarios|length }})</h4>
 
-            <form action="{% url 'forum:detail_topico' topico.id %}" method="POST">
-                {% csrf_token %}
-                
-                {{ form.coment }}
+            {% for comentario in comentarios|slice:":5" %}
+            <div class="card mb-4 comentario-card shadow-sm">
+                {% if user.is_authenticated and user.is_moderador or user.is_superuser %}
+                    <form action="{% url 'forum:excluir_comentario' comentario.id %}" method="post" class="btn-excluir-hover">
+                        {% csrf_token %}
+                        <button class="btn btn-danger btn-sm" title="Excluir comentário">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </form>
+                {% endif %}
 
-                <button type="submit" class="btn btn-outline-primary mt-3"
-        style="border-width: 2px; padding: 10px 22px; font-weight: 600;">
-    Enviar comentário
-</button>
-            </form>
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-3">
+                        {% if comentario.autor.foto_perfil %}
+                            <img src="{{ comentario.autor.foto_perfil.url }}" class="rounded-circle avatar me-3">
+                        {% else %}
+                            <i class="bi bi-person-circle text-secondary me-3" style="font-size: 42px;"></i>
+                        {% endif %}
+                        <div>
+                            <h6 class="mb-0 fw-bold text-dark">{{ comentario.autor }}</h6>
+                            <small class="text-muted">{{ comentario.criado|date:"d/m/Y H:i" }}</small>
+                        </div>
+                    </div>
+
+                    <div class="ms-1">
+                        <p class="mb-3 text-dark">{{ comentario.coment|linebreaks }}</p>
+
+                        <div class="d-flex gap-3 mb-3">
+                            <button class="btn btn-resposta btn-sm p-0" type="button"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#responder-{{ comentario.id }}">
+                                <i class="bi bi-reply"></i> Responder
+                            </button>
+                            {% if comentario.respostas.all %}
+                                <button class="btn btn-outline-secondary btn-sm ver-respostas-btn" style="background: linear-gradient(150deg, #2ecc71, #1e8449); border:none; color:white;"
+                                        type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#respostas-{{ comentario.id }}"
+                                        data-comentario-id="{{ comentario.id }}">
+                                    <i class="bi bi-chat-left"></i> Respostas 
+                                    <span class="respostas-count" style="background: linear-gradient(150deg, #2ecc71, #1e8449); border:none; color:white;">{{ comentario.respostas.all|length }}</span>
+                                </button>
+                            {% endif %}
+                        </div>
+
+                        {% if comentario.respostas.all %}
+                            <div id="respostas-{{ comentario.id }}" class="collapse mt-3">
+                                {% for resposta in comentario.respostas.all %}
+                                    <div class="resposta-container">
+                                        <i class="bi bi-arrow-return-right setinha-resposta"></i>
+                                        <div class="card resposta-card shadow-sm">
+                                            <div class="card-body py-3">
+                                                <div class="d-flex align-items-center mb-2">
+                                                    {% if resposta.autor.foto_perfil %}
+                                                        <img src="{{ resposta.autor.foto_perfil.url }}" class="rounded-circle avatar-sm me-2">
+                                                    {% else %}
+                                                        <i class="bi bi-person-circle text-secondary me-2" style="font-size: 22px;"></i>
+                                                    {% endif %}
+                                                    <div>
+                                                        <strong class="small text-dark">{{ resposta.autor }}</strong>
+                                                        <small class="text-muted d-block">{{ resposta.criado|date:"d/m/Y H:i" }}</small>
+                                                    </div>
+                                                </div>
+                                                <p class="mb-0 small text-dark">{{ resposta.coment|linebreaks }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+
+                        <div class="collapse mt-3" id="responder-{{ comentario.id }}">
+                            <form action="{% url 'forum:detail_topico' topico.id %}" method="POST" class="bg-light p-3 rounded">
+                                {% csrf_token %}
+                                {{ form.coment }}
+                                <input type="hidden" name="parent_id" value="{{ comentario.id }}">
+                                <button type="submit" class="btn btn-primary btn-sm mt-2"style="background: linear-gradient(150deg, #2ecc71, #1e8449); border:none; color:white;">
+                                    <i class="bi bi-send"></i> Enviar resposta
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+            {% if comentarios|length > 5 %}
+                <div id="mais-comentarios" class="collapse">
+                    {% for comentario in comentarios|slice:"5:" %}
+                        <div class="card mb-4 comentario-card shadow-sm">
+                            {% if comentario.autor ==  user.is_authenticated and user.is_moderador or user.is_superuser %}
+                                <form action="{% url 'forum:excluir_comentario' comentario.id %}" method="post" class="btn-excluir-hover">
+                                    {% csrf_token %}
+                                    <button class="btn btn-danger btn-sm" title="Excluir comentário">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </form>
+                            {% endif %}
+
+                            <div class="card-body">
+                                <div class="d-flex align-items-center mb-3">
+                                    {% if comentario.autor.foto_perfil %}
+                                        <img src="{{ comentario.autor.foto_perfil.url }}" class="rounded-circle avatar me-3">
+                                    {% else %}
+                                        <i class="bi bi-person-circle text-secondary me-3" style="font-size: 42px;"></i>
+                                    {% endif %}
+                                    <div>
+                                        <h6 class="mb-0 fw-bold text-dark">{{ comentario.autor }}</h6>
+                                        <small class="text-muted">{{ comentario.criado|date:"d/m/Y H:i" }}</small>
+                                    </div>
+                                </div>
+
+                                <div class="ms-1">
+                                    <p class="mb-3 text-dark">{{ comentario.coment|linebreaks }}</p>
+
+                                    <div class="d-flex gap-3 mb-3">
+                                        <button class="btn btn-resposta btn-sm p-0" type="button"
+                                                data-bs-toggle="collapse"
+                                                data-bs-target="#responder-{{ comentario.id }}">
+                                            <i class="bi bi-reply"></i> Responder
+                                        </button>
+
+                                        {% if comentario.respostas.all %}
+                                            <button class="btn btn-outline-secondary btn-sm ver-respostas-btn " style="background: linear-gradient(150deg, #2ecc71, #1e8449); border:none; color:white;"
+                                                    type="button"
+                                                    data-bs-toggle="collapse"
+                                                    data-bs-target="#respostas-{{ comentario.id }}"
+                                                    data-comentario-id="{{ comentario.id }}">
+                                                <i class="bi bi-chat-left"></i>Respostas
+                                                <span class="respostas-count" style="background: linear-gradient(150deg, #2ecc71, #1e8449); border:none; color:white;">{{ comentario.respostas.all|length }}</span>
+                                            </button>
+                                        {% endif %}
+                                    </div>
+
+                                    {% if comentario.respostas.all %}
+                                        <div id="respostas-{{ comentario.id }}" class="collapse mt-3">
+                                            {% for resposta in comentario.respostas.all %}
+                                                <div class="resposta-container">
+                                                    <i class="bi bi-arrow-return-right setinha-resposta"></i>
+                                                    <div class="card resposta-card shadow-sm">
+                                                        <div class="card-body py-3">
+                                                            <div class="d-flex align-items-center mb-2">
+                                                                {% if resposta.autor.foto_perfil %}
+                                                                    <img src="{{ resposta.autor.foto_perfil.url }}" class="rounded-circle avatar-sm me-2">
+                                                                {% else %}
+                                                                    <i class="bi bi-person-circle text-secondary me-2" style="font-size: 22px;"></i>
+                                                                {% endif %}
+                                                                <div>
+                                                                    <strong class="small text-dark">{{ resposta.autor }}</strong>
+                                                                    <small class="text-muted d-block">{{ resposta.criado|date:"d/m/Y H:i" }}</small>
+                                                                </div>
+                                                            </div>
+                                                            <p class="mb-0 small text-dark">{{ resposta.coment|linebreaks }}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+
+                                    <div class="collapse mt-3" id="responder-{{ comentario.id }}">
+                                        <form action="{% url 'forum:detail_topico' topico.id %}" method="POST" class="bg-light p-3 rounded">
+                                            {% csrf_token %}
+                                            {{ form.coment }}
+                                            <input type="hidden" name="parent_id" value="{{ comentario.id }}">
+                                            <button type="submit" class="btn btn-primary btn-sm mt-2"style="background: linear-gradient(150deg, #2ecc71, #1e8449); border:none; color:white;">
+                                                <i class="bi bi-send"></i> Enviar resposta
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <div class="text-center mt-4">
+                    <button id="toggle-comentarios-btn" class="btn btn-outline-primary" 
+                            data-bs-toggle="collapse" data-bs-target="#mais-comentarios"style="background: linear-gradient(150deg, #2ecc71, #1e8449); border:none; color:white;">
+                        Ver mais comentários
+                    </button>
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="card shadow-sm border-0 mt-5">
+            <div class="card-body">
+                <h5 class="fw-bold mb-3 text-dark"><i class="bi bi-chat-left-text"></i> Adicionar comentário</h5>
+                <form action="{% url 'forum:detail_topico' topico.id %}" method="POST">
+                    {% csrf_token %}
+                    {{ form.coment }}
+                    <button type="submit" class="btn btn-primary mt-3 px-4"style="background: linear-gradient(150deg, #2ecc71, #1e8449); border:none; color:white;">
+                        <i class="bi bi-send"></i> Enviar comentário
+                    </button>
+                </form>
+            </div>
         </div>
 
     </div>
 </main>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const toggleComentariosBtn = document.getElementById('toggle-comentarios-btn');
+    if (toggleComentariosBtn) {
+        toggleComentariosBtn.addEventListener('click', function () {
+            setTimeout(() => {
+                const target = document.querySelector(this.getAttribute('data-bs-target'));
+                const shown = target.classList.contains('show');
+                this.textContent = shown ? 'Ver menos comentários' : 'Ver mais comentários';
+                this.classList.toggle('btn-outline-primary', !shown);
+                this.classList.toggle('btn-outline-secondary', shown);
+            }, 150);
+        });
+    }
+    document.querySelectorAll('.ver-respostas-btn').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+            setTimeout(() => {
+                const target = document.querySelector(this.getAttribute('data-bs-target'));
+                const shown = target.classList.contains('show');
+                const count = this.querySelector('.respostas-count').textContent;
+                
+                if (shown) {
+                    this.innerHTML = '<i class="bi bi-chat-left"></i> Respostas <span class="respostas-count">' + count + '</span>';
+                    this.classList.remove('btn-secondary');
+                    this.classList.add('btn-outline-secondary');
+                } else {
+                    this.innerHTML = '<i class="bi bi-chevron-up"></i> Respostas <span class="respostas-count">' + count + '</span>';
+                    this.classList.remove('btn-outline-secondary');
+                    this.classList.add('btn-secondary');
+                }
+            }, 150);
+        });
+    });
+});
+</script>
 {% endblock %}

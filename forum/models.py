@@ -38,7 +38,7 @@ class Comentario(models.Model):
     coment = models.TextField()
     criado = models.DateTimeField(auto_now_add=True)
     #respostas
-    parent=models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True)
+    parent=models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='respostas')
 
     def __str__(self):
         return self.topico 
