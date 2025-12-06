@@ -19,7 +19,7 @@ class TopicoList(ListView):
         for t in context["topicos"]:
             t.likes = t.reacoes.filter(tipo="like").count()
             t.deslikes = t.reacoes.filter(tipo="dislike").count()
-
+        context ['page'] = 'forum'
         return context
 
 @login_required
@@ -59,6 +59,7 @@ def detail_topico(request, id):
         'topico': topico,
         'comentarios': comentarios,
         'form': form,
+        'page': 'forum',
     }
     return render(request, 'forum/detalhe_topico.html', context)
 
@@ -78,7 +79,6 @@ def excluir_comentario(request, pk):
 
     topico_id = comentario.topico.id
     comentario.delete()
-    messages.success(request, "Comentário excluído com sucesso!")
 
     return redirect('forum:detail_topico', id=topico_id)
 

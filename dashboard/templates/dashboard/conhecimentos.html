@@ -5,8 +5,8 @@
 
 {% block content %}
 
-<main class="bg-white py-5 px-4 px-md-5">
-  <div class="container">
+<main id="conhecimentos" class="py-5 px-4 px-md-5">
+  <div class="container bg-white rounded shadow-sm p-4">
 
     <h2 class="titulo-inicio text-center fw-bold mb-4">
       Conhecimentos Tradicionais
@@ -19,36 +19,40 @@
     </section>
 
     <style>
-      .nav-tabs {
+      #conhecimentos .nav-tabs {
         border-bottom: 2px solid #dcdcdc;
       }
-      
-      p, .lh-lg, .fs-6 {
-      font-size: 1.05rem !important; 
-      line-height: 1.9 !important; 
+      #conhecimentos p,
+      #conhecimentos .lh-lg,
+      #conhecimentos .fs-6 {
+        font-size: 1.05rem !important;
+        line-height: 1.9 !important;
       }
-
-      .nav-tabs .nav-link {
+      #conhecimentos .nav-tabs .nav-link {
         color: #414141;
         font-weight: 600;
         border: none;
         border-bottom: 3px solid transparent;
         transition: all 0.3s ease;
       }
-      .nav-tabs .nav-link:hover {
+
+      #conhecimentos .nav-tabs .nav-link:hover {
         border-color: #b30808;
         color: #b30808;
       }
-      .nav-tabs .nav-link.active {
+
+      #conhecimentos .nav-tabs .nav-link.active {
         color: #fff;
         background-color: #b30808;
         border-color: #b30808;
         border-radius: 6px 6px 0 0;
       }
-      .tab-pane {
+
+      #conhecimentos .tab-pane {
         animation: fadeIn 0.6s ease;
       }
-      .text-justify {
+
+      #conhecimentos .text-justify {
         text-align: justify !important;
         text-justify: inter-word;
       }
@@ -75,6 +79,8 @@
     </ul>
 
     <div class="tab-content" id="conhecimentoTabsContent">
+
+      <!-- JUREMA -->
       <div class="tab-pane fade show active" id="jurema" role="tabpanel" aria-labelledby="jurema-tab">
         <div class="row g-4 align-items-start mb-5">
           <div class="col-md-5 text-center">
@@ -93,7 +99,7 @@
         </div>
       </div>
 
-      <!-- Toré -->
+      <!-- TORÉ -->
       <div class="tab-pane fade" id="tore" role="tabpanel" aria-labelledby="tore-tab">
         <div class="row g-4 align-items-start mb-5">
           <div class="col-md-7 order-2 order-md-1">
@@ -112,7 +118,7 @@
         </div>
       </div>
 
-      <!-- Festa da Batata -->
+      <!-- FESTA DA BATATA -->
       <div class="tab-pane fade" id="batata" role="tabpanel" aria-labelledby="batata-tab">
         <div class="row g-4 align-items-start mb-5">
           <div class="col-md-5 text-center">
@@ -122,30 +128,36 @@
           <div class="col-md-7">
             <h3 class="fw-bold">FESTA DA BATATA</h3>
             <p class="lh-lg">
-              Ademais, há também a tradicional Festa da Batata, uma celebração cultural e agrícola amplamente realizada pelo povo indígena Catu, localizado entre os municípios de Canguaretama e Goianinha, no Rio Grande do Norte. Segundo a prefeitura de Goianinha (2022), a comemoração, que originalmente era ligada ao Dia de Todos os Santos, com o passar do tempo, passou a ser uma celebração da colheita da batata-doce, com o objetivo de reforçar a identidade indígena. Durante o evento, há diversas atividades culturais como danças, cantos tradicionais e a preparação de pratos típicos com batata-doce.
+              Ademais, há também a tradicional Festa da Batata, uma celebração cultural e agrícola amplamente realizada pelo povo indígena Catu. Segundo a prefeitura de Goianinha (2022), a comemoração passou a ser uma celebração da colheita da batata-doce, com o objetivo de reforçar a identidade indígena. Durante o evento, há diversas atividades culturais como danças, cantos tradicionais e a preparação de pratos típicos com batata-doce.
             </p>
           </div>
         </div>
       </div>
 
-      <!-- Influências no Cotidiano -->
+      <!-- INFLUÊNCIAS NO COTIDIANO -->
       <div class="tab-pane fade" id="cotidiano" role="tabpanel" aria-labelledby="cotidiano-tab">
         <div class="text-center mx-auto" style="max-width: 1200px;">
           <h3 class="fw-bold mb-3">INFLUÊNCIAS INDÍGENAS NO COTIDIANO</h3>
+
           <p class="lh-lg text-justify">
             Assim como as tradições indígenas permanecem, nosso cotidiano é repleto de conhecimentos e influências dos povos indígenas. De acordo com o Departamento de Nutrição da Faculdade de Saúde Pública da Universidade de São Paulo (2023), há forte presença indígena nas festas juninas, como o uso das fogueiras e de rituais como forma de agradecimento pela colheita e fertilidade. Além disso, muitos pratos típicos feitos à base de milho possuem origem indígena, como pirão, macaxeira, tapioca, bolo de macaxeira, batata-doce, peixe na folha de bananeira, entre outros.
           </p>
+
           <p class="lh-lg text-justify">
             Também existem cidades do Rio Grande do Norte cujos nomes têm influência indígena e que já foram ou ainda são habitadas por povos originários. Antes de citar esses municípios, vale lembrar que cada povo possuía sua própria forma de comunicação. Segundo o Instituto Socioambiental (2023), no período dos colonizadores portugueses, a língua tupi era amplamente falada e servia como Língua Geral. Entre as cidades do RN com nomes de origem indígena estão: Açú (Assu), que significa “Aldeia Grande”; Apodi, que significa “Chapada”; e Janduís, em homenagem ao povo indígena Janduí. De acordo com o B20 (2023), o gentílico “potiguar” também é de origem indígena, mais especificamente do povo potiguara, significando “comedor de camarão”.
           </p>
+
           <p class="lh-lg text-justify">
             Outro elemento indígena presente no cotidiano é a rede de descanso. Na cultura indígena, a rede era chamada de “ini”, na língua tupi-guarani, significando “deitar”. Originalmente feitas de cipó e liana, eram usadas para dormir e se proteger de insetos e animais no chão da floresta. Com o tempo, os colonizadores adotaram a prática, que passou a ser produzida com algodão, tornando-se um símbolo de conforto e relaxamento no Brasil.
           </p>
+
           <p class="lh-lg text-justify">
             A medicina tradicional indígena no Brasil, especialmente na região Nordeste, é marcada por práticas transmitidas ao longo das gerações. As plantas medicinais desempenham papel essencial nesse conhecimento. De acordo com Andrade (2016), os potiguaras utilizavam diversas plantas para tratar condições de saúde, retirando cascas e folhas com ferramentas tradicionais. Plantas como hortelã, alecrim, jenipapo e babosa são ainda hoje amplamente usadas na preparação de lambedores, chás e outros remédios caseiros, destinados a tratar envenenamentos, anemia, dores de cabeça, constipações, inflamações, cansaço e diversas doenças. Esse saber é preservado principalmente por curandeiros e pajés.
           </p>
+
         </div>
       </div>
+
     </div>
   </div>
 </main>

@@ -26,6 +26,12 @@ class cadastroform(UserCreationForm): #formulário de cadastro
         self.fields['username'].label = "Usuário"
         self.fields['password1'].label = "Senha"
         self.fields['password2'].label = 'Confirme a senha'
+    
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if UsuarioAdaptado.objects.filter(email=email).exists():
+            raise forms.ValidationError("Este email já está cadastrado.")
+        return email
 
     
 

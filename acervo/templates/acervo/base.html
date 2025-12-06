@@ -35,7 +35,7 @@
                       <li><a class="dropdown-item align-items-center gap-2 d-flex" href="{% url 'acervo:listar_audios' %}"><i class="bi bi-music-note-beamed"></i>Áudios</a></li>
                     </ul>
                   </div>
-                <a href="{% url 'forum:topicos' %}" class="{% if page == 'topicos' %}active{% endif %}"style=color:#2ECC71;text-decoration:underline;>FÓRUM</a>
+                <a href="{% url 'forum:topicos' %}" class="{% if page == 'forum' %}active{% endif %}">FÓRUM</a>
                 <div class="dropdown">
                     {% if user.is_authenticated %}
                     <button class="btn dropdown-toggle d-flex align-items-center gap-2 border-0 bg-transparent" type="button" data-bs-toggle="dropdown" style="color: #1A4623;">
